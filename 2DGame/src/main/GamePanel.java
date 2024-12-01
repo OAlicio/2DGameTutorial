@@ -1,5 +1,6 @@
 package main;
 
+import entity.Player;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -23,6 +24,7 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
     
     KeyHandler keyH = new KeyHandler();
     Thread gameThread; //Mantem o programa rodando até que seja fechado
+    Player player = new Player(this, keyH); //INSTANCIANDO O PLAYER
     
     //POSICAO INICIALDO JOGADOR
     
@@ -79,19 +81,7 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
     
     public void update() { // METODO PADRAO DO JPANEL
         
-            //ATUALIZAR AS COORDENADAS DO JOGADOR
-           if (keyH.upPressed == true) {
-               playerY -= playerSpeed; // QUANTO MAIS PRA CIMA MENOS O Y VALE MENOS EM 4 PIXELS(SPEED)
-           }
-           else if(keyH.downPressed == true) {
-               playerY += playerSpeed;
-           }
-           else if(keyH.leftPressed == true) {
-               playerX -= playerSpeed;
-           }
-           else if(keyH.rightPressed == true) {
-               playerX += playerSpeed;
-           }
+            player.update();
         }
 
     public void paintComponent(Graphics g) { //METODO PADRAO TAMBEM
@@ -99,10 +89,8 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
             super.paintComponent(g);
             
             Graphics2D g2 = (Graphics2D)g; // MAIS SOFISTICADO QUE O GRAPHICS, POSSUI MAIS FUNCOES
-           
-            g2.setColor(Color.white);
-            
-            g2.fillRect(playerX, playerY, tileSize, tileSize); // (x, y, width, height)
+
+            player.draw(g2);
             
             g2.dispose(); // DESCARTA E RELANCA COISAS QUE O SISTEMA ESTARA USANDO
         }
