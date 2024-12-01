@@ -14,7 +14,7 @@ public class Player extends Entity {
     KeyHandler keyH;
     
     public Player(GamePanel gp, KeyHandler keyH) {
-        
+    
         this.gp = gp;
         this.keyH = keyH;
         

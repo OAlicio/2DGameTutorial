@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
+import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
     
@@ -14,23 +15,18 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
     final int scale = 3;
     
     public final int tileSize = originalTileSize * scale; //Coloca numa escala mais visivel nas telas atuais (48 X 48)
-    public final int maxScreenCol = 16; // TAMANHO MAXIMO NA VERTICAL
-    public final int maxScreenRow = 12; // TAMANHO MAXIMO NA HORIZONTAL
+    public final int maxScreenCol = 16; // TAMANHO/LIMITE MAXIMO NA VERTICAL
+    public final int maxScreenRow = 12; // TAMANHO/LIMITE MAXIMO NA HORIZONTAL
     final int screenWidth = tileSize * maxScreenCol; // COMPRIMENTO TOTAL
     final int screenHeight = tileSize * maxScreenRow; // ALTURA TOTAL
     
     //FPS
     int FPS = 60; //FPS DESEJADO
     
+    TileManager tileM = new TileManager(this);
     KeyHandler keyH = new KeyHandler();
     Thread gameThread; //Mantem o programa rodando até que seja fechado
     Player player = new Player(this, keyH); //INSTANCIANDO O PLAYER
-    
-    //POSICAO INICIALDO JOGADOR
-    
-    int playerX = 100;
-    int playerY = 100;
-    int playerSpeed = 4;
     
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight)); //Coloca o tamanho da classe JPanel(Gamepanel)
@@ -90,6 +86,7 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
             
             Graphics2D g2 = (Graphics2D)g; // MAIS SOFISTICADO QUE O GRAPHICS, POSSUI MAIS FUNCOES
 
+            tileM.draw(g2); // AQUI TEMOS LAYERS, SE O TILE FOR DESENHADO APOS O PLAYER, O PLAYER FICARA POR BAIXO DOS TILES
             player.draw(g2);
             
             g2.dispose(); // DESCARTA E RELANCA COISAS QUE O SISTEMA ESTARA USANDO
