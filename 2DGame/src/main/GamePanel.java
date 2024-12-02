@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
+import object.SuperObject;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
@@ -36,7 +37,10 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
     KeyHandler keyH = new KeyHandler();
     Thread gameThread; //Mantem o programa rodando até que seja fechado
     public CollisionChecker cChecker = new CollisionChecker(this);
+    public AssetsSetter aSetter = new AssetsSetter(this);
     public Player player = new Player(this, keyH); //INSTANCIANDO O PLAYER
+    public SuperObject obj[] = new SuperObject[10]; //QUANTIDADE DE OBJECTOS A SEREM MOSTRADOS NA TELA
+    // --------------------------------------------- //
     
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight)); //Coloca o tamanho da classe JPanel(Gamepanel)
@@ -44,6 +48,11 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH); // ADICIONA O KEY LISTNER CRIADO AO GAMEPANEL
         this.setFocusable(true); //Gamepanel será "focado" para receber inputs
+    }
+    
+    public void setupGame() {
+    
+        aSetter.setObject();
     }
 
     public void startGameThread() {
@@ -96,7 +105,17 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
             
             Graphics2D g2 = (Graphics2D)g; // MAIS SOFISTICADO QUE O GRAPHICS, POSSUI MAIS FUNCOES
 
+            //TILE
             tileM.draw(g2); // AQUI TEMOS LAYERS, SE O TILE FOR DESENHADO APOS O PLAYER, O PLAYER FICARA POR BAIXO DOS TILES
+            
+            //OBJECT
+            for(int i = 0; i < obj.length; i++) {
+                if(obj[i] != null) {
+                    obj[i].draw(g2, this);
+                }
+            }
+            
+            //PLAYER
             player.draw(g2);
             
             g2.dispose(); // DESCARTA E RELANCA COISAS QUE O SISTEMA ESTARA USANDO
