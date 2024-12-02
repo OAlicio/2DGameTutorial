@@ -2,6 +2,7 @@ package entity;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -25,6 +26,14 @@ public class Player extends Entity {
         screenX = gp.screenWidth/2 - gp.tileSize/2;
         screenY = gp.screenHeight/2 - gp.tileSize/2;
         //-----------------------//
+        
+        //COLISAO
+        solidArea = new Rectangle(); //Rectangle(x, y, width, height)
+        solidArea.x = 8;
+        solidArea.y = 16;
+        solidArea.width = 32;
+        solidArea.height = 32;
+        //------//
         setDefaultValues();
         getPlayerImage();
     }
@@ -65,21 +74,40 @@ public class Player extends Entity {
                 || keyH.leftPressed == true || keyH.rightPressed == true) { // Previne da imagem se mexer sem dar nenhum comando
             if (keyH.upPressed == true) {
                 direction = "up";
-                worldY -= speed; // QUANTO MAIS PRA CIMA MENOS O Y VALE MENOS EM 4 PIXELS(SPEED)
             }
             else if(keyH.downPressed == true) {
                 direction = "down";
-                worldY += speed;
             }
             else if(keyH.leftPressed == true) {
                 direction = "left";
-                worldX -= speed;
             }
             else if(keyH.rightPressed == true) {
                 direction = "right";
-                worldX += speed;
             }
             
+            //VERIFICAR COLISAO
+            collisionOn = false;
+            gp.cChecker.checkTile(this);
+            
+            // SE A COLISAO FOR FALSA, O PLAYER NAO SE MOVE
+            if(collisionOn == false) {
+            
+                switch(direction) {
+                    
+                    case "up":
+                         worldY -= speed; // QUANTO MAIS PRA CIMA MENOS O Y VALE MENOS EM 4 PIXELS(SPEED)
+                        break;
+                    case "down":
+                        worldY += speed;
+                        break;
+                    case "left":
+                        worldX -= speed;
+                        break;
+                    case "right":
+                        worldX += speed;
+                        break;
+                }
+            }
             spriteCounter++;
             if(spriteCounter >= 14) { //A CADA 14 FRAMES TROCA A IMAGEM PELO SPRITENUM
                 if(spriteNum == 1){

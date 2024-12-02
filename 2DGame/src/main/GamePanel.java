@@ -23,7 +23,7 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
     //OPCOES DE MUNDO
     public final int maxWorldCol = 50; //MAIOR VALOR DE "x" DO MAPA
     public final int maxWorldRow = 50; //MAIOR VALOR DE "y" DO MAPA
-    //AGORA O TAMANHO DO MAPA E O LIMITE, E NAO MAIS A TELA
+    /* AGORA O TAMANHO DO MAPA É O LIMITE, E NAO MAIS A TELA */
     public final int worldWidth = tileSize * maxWorldCol; //COMPRIMENTO MAXIMO DO MAPA
     public final int worldHeight = tileSize * maxWorldRow; //ALTURA MAXIMA DO MAPA
     
@@ -31,9 +31,11 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
     //FPS
     int FPS = 60; //FPS DESEJADO
     
+    //OBJECTOS
     TileManager tileM = new TileManager(this);
     KeyHandler keyH = new KeyHandler();
     Thread gameThread; //Mantem o programa rodando até que seja fechado
+    public CollisionChecker cChecker = new CollisionChecker(this);
     public Player player = new Player(this, keyH); //INSTANCIANDO O PLAYER
     
     public GamePanel() {
