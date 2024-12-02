@@ -25,19 +25,23 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
     public final int maxWorldCol = 50; //MAIOR VALOR DE "x" DO MAPA
     public final int maxWorldRow = 50; //MAIOR VALOR DE "y" DO MAPA
     /* AGORA O TAMANHO DO MAPA É O LIMITE, E NAO MAIS A TELA */
-    public final int worldWidth = tileSize * maxWorldCol; //COMPRIMENTO MAXIMO DO MAPA
-    public final int worldHeight = tileSize * maxWorldRow; //ALTURA MAXIMA DO MAPA
+//    public final int worldWidth = tileSize * maxWorldCol; //COMPRIMENTO MAXIMO DO MAPA
+//    public final int worldHeight = tileSize * maxWorldRow; //ALTURA MAXIMA DO MAPA
     
     
     //FPS
     int FPS = 60; //FPS DESEJADO
     
-    //OBJECTOS
+    //SYSTEM -------------------------------//
     TileManager tileM = new TileManager(this);
     KeyHandler keyH = new KeyHandler();
-    Thread gameThread; //Mantem o programa rodando até que seja fechado
+    Sound sound = new Sound();
+    
     public CollisionChecker cChecker = new CollisionChecker(this);
     public AssetsSetter aSetter = new AssetsSetter(this);
+    Thread gameThread; //Mantem o programa rodando até que seja fechado
+    
+    //ENTITY AND OBJECT
     public Player player = new Player(this, keyH); //INSTANCIANDO O PLAYER
     public SuperObject obj[] = new SuperObject[10]; //QUANTIDADE DE OBJECTOS A SEREM MOSTRADOS NA TELA
     // --------------------------------------------- //
@@ -53,6 +57,7 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
     public void setupGame() {
     
         aSetter.setObject();
+        playMusic(0);
     }
 
     public void startGameThread() {
@@ -120,5 +125,22 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
             
             g2.dispose(); // DESCARTA E RELANCA COISAS QUE O SISTEMA ESTARA USANDO
         }
-           
+    
+    public void playMusic(int i) {
+    
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
+    }
+         
+    public void stopMusic() {
+    
+        sound.stop();
+    }
+    
+    public void playSE(int i) {
+    
+        sound.setFile(i);
+        sound.play();
+    }
 } 

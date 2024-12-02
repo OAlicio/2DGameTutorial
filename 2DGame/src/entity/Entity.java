@@ -16,5 +16,6 @@ public class Entity {
     
     //CRIANDO O COLISOR DAS ENTIDADES, UM RECTANGULO
     public Rectangle solidArea;
+    public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
 }
