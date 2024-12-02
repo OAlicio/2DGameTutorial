@@ -13,20 +13,28 @@ public class Player extends Entity {
     GamePanel gp;
     KeyHandler keyH;
     
+    public final int screenX; //ONDE DESENHAREMOS O PLAYER? QUEREMOS ELE NO CENTRO DA TELA
+    public final int screenY;
+    
     public Player(GamePanel gp, KeyHandler keyH) {
     
         this.gp = gp;
         this.keyH = keyH;
         
+        // CENTRALIZANDO O PLAYER
+        screenX = gp.screenWidth/2 - gp.tileSize/2;
+        screenY = gp.screenHeight/2 - gp.tileSize/2;
+        //-----------------------//
         setDefaultValues();
         getPlayerImage();
     }
 
-    
     public void setDefaultValues() {
     
-        x = 100;
-        y = 100;
+        //POSICOES INICIAIS DO PLAYER
+        worldX = gp.tileSize * 23;
+        worldY = gp.tileSize * 21;
+        // ------------------------ //
         speed = 4;
         direction = "down"; //DIRECAO PADRAO PODE SER QUALQUER UMA
     }
@@ -53,23 +61,23 @@ public class Player extends Entity {
     public void update() {
 
         //ATUALIZAR AS COORDENADAS DO JOGADOR
-        if(keyH.upPressed == true  || keyH.downPressed == true 
+        if(keyH.upPressed == true || keyH.downPressed == true 
                 || keyH.leftPressed == true || keyH.rightPressed == true) { // Previne da imagem se mexer sem dar nenhum comando
             if (keyH.upPressed == true) {
                 direction = "up";
-                y -= speed; // QUANTO MAIS PRA CIMA MENOS O Y VALE MENOS EM 4 PIXELS(SPEED)
+                worldY -= speed; // QUANTO MAIS PRA CIMA MENOS O Y VALE MENOS EM 4 PIXELS(SPEED)
             }
             else if(keyH.downPressed == true) {
                 direction = "down";
-                y += speed;
+                worldY += speed;
             }
             else if(keyH.leftPressed == true) {
                 direction = "left";
-                x -= speed;
+                worldX -= speed;
             }
             else if(keyH.rightPressed == true) {
                 direction = "right";
-                x += speed;
+                worldX += speed;
             }
             
             spriteCounter++;
@@ -89,7 +97,7 @@ public class Player extends Entity {
     public void draw(Graphics2D g2) {
         
         BufferedImage image = null;
-        
+        //CENTRALIZANDO O PLAYER
         switch(direction) {
         case "up":
             if(spriteNum == 1) {
@@ -124,6 +132,6 @@ public class Player extends Entity {
             }
             break; 
         }
-        g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null); //drawImage(imagem, x, y, width, height, ImageObserver) DESENHA UMA IMAGEM
+        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null); //drawImage(imagem, x, y, width, height, ImageObserver) DESENHA UMA IMAGEM
     }
 }

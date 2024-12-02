@@ -17,8 +17,16 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
     public final int tileSize = originalTileSize * scale; //Coloca numa escala mais visivel nas telas atuais (48 X 48)
     public final int maxScreenCol = 16; // TAMANHO/LIMITE MAXIMO NA VERTICAL
     public final int maxScreenRow = 12; // TAMANHO/LIMITE MAXIMO NA HORIZONTAL
-    final int screenWidth = tileSize * maxScreenCol; // COMPRIMENTO TOTAL
-    final int screenHeight = tileSize * maxScreenRow; // ALTURA TOTAL
+    public final int screenWidth = tileSize * maxScreenCol; // COMPRIMENTO TOTAL 768 pixels
+    public final int screenHeight = tileSize * maxScreenRow; // ALTURA TOTAL 576 pixels
+    
+    //OPCOES DE MUNDO
+    public final int maxWorldCol = 50; //MAIOR VALOR DE "x" DO MAPA
+    public final int maxWorldRow = 50; //MAIOR VALOR DE "y" DO MAPA
+    //AGORA O TAMANHO DO MAPA E O LIMITE, E NAO MAIS A TELA
+    public final int worldWidth = tileSize * maxWorldCol; //COMPRIMENTO MAXIMO DO MAPA
+    public final int worldHeight = tileSize * maxWorldRow; //ALTURA MAXIMA DO MAPA
+    
     
     //FPS
     int FPS = 60; //FPS DESEJADO
@@ -26,7 +34,7 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
     TileManager tileM = new TileManager(this);
     KeyHandler keyH = new KeyHandler();
     Thread gameThread; //Mantem o programa rodando até que seja fechado
-    Player player = new Player(this, keyH); //INSTANCIANDO O PLAYER
+    public Player player = new Player(this, keyH); //INSTANCIANDO O PLAYER
     
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight)); //Coloca o tamanho da classe JPanel(Gamepanel)
