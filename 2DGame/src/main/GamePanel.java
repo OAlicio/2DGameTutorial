@@ -35,10 +35,12 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
     //SYSTEM -------------------------------//
     TileManager tileM = new TileManager(this);
     KeyHandler keyH = new KeyHandler();
-    Sound sound = new Sound();
+    Sound music = new Sound();
+    Sound se = new Sound();
     
     public CollisionChecker cChecker = new CollisionChecker(this);
     public AssetsSetter aSetter = new AssetsSetter(this);
+    public UI ui = new UI(this);
     Thread gameThread; //Mantem o programa rodando até que seja fechado
     
     //ENTITY AND OBJECT
@@ -111,7 +113,7 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
             Graphics2D g2 = (Graphics2D)g; // MAIS SOFISTICADO QUE O GRAPHICS, POSSUI MAIS FUNCOES
 
             //TILE
-            tileM.draw(g2); // AQUI TEMOS LAYERS, SE O TILE FOR DESENHADO APOS O PLAYER, O PLAYER FICARA POR BAIXO DOS TILES
+            tileM.draw(g2); // AQUI TEMOS LAYERS, INDO DE CIMA PRA BAIXO (O MAIS ABAIXO TEM MAIOR PRIORIDADE)
             
             //OBJECT
             for(int i = 0; i < obj.length; i++) {
@@ -123,24 +125,27 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
             //PLAYER
             player.draw(g2);
             
+            // UI
+            ui.draw(g2);
+            
             g2.dispose(); // DESCARTA E RELANCA COISAS QUE O SISTEMA ESTARA USANDO
         }
     
     public void playMusic(int i) {
     
-        sound.setFile(i);
-        sound.play();
-        sound.loop();
+        music.setFile(i);
+        music.play();
+        music.loop();
     }
          
     public void stopMusic() {
     
-        sound.stop();
+        music.stop();
     }
     
     public void playSE(int i) {
     
-        sound.setFile(i);
-        sound.play();
+        se.setFile(i);
+        se.play();
     }
 } 
