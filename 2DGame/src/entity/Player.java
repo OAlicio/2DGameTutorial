@@ -8,6 +8,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import main.GamePanel;
 import main.KeyHandler;
+import main.UtilityTool;
 
 public class Player extends Entity {
     
@@ -17,6 +18,9 @@ public class Player extends Entity {
     public final int screenX; //ONDE DESENHAREMOS O PLAYER? QUEREMOS ELE NO CENTRO DA TELA
     public final int screenY;
     public int hasKey = 0; //Quantidade de chaves pegas
+    int standCounter = 0; //AJUSTAR O TIMING DO RELEASE BUTTON
+    boolean moving = false;
+    int pixelCounter = 0;
     
     public Player(GamePanel gp, KeyHandler keyH) {
     
@@ -29,13 +33,23 @@ public class Player extends Entity {
         //-----------------------//
         
         //COLISAO
-        solidArea = new Rectangle(); //Rectangle(x, y, width, height)
+        /*solidArea = new Rectangle(); //Rectangle(x, y, width, height)
         solidArea.x = 8;
         solidArea.y = 16;
         solidAreaDefaultX = solidArea.x; //SALVANDO OS VALORES DE SOLIDAREAX E Y, CASO SEJAM MODIFICADAS NO FUTURO
         solidAreaDefaultY = solidArea.y;
         solidArea.width = 32;
-        solidArea.height = 32;
+        solidArea.height = 32;*/
+        
+        //MOVIMENTACAO TILE/GRID "COLISAO"
+        solidArea = new Rectangle(); //Rectangle(x, y, width, height)
+        solidArea.x = 1;
+        solidArea.y = 1;
+        solidAreaDefaultX = solidArea.x; //SALVANDO OS VALORES DE SOLIDAREAX E Y, CASO SEJAM MODIFICADAS NO FUTURO
+        solidAreaDefaultY = solidArea.y;
+        solidArea.width = 46;
+        solidArea.height = 46;
+        
         //------//
         
         setDefaultValues();
@@ -55,24 +69,34 @@ public class Player extends Entity {
         
     public void getPlayerImage() {
     
-        try {
+        up1 = setup("boy_up_1");
+        up2 = setup("boy_up_2");
+        down1 = setup("boy_down_1");
+        down2 = setup("boy_down_2");
+        left1 = setup("boy_left_1");
+        left2 = setup("boy_left_2");
+        right1 = setup("boy_right_1");
+        right2 = setup("boy_right_2");
         
-            up1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_1.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_2.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_down_1.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_down_2.png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_left_1.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_left_2.png"));
-            right1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_right_1.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_right_2.png"));
+    }
+    
+    public BufferedImage setup(String imageName) {
+        
+        UtilityTool uTool = new UtilityTool();
+        BufferedImage image = null;
+        
+        try {
             
-        }catch(IOException e) { 
+            image = ImageIO.read(getClass().getResourceAsStream("/player/" + imageName +".png"));
+            image = uTool.scaledImage(image, gp.tileSize, gp.tileSize);
+        }catch(IOException e) {
             e.printStackTrace();
         }
+        return image;
     }
     
     public void update() {
-
+        
         //ATUALIZAR AS COORDENADAS DO JOGADOR
         if(keyH.upPressed == true || keyH.downPressed == true 
                 || keyH.leftPressed == true || keyH.rightPressed == true) { // Previne da imagem se mexer sem dar nenhum comando
@@ -127,7 +151,16 @@ public class Player extends Entity {
                 spriteCounter = 0;
             }   
         }
+        else { //COLOCANDO O PLAYER NUMA POSICAO NORMAL
         
+            standCounter++;
+            
+            if(standCounter == 20) { //A CADA x FRAMES O PLAYER VOLTA A POSICAO INICIAL APOS O BOTAO DEIXAR DE SER PRESSIONADO
+               standCounter = 0;
+               spriteNum = 1; 
+            }
+        }
+       
     }
     
     public void pickUpObject (int i) {
@@ -206,6 +239,11 @@ public class Player extends Entity {
             }
             break; 
         }
-        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null); //drawImage(imagem, x, y, width, height, ImageObserver) DESENHA UMA IMAGEM
+        g2.drawImage(image, screenX, screenY, null); //drawImage(imagem, x, y, width, height, ImageObserver) DESENHA UMA IMAGEM
+        
+        //COLLISION VIEWER
+        //g2.setColor(Color.red);
+        //g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
+        // --------------- //
     }
 }

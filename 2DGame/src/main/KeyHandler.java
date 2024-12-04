@@ -7,6 +7,9 @@ public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas
 
     public boolean upPressed, downPressed, leftPressed, rightPressed;
     
+    //DEBUG
+    boolean checkDrawTime = false;
+    
     @Override
     public void keyTyped(KeyEvent e) { //NAO USAREMOS O KEYTYPED
     }
@@ -27,6 +30,16 @@ public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas
         }
         if (code == KeyEvent.VK_D){ // Tecla D
             rightPressed = true;
+        }
+        
+        //DEBUG
+        if (code == KeyEvent.VK_P) {
+            if(checkDrawTime == false) {
+                checkDrawTime = true;
+            }
+            else if(checkDrawTime == true) {
+                checkDrawTime = false;
+            }
         }
     }
 

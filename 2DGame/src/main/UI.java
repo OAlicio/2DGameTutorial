@@ -28,7 +28,7 @@ public class UI {
         
         arial_40 = new Font("Arial", Font.PLAIN, 40);
         arial_80B = new Font("Arial", Font.BOLD, 80);
-        OBJ_Key key = new OBJ_Key();
+        OBJ_Key key = new OBJ_Key(gp);
         keyImage = key.image;
     }
     
@@ -49,13 +49,13 @@ public class UI {
             int x;
             int y;
             
-            text = "Encontraste o tesouro";
+            text = "You found a treasure";
             textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth(); //RETORNA O TAMANHO DO TEXTO
             x = gp.screenWidth/2 - textLength/2;
             y = gp.screenHeight/2 - (gp.tileSize*3);
             g2.drawString(text, x, y);
             
-            text = "Tempo de conclusâo :" + dFormat.format(playTime) + "!";
+            text = "Time :" + dFormat.format(playTime) + "!";
             textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth(); //RETORNA O TAMANHO DO TEXTO
             x = gp.screenWidth/2 - textLength/2;
             y = gp.screenHeight/2 + (gp.tileSize*4);
@@ -63,7 +63,7 @@ public class UI {
             
             g2.setFont(arial_80B);
             g2.setColor(Color.yellow);
-            text = "Parabéns! Ganhaste em um jogo claramente feito pra criança";
+            text = "CONGRATULATIONS! YOU WON";
             textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth(); //RETORNA O TAMANHO DO TEXTO
             
             x = gp.screenWidth/2 - textLength/2;

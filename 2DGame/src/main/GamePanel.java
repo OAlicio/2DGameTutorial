@@ -75,29 +75,29 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
-        long timer = 0;
-        long drawCount = 0;
+//        long timer = 0;
+//        long drawCount = 0;
         
         while (gameThread != null) { //ENQUANTO O GAME THREAD EXISTIR, REPITA
             
             currentTime = System.nanoTime(); // PEGA O TEMPO DE EXECUCAO ATUAL DO SISTEMA EM NANO SEGUNDOS (1s = 1Bns)
             
             delta += (currentTime - lastTime) / drawInterval;
-            timer += (currentTime - lastTime);
+            //timer += (currentTime - lastTime);
             lastTime = currentTime;
             
             if(delta >= 1) {
                 update();
                 repaint();
                 delta--;
-                drawCount++;
+               //drawCount++;
             }
             
-            if(timer >= 1000000000) {
-                System.out.println("FPS: " + drawCount);
-                drawCount = 0;
-                timer = 0;
-            }
+//            if(timer >= 1000000000) {
+//                System.out.println("FPS: " + drawCount); //FPS CHECKER
+//                drawCount = 0;
+//                timer = 0;
+//            }
         }
     }
     
@@ -111,7 +111,13 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
             super.paintComponent(g);
             
             Graphics2D g2 = (Graphics2D)g; // MAIS SOFISTICADO QUE O GRAPHICS, POSSUI MAIS FUNCOES
-
+            
+            //DEBUG
+            long drawStart = 0;
+            if(keyH.checkDrawTime == true) {
+                drawStart = System.nanoTime();
+            }
+   
             //TILE
             tileM.draw(g2); // AQUI TEMOS LAYERS, INDO DE CIMA PRA BAIXO (O MAIS ABAIXO TEM MAIOR PRIORIDADE)
             
@@ -127,6 +133,14 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
             
             // UI
             ui.draw(g2);
+            
+            if(keyH.checkDrawTime == true) {
+                long drawEnd = System.nanoTime();
+                long passed = drawEnd - drawStart;
+                g2.setColor(Color.white);
+                g2.drawString("Draw Time: " + passed, 10, 400);
+                System.out.println("DrawTime :" + passed);
+            }
             
             g2.dispose(); // DESCARTA E RELANCA COISAS QUE O SISTEMA ESTARA USANDO
         }
