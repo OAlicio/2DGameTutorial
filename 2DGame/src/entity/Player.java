@@ -33,22 +33,22 @@ public class Player extends Entity {
         //-----------------------//
         
         //COLISAO
-        /*solidArea = new Rectangle(); //Rectangle(x, y, width, height)
+        solidArea = new Rectangle(); //Rectangle(x, y, width, height)
         solidArea.x = 8;
         solidArea.y = 16;
         solidAreaDefaultX = solidArea.x; //SALVANDO OS VALORES DE SOLIDAREAX E Y, CASO SEJAM MODIFICADAS NO FUTURO
         solidAreaDefaultY = solidArea.y;
         solidArea.width = 32;
-        solidArea.height = 32;*/
+        solidArea.height = 32;
         
         //MOVIMENTACAO TILE/GRID "COLISAO"
-        solidArea = new Rectangle(); //Rectangle(x, y, width, height)
+        /*solidArea = new Rectangle(); //Rectangle(x, y, width, height)
         solidArea.x = 1;
         solidArea.y = 1;
         solidAreaDefaultX = solidArea.x; //SALVANDO OS VALORES DE SOLIDAREAX E Y, CASO SEJAM MODIFICADAS NO FUTURO
         solidAreaDefaultY = solidArea.y;
         solidArea.width = 46;
-        solidArea.height = 46;
+        solidArea.height = 46;*/
         
         //------//
         
@@ -242,8 +242,8 @@ public class Player extends Entity {
         g2.drawImage(image, screenX, screenY, null); //drawImage(imagem, x, y, width, height, ImageObserver) DESENHA UMA IMAGEM
         
         //COLLISION VIEWER
-        //g2.setColor(Color.red);
-        //g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
+        g2.setColor(Color.red);
+        g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
         // --------------- //
     }
 }
