@@ -17,7 +17,7 @@ public class Player extends Entity {
     
     public final int screenX; //ONDE DESENHAREMOS O PLAYER? QUEREMOS ELE NO CENTRO DA TELA
     public final int screenY;
-    public int hasKey = 0; //Quantidade de chaves pegas
+    //public int hasKey = 0; //Quantidade de chaves pegas
     int standCounter = 0; //AJUSTAR O TIMING DO RELEASE BUTTON
     boolean moving = false;
     int pixelCounter = 0;
@@ -42,6 +42,7 @@ public class Player extends Entity {
         solidArea.height = 32;
         
         //MOVIMENTACAO TILE/GRID "COLISAO"
+        
         /*solidArea = new Rectangle(); //Rectangle(x, y, width, height)
         solidArea.x = 1;
         solidArea.y = 1;
@@ -167,37 +168,37 @@ public class Player extends Entity {
         
         if(i != 999) {
         
-            String objectName = gp.obj[i].name;
-            switch(objectName) {
-                case "Key": 
-                    hasKey++;
-                    gp.playSE(1);
-                    gp.obj[i] = null; //DELETA O OBJECTO TOCADO
-                    gp.ui.showMessage("Chave coletada");
-                    break;
-                case "Door":
-                    if(hasKey > 0) {
-                        gp.playSE(3);
-                        gp.obj[i] = null;
-                        hasKey--;
-                        gp.ui.showMessage("Abriste mais uma porta");
-                    }
-                    else {
-                        gp.ui.showMessage("Precisas de uma chave Mingous");
-                    }
-                    break;
-                case "Boots":
-                    gp.playSE(2);
-                    speed += 2;
-                    gp.obj[i] = null;
-                    gp.ui.showMessage("Velocidade aumentada");
-                    break;
-                case "Chest": //Quando o player chegar no bau precisamos parar o jogo
-                    gp.ui.gameFinished = true;
-                    gp.stopMusic();
-                    gp.playSE(4);
-                    break;
-            }
+//            String objectName = gp.obj[i].name;
+//            switch(objectName) {
+//                case "Key": 
+//                    hasKey++;
+//                    gp.playSE(1);
+//                    gp.obj[i] = null; //DELETA O OBJECTO TOCADO
+//                    gp.ui.showMessage("Chave coletada");
+//                    break;
+//                case "Door":
+//                    if(hasKey > 0) {
+//                        gp.playSE(3);
+//                        gp.obj[i] = null;
+//                        hasKey--;
+//                        gp.ui.showMessage("Abriste mais uma porta");
+//                    }
+//                    else {
+//                        gp.ui.showMessage("Precisas de uma chave Mingous");
+//                    }
+//                    break;
+//                case "Boots":
+//                    gp.playSE(2);
+//                    speed += 2;
+//                    gp.obj[i] = null;
+//                    gp.ui.showMessage("Velocidade aumentada");
+//                    break;
+//                case "Chest": //Quando o player chegar no bau precisamos parar o jogo
+//                    gp.ui.gameFinished = true;
+//                    gp.stopMusic();
+//                    gp.playSE(4);
+//                    break;
+//            }
         }
     }
 

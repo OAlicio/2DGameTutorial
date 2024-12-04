@@ -23,18 +23,14 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
     
     //OPCOES DE MUNDO
     public final int maxWorldCol = 50; //MAIOR VALOR DE "x" DO MAPA
-    public final int maxWorldRow = 50; //MAIOR VALOR DE "y" DO MAPA
-    /* AGORA O TAMANHO DO MAPA É O LIMITE, E NAO MAIS A TELA */
-//    public final int worldWidth = tileSize * maxWorldCol; //COMPRIMENTO MAXIMO DO MAPA
-//    public final int worldHeight = tileSize * maxWorldRow; //ALTURA MAXIMA DO MAPA
-    
+    public final int maxWorldRow = 50; //MAIOR VALOR DE "y" DO MAPA    
     
     //FPS
     int FPS = 60; //FPS DESEJADO
     
     //SYSTEM -------------------------------//
     TileManager tileM = new TileManager(this);
-    KeyHandler keyH = new KeyHandler();
+    KeyHandler keyH = new KeyHandler(this);
     Sound music = new Sound();
     Sound se = new Sound();
     
@@ -42,11 +38,20 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
     public AssetsSetter aSetter = new AssetsSetter(this);
     public UI ui = new UI(this);
     Thread gameThread; //Mantem o programa rodando até que seja fechado
+    // ---------------------------------------//
     
     //ENTITY AND OBJECT
     public Player player = new Player(this, keyH); //INSTANCIANDO O PLAYER
     public SuperObject obj[] = new SuperObject[10]; //QUANTIDADE DE OBJECTOS A SEREM MOSTRADOS NA TELA
     // --------------------------------------------- //
+    
+    //GAMESTATE
+    
+    public int gameState;
+    public final int playState = 1; //PODEM SER QUAISQUER NUMEROS
+    public final int pauseState = 2;
+    
+    //---------//
     
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight)); //Coloca o tamanho da classe JPanel(Gamepanel)
@@ -60,6 +65,8 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
     
         aSetter.setObject();
         playMusic(0);
+        stopMusic();
+        gameState = playState;
     }
 
     public void startGameThread() {
@@ -102,8 +109,14 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
     }
     
     public void update() { // METODO PADRAO DO JPANEL
-        
-            player.update();
+            
+            if(gameState == playState) {
+                player.update();
+            }
+            if(gameState == pauseState) {
+                //NOTHING
+            }
+            
         }
 
     public void paintComponent(Graphics g) { //METODO PADRAO TAMBEM
