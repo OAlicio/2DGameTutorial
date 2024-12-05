@@ -1,5 +1,6 @@
 package main;
 
+import entity.Entity;
 import entity.Player;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -43,6 +44,7 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
     //ENTITY AND OBJECT
     public Player player = new Player(this, keyH); //INSTANCIANDO O PLAYER
     public SuperObject obj[] = new SuperObject[10]; //QUANTIDADE DE OBJECTOS A SEREM MOSTRADOS NA TELA
+    public Entity npc[] = new Entity[10];
     // --------------------------------------------- //
     
     //GAMESTATE
@@ -64,8 +66,9 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
     public void setupGame() {
     
         aSetter.setObject();
+        aSetter.setNPC();
         playMusic(0);
-        stopMusic();
+        //stopMusic();
         gameState = playState;
     }
 
@@ -82,36 +85,35 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
-//        long timer = 0;
-//        long drawCount = 0;
         
         while (gameThread != null) { //ENQUANTO O GAME THREAD EXISTIR, REPITA
             
             currentTime = System.nanoTime(); // PEGA O TEMPO DE EXECUCAO ATUAL DO SISTEMA EM NANO SEGUNDOS (1s = 1Bns)
             
             delta += (currentTime - lastTime) / drawInterval;
-            //timer += (currentTime - lastTime);
             lastTime = currentTime;
             
             if(delta >= 1) {
                 update();
                 repaint();
                 delta--;
-               //drawCount++;
             }
-            
-//            if(timer >= 1000000000) {
-//                System.out.println("FPS: " + drawCount); //FPS CHECKER
-//                drawCount = 0;
-//                timer = 0;
-//            }
         }
     }
     
     public void update() { // METODO PADRAO DO JPANEL
             
             if(gameState == playState) {
+                
+                //PLAYER
                 player.update();
+                
+                //NPC
+                for(int i = 0; i < npc.length; i++) {
+                    if(npc[i] != null) {
+                        npc[i].update();
+                    }
+                }
             }
             if(gameState == pauseState) {
                 //NOTHING
@@ -138,6 +140,15 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
             for(int i = 0; i < obj.length; i++) {
                 if(obj[i] != null) {
                     obj[i].draw(g2, this);
+                }
+            }
+            
+            //NPC
+            
+            for(int i = 0; i < npc.length; i++) {
+                
+                if(npc[i] != null) {
+                    npc[i].draw(g2);
                 }
             }
             
