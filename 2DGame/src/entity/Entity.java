@@ -43,9 +43,9 @@ public class Entity {
             
             dialogueIndex = 0;
         }
-        
+                
         gp.ui.currentDialogue = dialogue[dialogueIndex];
-        dialogueIndex++;
+        dialogueIndex += 1;
         
         switch(gp.player.direction) {
             

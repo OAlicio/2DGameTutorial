@@ -14,7 +14,6 @@ public class NPC_OldMan extends Entity {
         
         getImage();
         setDialogue();
-        speak();
     }
     
     public void getImage() {
@@ -42,8 +41,8 @@ public class NPC_OldMan extends Entity {
         
         actionLockCounter++;
         
-        if(actionLockCounter == 120 || gp.npc[0].collisionOn == true) {
-        //if(actionLockCounter == 120) {
+        //if(actionLockCounter == 120 || gp.npc[0].collisionOn == true) {
+        if(actionLockCounter == 120) {
             //ALEATORIZAR UM NUMERO
             Random random = new Random();
             int i = random.nextInt(100) + 1; //NUMEROS DE 1 A 100 (SERIA DE 0 A 99 SEM O +1)

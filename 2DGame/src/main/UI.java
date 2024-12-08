@@ -4,14 +4,20 @@ package main;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 //MOSTRA COISAS NA TELA
 public class UI {
     
     GamePanel gp;
     Graphics2D g2;
-    Font arial_40, arial_80B;
+    Font maruMonica, purisaB;
     public boolean messageOn = false;
     public String message = "";
     int messageCounter = 0;
@@ -22,8 +28,17 @@ public class UI {
     
         this.gp = gp;
         
-        arial_40 = new Font("Arial", Font.PLAIN, 40);
-        arial_80B = new Font("Arial", Font.BOLD, 80);
+        try {
+            InputStream is = getClass().getResourceAsStream("/font/x12y16pxMaruMonica.ttf"); //PEGAR FONTES PERSONALIZADAS NOD FICHEIROS DO JOGO
+            maruMonica = Font.createFont(Font.TRUETYPE_FONT, is);
+            
+            is = getClass().getResourceAsStream("/font/Purisa Bold.ttf");
+            purisaB = Font.createFont(Font.TRUETYPE_FONT, is);
+        } catch (FontFormatException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     public void showMessage(String text) {
@@ -36,7 +51,9 @@ public class UI {
         
         this.g2 = g2;
         
-        g2.setFont(arial_40);
+        g2.setFont(maruMonica);
+//        g2.setFont(purisaB);
+//        g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON); //DEIXA O TEXTO MAIS LISO
         g2.setColor(Color.white);
         
         
@@ -56,7 +73,7 @@ public class UI {
             drawDialogueScreen();
         }
     }
-    
+
     public void drawPauseScreen() {
         
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN,80F));
@@ -76,7 +93,7 @@ public class UI {
         int height = gp.tileSize * 4;
         drawSubWindow(x, y, width, height);
 
-        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 28F));
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 32F));
         x += gp.tileSize;
         y += gp.tileSize;
         

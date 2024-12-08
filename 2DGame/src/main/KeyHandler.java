@@ -44,7 +44,7 @@ public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas
                 rightPressed = true;
             }
             
-            if (code == KeyEvent.VK_ENTER){ // Tecla P
+            if (code == KeyEvent.VK_ENTER) {
 
                 dialogueKey = true;
             }
