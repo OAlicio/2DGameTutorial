@@ -153,8 +153,13 @@ public class Player extends Entity {
     public void interactNPC(int i) {
         
         if(i != 999) {
-            System.out.println("You're hitting an npc!");
+            
+            if(gp.keyH.dialogueKey == true) {
+                gp.gameState = gp.dialogueState;
+                gp.npc[i].speak();
+            }
         }
+        gp.keyH.dialogueKey = false;
     }
 
     @Override
@@ -197,8 +202,6 @@ public class Player extends Entity {
             break; 
         }
         g2.drawImage(image, screenX, screenY, null); //drawImage(imagem, x, y, width, height, ImageObserver) DESENHA UMA IMAGEM
-        
-        //COLLISION VIEWER
 //        g2.setColor(Color.red);
 //        g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
         // --------------- //

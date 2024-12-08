@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas que serao pressionadas
 
     GamePanel gp;
-    public boolean upPressed, downPressed, leftPressed, rightPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, dialogueKey;
     
     //DEBUG
     boolean checkDrawTime = false;
@@ -25,34 +25,62 @@ public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas
         
         int code = e.getKeyCode();
         
-        if (code == KeyEvent.VK_W){ // Tecla W
+        // PLAY STATE
+        if(gp.gameState == gp.playState) {
+            
+            if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP){ // Tecla W
             upPressed = true;
-        }
-        if (code == KeyEvent.VK_S){ // Tecla S
-            downPressed = true;
-        }
-        if (code == KeyEvent.VK_A){ // Tecla A
-            leftPressed = true;
-        }
-        if (code == KeyEvent.VK_D){ // Tecla D
-            rightPressed = true;
-        }
-        if (code == KeyEvent.VK_P){ // Tecla D
-            if(gp.gameState == gp.playState) {
+            }
+            
+            if (code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN){ // Tecla S
+                downPressed = true;
+            }
+            
+            if (code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT){ // Tecla A
+                leftPressed = true;
+            }
+            
+            if (code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT){ // Tecla D
+                rightPressed = true;
+            }
+            
+            if (code == KeyEvent.VK_ENTER){ // Tecla P
+
+                dialogueKey = true;
+            }
+            
+             if (code == KeyEvent.VK_P){ // Tecla P
+                
                 gp.gameState = gp.pauseState;
             }
-            else if(gp.gameState == gp.pauseState) {
+
+            //DEBUG
+            if (code == KeyEvent.VK_T ){
+                
+                if(checkDrawTime == false) {
+                    checkDrawTime = true;
+                }
+                
+                else if(checkDrawTime == true) {
+                    checkDrawTime = false;
+                }
+            }
+        }
+        
+        //PAUSE STATE
+        else if(gp.gameState == gp.pauseState) {
+            
+            if (code == KeyEvent.VK_P){
+                
                 gp.gameState = gp.playState;
             }
         }
         
-        //DEBUG
-        if (code == KeyEvent.VK_T ){
-            if(checkDrawTime == false) {
-                checkDrawTime = true;
-            }
-            else if(checkDrawTime == true) {
-                checkDrawTime = false;
+        // DIALOGUE STATE
+        else if(gp.gameState == gp.dialogueState) {
+            
+            if(code == KeyEvent.VK_ENTER) {
+                gp.gameState = gp.playState;
             }
         }
     }
@@ -62,16 +90,16 @@ public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas
         
         int code = e.getKeyCode();
         
-        if (code == KeyEvent.VK_W){
+        if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP){
             upPressed = false;
         }
-        if (code == KeyEvent.VK_S){
+        if (code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN){
             downPressed = false;
         }
-        if (code == KeyEvent.VK_A){
+        if (code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT){
             leftPressed = false;
         }
-        if (code == KeyEvent.VK_D){
+        if (code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT){
             rightPressed = false;
         }
     }
