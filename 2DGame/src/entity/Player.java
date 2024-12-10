@@ -105,6 +105,14 @@ public class Player extends Entity {
             
             // ---------------------- //
             
+            // VERIFICA OS EVENTOS
+            
+            gp.eHandler.checkEvent();
+            
+            gp.keyH.dialogueKey = false; //REALOCAMOS PRA CA, pRA NAODAR BUGS DE CLICS ENTRE DIFERENTES FUNCOES/METODOS
+            gp.keyH.enterPressed = false; // ->
+            // ------------------- //
+            
             // SE A COLISAO FOR FALSA, O PLAYER NAO SE MOVE
             if(collisionOn == false) {
             
@@ -163,7 +171,6 @@ public class Player extends Entity {
                 gp.npc[i].speak();
             }
         }
-        gp.keyH.dialogueKey = false;
     }
 
     @Override

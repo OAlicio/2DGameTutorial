@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas que serao pressionadas
 
     GamePanel gp;
-    public boolean upPressed, downPressed, leftPressed, rightPressed, dialogueKey;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, dialogueKey, enterPressed;
     
     //DEBUG
     boolean checkDrawTime = false;
@@ -132,6 +132,7 @@ public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas
             if (code == KeyEvent.VK_ENTER) {
 
                 dialogueKey = true;
+                enterPressed = true;
             }
             
              if (code == KeyEvent.VK_P){ // Tecla P
@@ -175,18 +176,23 @@ public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas
         
         int code = e.getKeyCode();
         
-        if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP){
+        if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP){
             upPressed = false;
         }
-        if (code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN){
+        
+        if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN){
             downPressed = false;
         }
-        if (code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT){
+        
+        if(code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT){
             leftPressed = false;
         }
-        if (code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT){
+        
+        if(code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT){
             rightPressed = false;
         }
+        
+        //if)
     }
     
     

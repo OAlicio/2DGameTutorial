@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import object.SuperObject;
 import tile.TileManager;
 
-public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
+public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
     
     //OPCOES DE TELA
     public final int originalTileSize = 16; // TAMANHO DOS TILES (16 X 16)
@@ -39,6 +39,8 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE » THREAD
     public AssetsSetter aSetter = new AssetsSetter(this);
     public UI ui = new UI(this);
     Thread gameThread; //Mantem o programa rodando até que seja fechado
+    
+    public EventHandler eHandler = new EventHandler(this);
     // ---------------------------------------//
     
     //ENTITY AND OBJECT
