@@ -29,6 +29,10 @@ public class Entity {
     String dialogue[] = new String[20]; //PARA OS DIALOGOS COM NPC's
     int dialogueIndex = 0; 
     
+    //CHARACTER STATUS
+    public int maxLife;
+    public int life;
+    
     public Entity(GamePanel gp) {
         this.gp = gp;
     }
