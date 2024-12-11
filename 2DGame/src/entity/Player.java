@@ -109,7 +109,7 @@ public class Player extends Entity {
             
             gp.eHandler.checkEvent();
             
-            gp.keyH.dialogueKey = false; //REALOCAMOS PRA CA, pRA NAODAR BUGS DE CLICS ENTRE DIFERENTES FUNCOES/METODOS
+            gp.keyH.dialogueKey = false; //REALOCAMOS PRA CA, PRA NAO DAR BUGS DE CLICS ENTRE DIFERENTES FUNCOES/METODOS
             gp.keyH.enterPressed = false; // ->
             // ------------------- //
             

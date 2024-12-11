@@ -6,8 +6,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import javax.swing.JPanel;
-import object.SuperObject;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
@@ -45,8 +47,9 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
     
     //ENTITY AND OBJECT
     public Player player = new Player(this, keyH); //INSTANCIANDO O PLAYER
-    public SuperObject obj[] = new SuperObject[10]; //QUANTIDADE DE OBJECTOS A SEREM MOSTRADOS NA TELA
+    public Entity obj[] = new Entity[10]; //QUANTIDADE DE OBJECTOS A SEREM MOSTRADOS NA TELA
     public Entity npc[] = new Entity[10];
+    ArrayList<Entity> entityList = new ArrayList<>(); //REORGANIZANDO AS LAYERS DAS ENTIDADE(PLAYER & OBJECTOS)
     // --------------------------------------------- //
     
     //GAMESTATE
@@ -150,28 +153,51 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
                 //TILE
                 tileM.draw(g2); // AQUI TEMOS LAYERS, INDO DE CIMA PRA BAIXO (O MAIS ABAIXO TEM MAIOR PRIORIDADE)
 
-                //OBJECT
+                // ADICIONA ENTIDADES A LISTA DE ENTIDADES
+                
+                    //PLAYER
+                entityList.add(player);
+                
+                    //NPC
+                for(int i = 0; i < npc.length; i++) {
+                    if(npc[i] != null) {
+                        entityList.add(npc[i]);
+                    }
+                }
+                
+                    //OBJECTOS
                 for(int i = 0; i < obj.length; i++) {
                     if(obj[i] != null) {
-                        obj[i].draw(g2, this);
+                        entityList.add(obj[i]);
                     }
                 }
-
-                //NPC
-
-                for(int i = 0; i < npc.length; i++) {
-
-                    if(npc[i] != null) {
-                        npc[i].draw(g2);
+                
+                //SORT
+                Collections.sort(entityList, new Comparator<Entity>() {
+                   
+                    @Override
+                    public int compare(Entity e1, Entity e2) {
+                        int result = Integer.compare(e1.worldY, e2.worldY);
+                        return result;
                     }
+                });
+                
+                //DESENHAR AS ENTIDADES
+                for(int i = 0; i < entityList.size(); i++) {
+                
+                    entityList.get(i).draw(g2);
                 }
-
-                //PLAYER
-                player.draw(g2);
-
+                
+                //ESVAZIAR A LISTA DE ENTIDADES
+                entityList.clear();
+                
+                // -------------------------------------- //
+                
                 // UI
                 ui.draw(g2);
-
+            }
+            
+                //DEBUG
                 if(keyH.checkDrawTime == true) {
                     long drawEnd = System.nanoTime();
                     long passed = drawEnd - drawStart;
@@ -179,7 +205,6 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
                     g2.drawString("Draw Time: " + passed, 10, 400);
                     System.out.println("DrawTime :" + passed);
                 }
-            }
        
             
             g2.dispose(); // DESCARTA E RELANCA COISAS QUE O SISTEMA ESTARA USANDO

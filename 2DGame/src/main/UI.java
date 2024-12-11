@@ -1,6 +1,7 @@
 package main;
 
 
+import entity.Entity;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -10,7 +11,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import object.OBJ_Heart;
-import object.SuperObject;
 
 //MOSTRA COISAS NA TELA
 public class UI {
@@ -44,7 +44,7 @@ public class UI {
         }
         
         //HUD OBJECTS
-        SuperObject heart = new OBJ_Heart(gp);
+        Entity heart = new OBJ_Heart(gp);
         heart_full = heart.image;
         heart_half = heart.image2;
         heart_blank = heart.image3;

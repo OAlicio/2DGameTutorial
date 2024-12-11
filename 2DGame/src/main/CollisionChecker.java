@@ -146,7 +146,7 @@ public class CollisionChecker {
         return index;
     }
     
-    //COLISAODE NPC OU MONSTROS
+    //COLISAO DE NPC OU MONSTROS
     public int checkEntity(Entity entity, Entity[] target) {
         
         int index = 999; //PODE SER QUALQUER NUMERO DESDE QUE NAO ESTEJA NO INTERVALO DO ARRAY DO OBJECTO

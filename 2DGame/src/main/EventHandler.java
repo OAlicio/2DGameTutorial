@@ -22,20 +22,20 @@ public class EventHandler {
         int row = 0;
         while(col < gp.maxWorldCol && row < gp.maxWorldRow) {
            
-        eventRect[col][row] = new EventRect();
-        eventRect[col][row].x = 23; //QUEREMOS QUE O EVENTO OCORRA MAIS PRA DENTRO DE UM TILE
-        eventRect[col][row].y = 23;
-        eventRect[col][row].width = 2;
-        eventRect[col][row].height = 2;
-        
-        eventRect[col][row].eventRectDefaultX = eventRect[col][row].x;
-        eventRect[col][row].eventRectDefaultY = eventRect[col][row].y;
-        
-        col++;
-        if(col == gp.maxWorldCol) {
-            col = 0;
-            row++;
-        }
+            eventRect[col][row] = new EventRect();
+            eventRect[col][row].x = 23; //QUEREMOS QUE O EVENTO OCORRA MAIS PRA DENTRO DE UM TILE
+            eventRect[col][row].y = 23;
+            eventRect[col][row].width = 2;
+            eventRect[col][row].height = 2;
+
+            eventRect[col][row].eventRectDefaultX = eventRect[col][row].x;
+            eventRect[col][row].eventRectDefaultY = eventRect[col][row].y;
+
+            col++;
+            if(col == gp.maxWorldCol) {
+                col = 0;
+                row++;
+            }
         }
     }
     
