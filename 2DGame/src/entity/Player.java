@@ -1,5 +1,8 @@
 package entity;
 
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -46,6 +49,9 @@ public class Player extends Entity {
         //POSICOES INICIAIS DO PLAYER
         worldX = gp.tileSize * 23;
         worldY = gp.tileSize * 21;
+        
+//        worldX = gp.tileSize * 10;
+//        worldY = gp.tileSize * 13;
         // ------------------------ //
         speed = 4;
         direction = "down"; //DIRECAO PADRAO PODE SER QUALQUER UMA
@@ -66,7 +72,6 @@ public class Player extends Entity {
         left2 = setup("/player/boy_left_2");
         right1 = setup("/player/boy_right_1");
         right2 = setup("/player/boy_right_2");
-        
     }
         
     @Override
@@ -99,12 +104,13 @@ public class Player extends Entity {
             // ------------------------------ //
             
             //VERIFICAR COLISAO COM NPC
-            
             int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
             interactNPC(npcIndex);
-            
             // ---------------------- //
             
+            //VERIIFCAR COLISAO COM MONSTROS
+            int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
+            monsterDamage(monsterIndex);
             // VERIFICA OS EVENTOS
             
             gp.eHandler.checkEvent();
@@ -153,6 +159,14 @@ public class Player extends Entity {
             }
         }
        
+        // PRECISA ESTAR FORA DO IF STATEMENT DAS KEYBINDS DE MOVIMENTACAO
+        if(invincible == true) {
+            invincibleCounter++;
+            if(invincibleCounter == 60) {
+                invincible = false;
+                invincibleCounter = 0;
+            }
+        }
     }
     
     public void pickUpObject (int i) {
@@ -169,6 +183,17 @@ public class Player extends Entity {
             if(gp.keyH.dialogueKey == true) {
                 gp.gameState = gp.dialogueState;
                 gp.npc[i].speak();
+            }
+        }
+    }
+    
+    public void monsterDamage(int i) {
+        
+        if(i != 999) {
+            
+            if(invincible == false) {
+                life -= 1;
+                invincible = true;
             }
         }
     }
@@ -212,9 +237,24 @@ public class Player extends Entity {
             }
             break; 
         }
+        
+        if(invincible == true) {
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f /*O QUAO TRANSPARENTE FICARA A IMAGEM*/));
+        }
+        
         g2.drawImage(image, screenX, screenY, null); //drawImage(imagem, x, y, width, height, ImageObserver) DESENHA UMA IMAGEM
+
+        //RESET ALPHA 
+         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+         
+        //COLISAO
 //        g2.setColor(Color.red);
 //        g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
         // --------------- //
+        
+        //DEBUG PARA TEMPO DE INVENCIBILIDADE
+//        g2.setFont(new Font("Arial", Font.PLAIN, 25));
+//        g2.setColor(Color.white);
+//        g2.drawString("Invincible: " + invincibleCounter, 10, 400);
     }
 }

@@ -131,7 +131,7 @@ public class TileManager {
         int worldCol = 0;
         int worldRow = 0;
         
-        while(worldCol < gp.maxWorldCol && worldRow < gp.maxWorldCol) {
+        while(worldCol < gp.maxWorldCol && worldRow < gp.maxWorldRow) {
         
             int tileNum = mapTileNum[worldCol][worldRow]; //PEGAR O VALOR DO TILE NA POSICAO ex: 0x0, O MAPA JA FOI GUARDADO
             
@@ -142,10 +142,10 @@ public class TileManager {
             int screenY = worldY - gp.player.worldY + gp.player.screenY;
             
             //EVITANDO RENDERIZAR TILES NAO VISIVEIS
-            if(worldX + gp.tileSize > gp.player.worldX - gp.player.screenX && 
-               worldX - gp.tileSize < gp.player.worldX + gp.player.screenX && 
-               worldY + gp.tileSize > gp.player.worldY - gp.player.screenY && 
-               worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
+            if(worldX + (gp.tileSize * 2) > gp.player.worldX - gp.player.screenX && 
+               worldX - (gp.tileSize * 2) < gp.player.worldX + gp.player.screenX && 
+               worldY + (gp.tileSize * 2) > gp.player.worldY - gp.player.screenY && 
+               worldY - (gp.tileSize * 2)< gp.player.worldY + gp.player.screenY ) {
                 
                 g2.drawImage(tile[tileNum].image, screenX, screenY, null);
             }

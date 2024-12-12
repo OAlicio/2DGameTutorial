@@ -47,8 +47,9 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
     
     //ENTITY AND OBJECT
     public Player player = new Player(this, keyH); //INSTANCIANDO O PLAYER
-    public Entity obj[] = new Entity[10]; //QUANTIDADE DE OBJECTOS A SEREM MOSTRADOS NA TELA
+    public Entity obj[] = new Entity[10]; //QUANTIDADE DE OBJECTOS/ENTIDADES A SEREM MOSTRADOS NA TELA
     public Entity npc[] = new Entity[10];
+    public Entity monster[] = new Entity[20];
     ArrayList<Entity> entityList = new ArrayList<>(); //REORGANIZANDO AS LAYERS DAS ENTIDADE(PLAYER & OBJECTOS)
     // --------------------------------------------- //
     
@@ -74,6 +75,7 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
     
         aSetter.setObject();
         aSetter.setNPC();
+        aSetter.setMonster();
         //playMusic(0);
         //stopMusic();
         gameState = titleState;
@@ -119,6 +121,11 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
                 for(int i = 0; i < npc.length; i++) {
                     if(npc[i] != null) {
                         npc[i].update();
+                    }
+                }
+                for(int i = 0; i < monster.length; i++) {
+                    if(monster[i] != null) {
+                        monster[i].update();
                     }
                 }
             }
@@ -167,8 +174,15 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
                 
                     //OBJECTOS
                 for(int i = 0; i < obj.length; i++) {
-                    if(obj[i] != null) {
-                        entityList.add(obj[i]);
+                        if(obj[i] != null) {
+                            entityList.add(obj[i]);
+                        }
+                    }
+               
+                //MONSTROS
+                for (Entity monster1 : monster) {
+                    if (monster1 != null) {
+                        entityList.add(monster1);
                     }
                 }
                 
