@@ -206,7 +206,6 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
                     System.out.println("DrawTime :" + passed);
                 }
        
-            
             g2.dispose(); // DESCARTA E RELANCA COISAS QUE O SISTEMA ESTARA USANDO
         }
     
