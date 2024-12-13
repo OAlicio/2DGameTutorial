@@ -1,8 +1,6 @@
 package entity;
 
 import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -40,8 +38,16 @@ public class Player extends Entity {
         solidArea.height = 32;
         //------------//
         
+        //AREA DE ATAQUE
+        
+        attackArea.width = 36;
+        attackArea.height = 36;
+        
+        // ------------- //
+        
         setDefaultValues();
         getPlayerImage();
+        getPlayerAttackImage();
     }
 
     public void setDefaultValues() {
@@ -64,31 +70,50 @@ public class Player extends Entity {
         
     public void getPlayerImage() {
     
-        up1 = setup("/player/boy_up_1");
-        up2 = setup("/player/boy_up_2");
-        down1 = setup("/player/boy_down_1");
-        down2 = setup("/player/boy_down_2");
-        left1 = setup("/player/boy_left_1");
-        left2 = setup("/player/boy_left_2");
-        right1 = setup("/player/boy_right_1");
-        right2 = setup("/player/boy_right_2");
+        up1 = setup("/player/boy_up_1", gp.tileSize, gp.tileSize);
+        up2 = setup("/player/boy_up_2", gp.tileSize, gp.tileSize);
+        down1 = setup("/player/boy_down_1", gp.tileSize, gp.tileSize);
+        down2 = setup("/player/boy_down_2", gp.tileSize, gp.tileSize);
+        left1 = setup("/player/boy_left_1", gp.tileSize, gp.tileSize);
+        left2 = setup("/player/boy_left_2", gp.tileSize, gp.tileSize);
+        right1 = setup("/player/boy_right_1", gp.tileSize, gp.tileSize);
+        right2 = setup("/player/boy_right_2", gp.tileSize, gp.tileSize);
+    }
+    
+    public void getPlayerAttackImage() {
+        
+        attackUp1 = setup("/player/boy_attack_up_1", gp.tileSize, gp.tileSize * 2);
+        attackUp2 = setup("/player/boy_attack_up_2", gp.tileSize, gp.tileSize * 2);
+        attackDown1 = setup("/player/boy_attack_down_1", gp.tileSize, gp.tileSize * 2);
+        attackDown2 = setup("/player/boy_attack_down_2", gp.tileSize, gp.tileSize * 2);
+        attackLeft1 = setup("/player/boy_attack_left_1", gp.tileSize * 2, gp.tileSize);
+        attackLeft2 = setup("/player/boy_attack_left_2", gp.tileSize * 2, gp.tileSize);
+        attackRight1 = setup("/player/boy_attack_right_1", gp.tileSize * 2, gp.tileSize);
+        attackRight2 = setup("/player/boy_attack_right_2", gp.tileSize * 2, gp.tileSize);
     }
         
     @Override
     public void update() {
         
+        if(attacking == true) {
+            attacking();
+        }
         //ATUALIZAR AS COORDENADAS DO JOGADOR
-        if(keyH.upPressed == true || keyH.downPressed == true 
-                || keyH.leftPressed == true || keyH.rightPressed == true) { // Previne da imagem se mexer sem dar nenhum comando
+        else if(keyH.upPressed == true || keyH.downPressed == true 
+                || keyH.leftPressed == true || keyH.rightPressed == true || keyH.enterPressed == true) { // Previne da imagem se mexer sem dar nenhum comando
+            
             if (keyH.upPressed == true) {
                 direction = "up";
             }
+            
             else if(keyH.downPressed == true) {
                 direction = "down";
             }
+            
             else if(keyH.leftPressed == true) {
                 direction = "left";
             }
+            
             else if(keyH.rightPressed == true) {
                 direction = "right";
             }
@@ -111,16 +136,19 @@ public class Player extends Entity {
             //VERIIFCAR COLISAO COM MONSTROS
             int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
             monsterDamage(monsterIndex);
+            // --------------------------- //
+            
             // VERIFICA OS EVENTOS
-            
             gp.eHandler.checkEvent();
+            // --------------------- //
             
-            gp.keyH.dialogueKey = false; //REALOCAMOS PRA CA, PRA NAO DAR BUGS DE CLICS ENTRE DIFERENTES FUNCOES/METODOS
-            gp.keyH.enterPressed = false; // ->
-            // ------------------- //
+            //REALOCAMOS PRA CA, PRA NAO DAR BUGS DE CLICS ENTRE DIFERENTES FUNCOES/METODOS
+            //gp.keyH.enterPressed = false; // ->
+            
+            // ----------------------------------- //
             
             // SE A COLISAO FOR FALSA, O PLAYER NAO SE MOVE
-            if(collisionOn == false) {
+            if(collisionOn == false && keyH.enterPressed == false) {
             
                 switch(direction) {
                     
@@ -138,6 +166,9 @@ public class Player extends Entity {
                         break;
                 }
             }
+            
+            keyH.enterPressed = false;
+                    
             spriteCounter++;
             if(spriteCounter >= 14) { //A CADA 14 FRAMES TROCA A IMAGEM PELO SPRITENUM
                 if(spriteNum == 1){
@@ -169,6 +200,68 @@ public class Player extends Entity {
         }
     }
     
+    public void attacking() {
+        
+        spriteCounter++;
+        
+        if(spriteCounter <= 5) { //PRIMEIROS 5 FRAMES TERA A IMAGEM SACANDO A ESPADA 
+            spriteNum = 1;
+        }
+        
+        if(spriteCounter > 5 && spriteCounter <= 25) { //AQUI ENTRE 6 A 25 FRAMES COMECARA A ATACAR
+            spriteNum = 2;
+            
+            //SALVANDO O WORLDX, WORLDY E SOLID AREA
+            int currentWorldX = worldX;
+            int currentWorldY = worldY;
+            int solidAreaWidth = solidArea.width;
+            int solidAreaHeight = solidArea.height;
+            // ----------------------------------- //
+            
+            //AJUSTADO O WORLDX E Y PARA A AREA DE ATAQUE
+            switch(direction) {
+                
+                case "up":
+                    worldY -= attackArea.height;
+                    break;
+                    
+                case "down":
+                    worldY += attackArea.height;
+                    break;
+                    
+                case "left":
+                    worldX -= attackArea.width;
+                    break;
+                    
+                case "right":
+                    worldX += attackArea.width;
+                    break;
+                    
+            }
+            
+            //AREA DE ATAQUE FICA IGUAL A SOLID AREA
+            solidArea.width = attackArea.width;
+            solidArea.height = attackArea.height;
+            
+            //VERIFICAR COLISAO COM MONSTROS, COM AS POSICOES ATUALIZADAS
+            int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
+            damageMonster(monsterIndex);
+            
+            //APOS A VERIFICACAP VOLTA AOS SEUS VALORES INCIAIS
+            worldX = currentWorldX;
+            worldY = currentWorldY;
+            solidArea.width = solidAreaWidth;
+            solidArea.height = solidAreaHeight;
+            
+        }
+        
+        if(spriteCounter > 25) { // A IMAGEM DO ATAQUE
+            spriteNum = 1;
+            spriteCounter = 0;
+            attacking = false;
+        }
+    }
+    
     public void pickUpObject (int i) {
         
         if(i != 999) {
@@ -178,11 +271,15 @@ public class Player extends Entity {
     
     public void interactNPC(int i) {
         
-        if(i != 999) {
+        if(gp.keyH.enterPressed == true) {
+                
+            if(i != 999) {
             
-            if(gp.keyH.dialogueKey == true) {
                 gp.gameState = gp.dialogueState;
                 gp.npc[i].speak();
+            }
+            else {
+                attacking = true;
             }
         }
     }
@@ -197,55 +294,142 @@ public class Player extends Entity {
             }
         }
     }
+    
+    public void damageMonster(int i) {
+        
+        if(i != 999) {
+            
+            if(gp.monster[i].invincible == false) {
+                gp.monster[i].life -= 1;
+                gp.monster[i].invincible = true;
+                
+                if(gp.monster[i].life <= 0) {
+                    gp.monster[i] = null;
+                }
+            }
+        }
+    }
 
     @Override
     public void draw(Graphics2D g2) {
         
         BufferedImage image = null;
+        int tempScreenX = screenX; //RESOLVE O PROBLEMA DOS SPRITES ESTAREM EM LOCALIZACOES DIFERENTES APOS O ATAQUE
+        int tempScreenY = screenY;
+        
         //CENTRALIZANDO O PLAYER
         switch(direction) {
+            
         case "up":
-            if(spriteNum == 1) {
+            
+            if(attacking == false) {
+                
+                if(spriteNum == 1) {
                 image = up1;
+                }
+                
+                if(spriteNum == 2) {
+                    image = up2;
+                } 
             }
-            if(spriteNum == 2) {
-                image = up2;
-            }  
+            
+            if(attacking == true) {
+                tempScreenY = screenY - gp.tileSize;
+                if(spriteNum == 1) {
+                image = attackUp1;
+                }
+                
+                if(spriteNum == 2) {
+                    image = attackUp2;
+                } 
+            }
             break;
+            
         case "down":
-            if(spriteNum == 1) {
+            
+            if(attacking == false) {
+                
+                if(spriteNum == 1) {
                 image = down1;
+                }
+                
+                if(spriteNum == 2) {
+                    image = down2;
+                } 
             }
-            if(spriteNum == 2) {
-                image = down2;
-            }  
+            
+            if(attacking == true) {
+                
+                if(spriteNum == 1) {
+                image = attackDown1;
+                }
+                
+                if(spriteNum == 2) {
+                    image = attackDown2;
+                } 
+            }
             break;
+            
         case "left":
-            if(spriteNum == 1) {
+            
+            if(attacking == false) {
+                
+                if(spriteNum == 1) {
                 image = left1;
+                }
+                
+                if(spriteNum == 2) {
+                    image = left2;
+                }
             }
-            if(spriteNum == 2) {
-                image = left2;
-            }  
+            
+            if(attacking == true) {
+                
+                tempScreenX = screenX - gp.tileSize;
+                if(spriteNum == 1) {
+                image = attackLeft1;
+                }
+                
+                if(spriteNum == 2) {
+                    image = attackLeft2;
+                }
+            }
             break;
+            
         case "right":
-            if(spriteNum == 1) {
-                image = right1;
+            
+            if(attacking == false) {
+                
+                if(spriteNum == 1) {
+                    image = right1;
+                }
+
+                if(spriteNum == 2) {
+                    image = right2;
+                } 
             }
-            if(spriteNum == 2) {
-                image = right2;
+            
+            if(attacking == true) {
+                
+                if(spriteNum == 1) {
+                    image = attackRight1;
+                }
+
+                if(spriteNum == 2) {
+                    image = attackRight2;
+                }
             }
             break; 
         }
         
         if(invincible == true) {
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f /*O QUAO TRANSPARENTE FICARA A IMAGEM*/));
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f /*O QUAO TRANSPARENTE FICARA A IMAGEM*/));
         }
         
-        g2.drawImage(image, screenX, screenY, null); //drawImage(imagem, x, y, width, height, ImageObserver) DESENHA UMA IMAGEM
+        g2.drawImage(image, tempScreenX, tempScreenY, null); //drawImage(imagem, x, y, width, height, ImageObserver) DESENHA UMA IMAGEM
 
         //RESET ALPHA 
-         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
          
         //COLISAO
 //        g2.setColor(Color.red);

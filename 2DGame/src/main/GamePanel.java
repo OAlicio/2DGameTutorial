@@ -76,8 +76,6 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
         aSetter.setObject();
         aSetter.setNPC();
         aSetter.setMonster();
-        //playMusic(0);
-        //stopMusic();
         gameState = titleState;
     }
 
@@ -204,7 +202,6 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
                 
                 //ESVAZIAR A LISTA DE ENTIDADES
                 entityList.clear();
-                
                 // -------------------------------------- //
                 
                 // UI
