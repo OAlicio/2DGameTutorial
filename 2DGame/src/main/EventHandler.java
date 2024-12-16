@@ -101,13 +101,13 @@ public class EventHandler {
         return hit;
     }
     
-    public void teleport(int gameState) {
-        
-        gp.gameState = gameState;
-        gp.ui.currentDialogue = "Teleport!";
-        gp.player.worldX = gp.tileSize * 37;
-        gp.player.worldY = gp.tileSize * 10;
-    }
+//    public void teleport(int gameState) {
+//        
+//        gp.gameState = gameState;
+//        gp.ui.currentDialogue = "Teleport!";
+//        gp.player.worldX = gp.tileSize * 37;
+//        gp.player.worldY = gp.tileSize * 10;
+//    }
     
     public void damagePit(int col, int row, int gameState) {
         
@@ -125,9 +125,11 @@ public class EventHandler {
             gp.gameState = gameState;
             gp.player.attackCanceled = true;
             gp.playSE(2);
-            gp.ui.currentDialogue = "You drink the water.\nYour life has been recovered";
+            gp.ui.currentDialogue = "You drink the water.\nYour life has been recovered "
+                    + "\n And Monster's has been replaced";
             gp.player.life = gp.player.maxLife;
             canTouchEvent = false;
+            gp.aSetter.setMonster();
         }
     }
 }
