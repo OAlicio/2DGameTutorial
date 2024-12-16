@@ -6,6 +6,8 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import main.GamePanel;
 import main.KeyHandler;
+import object.OBJ_Shield_Wood;
+import object.OBJ_Sword_Normal;
 
 public class Player extends Entity {
     
@@ -16,6 +18,7 @@ public class Player extends Entity {
     int standCounter = 0; //AJUSTAR O TIMING DO RELEASE BUTTON
     boolean moving = false;
     int pixelCounter = 0;
+    public boolean attackCanceled = false;
     
     public Player(GamePanel gp, KeyHandler keyH) {
     
@@ -56,18 +59,34 @@ public class Player extends Entity {
         worldX = gp.tileSize * 23;
         worldY = gp.tileSize * 21;
         
-//        worldX = gp.tileSize * 10;
-//        worldY = gp.tileSize * 13;
-        // ------------------------ //
         speed = 4;
         direction = "down"; //DIRECAO PADRAO PODE SER QUALQUER UMA
         
         //PLAYER STATUS
+        level = 1;
         maxLife = 6;
         life = maxLife;
+        strength = 1; //QUANTO MAIS FORTE FOR, MAIS DANO DARA
+        dexterity = 1; //QUANTO MAIS DESTREZA TIVER, MENOS DANO TOMA
+        exp = 0;
+        nextLevelExp = 5;
+        coin = 0;
+        currentWeapon = new OBJ_Sword_Normal(gp);
+        currentShield = new OBJ_Shield_Wood(gp);
+        attack = getAttack(); //O VALOR DO ATAQUE TOTAL E DECIDIDO ATRAVES DA FORCA E ARMA
+        defense = getDefense(); //O VALOR DA DEFESA TOTAL VALE A DESTREZA E O ESCUDO
     }
     
+    public int getAttack() {
         
+        return attack = strength * currentWeapon.attackValue;
+    }  
+    
+    public int getDefense() {
+        
+        return defense = dexterity * currentShield.defenseValue;
+    } 
+    
     public void getPlayerImage() {
     
         up1 = setup("/player/boy_up_1", gp.tileSize, gp.tileSize);
@@ -142,11 +161,6 @@ public class Player extends Entity {
             gp.eHandler.checkEvent();
             // --------------------- //
             
-            //REALOCAMOS PRA CA, PRA NAO DAR BUGS DE CLICS ENTRE DIFERENTES FUNCOES/METODOS
-            //gp.keyH.enterPressed = false; // ->
-            
-            // ----------------------------------- //
-            
             // SE A COLISAO FOR FALSA, O PLAYER NAO SE MOVE
             if(collisionOn == false && keyH.enterPressed == false) {
             
@@ -167,6 +181,13 @@ public class Player extends Entity {
                 }
             }
             
+            if(keyH.enterPressed == true && attackCanceled == false) {
+                gp.playSE(7);
+                attacking = true;
+                spriteCounter = 0;
+            }
+            
+            attackCanceled = false;
             keyH.enterPressed = false;
                     
             spriteCounter++;
@@ -275,14 +296,11 @@ public class Player extends Entity {
                 
             if(i != 999) {
             
+                attackCanceled = true;
                 gp.gameState = gp.dialogueState;
                 gp.npc[i].speak();
             }
-            else {
-                gp.playSE(7);
-                attacking = true;
-            }
-        }
+        }  
     }
     
     //MONSTRO PRA PLAYER

@@ -54,25 +54,20 @@ public class EventHandler {
         
         if(canTouchEvent == true) {
             
-          if(hit(27, 16, "right") == true) {
-            //EVENTO ACONTECE
-            damagePit(27, 16, gp.dialogueState);
-        }
-          
-          if(hit(23, 19, "any") == true) {
-            //EVENTO ACONTECE
-            damagePit(27, 16, gp.dialogueState);
-        }
-        
-        if(hit(23, 12, "up") == true) {
-            //EVENTO ACONTECE
-            healingPool(23, 12, gp.dialogueState);
-        }
-        
-//        if(hit(27, 16, "right") == true) {
-//            //EVENTO ACONTECE
-//            teleport(gp.dialogueState);
-//        }
+            if(hit(27, 16, "right") == true) {
+                //EVENTO ACONTECE
+                damagePit(27, 16, gp.dialogueState);
+            }
+
+              if(hit(23, 19, "any") == true) {
+                //EVENTO ACONTECE
+                damagePit(27, 16, gp.dialogueState);
+            }
+
+            if(hit(23, 12, "up") == true) {
+                //EVENTO ACONTECE
+                healingPool(23, 12, gp.dialogueState);
+            }
         }
     }
     
@@ -85,7 +80,6 @@ public class EventHandler {
         eventRect[col][row].x = col * gp.tileSize + eventRect[col][row].x;
         eventRect[col][row].y = row * gp.tileSize + eventRect[col][row].y;
         
-        
          if(gp.player.solidArea.intersects(eventRect[col][row]) && eventRect[col][row].eventDone == false) {
             
             if(gp.player.direction.contentEquals(reqDirection) || reqDirection.contentEquals("any")) {
@@ -96,15 +90,6 @@ public class EventHandler {
                 previousEventY = gp.player.worldY;
             }
         }
-        
-        //DAMAGE PIT OU HEALING UMA VEZ APENAS
-//        if(gp.player.solidArea.intersects(eventRect[col][row]) && eventRect[col][row].eventDone == false) {
-//            
-//            if(gp.player.direction.contentEquals(reqDirection) || reqDirection.contentEquals("any")) {
-//                
-//                hit = true;
-//            }
-//        }
         
         //REDEFININDO PROS VALORES PADROES
         
@@ -127,26 +112,19 @@ public class EventHandler {
     public void damagePit(int col, int row, int gameState) {
         
         gp.gameState = gameState;
+        gp.playSE(6);
         gp.ui.currentDialogue = "You fall into a pit!";
         gp.player.life -= 1;
-        //eventRect[col][row].eventDone = true;
         canTouchEvent = false;
     }
-    
-    //DAMAGE PIT CONFIGURADO PRA DAR APENAS UM HIT POR LOAD
-//    public void damagePit(int col, int row, int gameState) {
-//        
-//        gp.gameState = gameState;
-//        gp.ui.currentDialogue = "You fall into a pit!";
-//        gp.player.life -= 1;
-//        eventRect[col][row].eventDone = true;
-//    }
     
     public void healingPool(int col, int row, int gameState) {
         
         if(gp.keyH.enterPressed == true) {
             
             gp.gameState = gameState;
+            gp.player.attackCanceled = true;
+            gp.playSE(2);
             gp.ui.currentDialogue = "You drink the water.\nYour life has been recovered";
             gp.player.life = gp.player.maxLife;
             canTouchEvent = false;
