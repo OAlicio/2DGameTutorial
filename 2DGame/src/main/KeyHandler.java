@@ -182,6 +182,12 @@ public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas
                 showDebugText = false;
             }
         }
+        
+        //MAP CHANGE's RELOADER
+         if(code == KeyEvent.VK_R ) {
+             
+             gp.tileM.loadMap("/maps/worldV2.txt");
+         }
     }
     
     public void pauseState(int code) {
