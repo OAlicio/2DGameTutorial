@@ -30,37 +30,7 @@ public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas
             
             if(gp.ui.titleScreenState == 0) {
                 
-                if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP){ // Tecla W
-                    gp.ui.commandNum--;
-                    if(gp.ui.commandNum < 0) {
-                        gp.ui.commandNum = 0;
-                        //gp.ui.commandNum = 2; -> *Se quisermosum menu que ao chegar ao fim volta ao inicio
-                    }
-                }
-
-                if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN){ // Tecla S
-                    gp.ui.commandNum++;
-                    if(gp.ui.commandNum > 2) {
-                        gp.ui.commandNum = 2;
-                        //gp.ui.commandNum = 0; -> *
-                    }
-                }
-
-                if(code == KeyEvent.VK_ENTER) {
-                    if(gp.ui.commandNum == 0) {
-                        gp.ui.titleScreenState = 1;
-                    }
-
-                    if(gp.ui.commandNum == 1) {
-                        //NEW GAME
-
-                    }
-
-                    if(gp.ui.commandNum == 2) {
-                        //QUIT
-                        System.exit(0); //FECHAR O PROGRAMA
-                    }
-                }
+                titleState(code);
             }
             
             else if(gp.ui.titleScreenState == 1) {
@@ -113,60 +83,128 @@ public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas
         // PLAY STATE
         else if(gp.gameState == gp.playState) {
             
-            if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP){ // Tecla W
-                upPressed = true;
-            }
-            
-            if (code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN){ // Tecla S
-                downPressed = true;
-            }
-            
-            if (code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT){ // Tecla A
-                leftPressed = true;
-            }
-            
-            if (code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT){ // Tecla D
-                rightPressed = true;
-            }
-            
-            if (code == KeyEvent.VK_ENTER) {
-
-                enterPressed = true;
-            }
-            
-             if (code == KeyEvent.VK_P){ // Tecla P
-                
-                gp.gameState = gp.pauseState;
-            }
-
-            //DEBUG
-            if (code == KeyEvent.VK_T ){
-                
-                if(checkDrawTime == false) {
-                    checkDrawTime = true;
-                }
-                
-                else if(checkDrawTime == true) {
-                    checkDrawTime = false;
-                }
-            }
+            playState(code);
         }
         
         //PAUSE STATE
         else if(gp.gameState == gp.pauseState) {
             
-            if (code == KeyEvent.VK_P){
-                
-                gp.gameState = gp.playState;
-            }
+            pauseState(code);
         }
         
         // DIALOGUE STATE
         else if(gp.gameState == gp.dialogueState) {
             
-            if(code == KeyEvent.VK_ENTER) {
-                gp.gameState = gp.playState;
+            dialogueState(code);
+        }
+        //CHARACTER STATE
+        else if(gp.gameState == gp.characterState) {
+            
+            characterState(code);
+        }
+    }
+    
+    public void titleState(int code) {
+        
+        if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP){ // Tecla W
+            gp.ui.commandNum--;
+            if(gp.ui.commandNum < 0) {
+                gp.ui.commandNum = 0;
+                //gp.ui.commandNum = 2; -> *Se quisermos um menu que ao chegar ao fim volta ao inicio
             }
+        }
+
+        if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN){ // Tecla S
+            gp.ui.commandNum++;
+            if(gp.ui.commandNum > 2) {
+                gp.ui.commandNum = 2;
+                //gp.ui.commandNum = 0; -> *
+            }
+        }
+
+        if(code == KeyEvent.VK_ENTER) {
+            if(gp.ui.commandNum == 0) {
+                gp.ui.titleScreenState = 1;
+            }
+
+            if(gp.ui.commandNum == 1) {
+                //NEW GAME
+
+            }
+
+            if(gp.ui.commandNum == 2) {
+                //QUIT
+                System.exit(0); //FECHAR O PROGRAMA
+            }
+        }
+    }
+    
+    public void playState(int code) {
+        
+        if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP){ // Tecla W
+            upPressed = true;
+        }
+
+        if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN){ // Tecla S
+            downPressed = true;
+        }
+
+        if(code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT){ // Tecla A
+            leftPressed = true;
+        }
+
+        if(code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT){ // Tecla D
+            rightPressed = true;
+        }
+
+        if(code == KeyEvent.VK_C) {
+            gp.gameState = gp.characterState; 
+        }
+
+        if(code == KeyEvent.VK_ENTER) {
+
+            enterPressed = true;
+        }
+
+         if(code == KeyEvent.VK_P){ // Tecla P
+
+            gp.gameState = gp.pauseState;
+        }
+
+        //DEBUG
+        if(code == KeyEvent.VK_T ){
+
+            if(checkDrawTime == false) {
+                checkDrawTime = true;
+            }
+
+            else if(checkDrawTime == true) {
+                checkDrawTime = false;
+            }
+        }
+    }
+    
+    public void pauseState(int code) {
+        
+        if (code == KeyEvent.VK_P){
+
+            gp.gameState = gp.playState;
+        }
+    }
+    
+    public void dialogueState(int code) {
+        
+        if(code == KeyEvent.VK_ENTER) {
+            
+            gp.gameState = gp.playState;
+        }
+    }
+    
+    public void characterState(int code) {
+        
+        if(code == KeyEvent.VK_C) {
+            
+            gp.gameState = gp.playState;
         }
     }
 
