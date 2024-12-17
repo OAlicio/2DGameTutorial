@@ -403,10 +403,25 @@ public class UI {
         final int slotYStart = frameY + 20;
         int slotX = slotXStart;
         int slotY = slotYStart;
+        int slotSize = gp.tileSize + 3;
+        
+        //DESENHAR OS ITENS DO PLAYER
+        for(int i = 0; i < gp.player.inventory.size(); i++) {
+            
+            g2.drawImage(gp.player.inventory.get(i).down1, slotX, slotY, null);
+            
+            slotX += slotSize;
+            
+            if(i == 4 || i == 9 || i == 14) {
+                slotX = slotXStart;
+                slotY += gp.tileSize;
+            }
+        }
+        
         
         //CURSOR
-        int cursorX = slotXStart + (gp.tileSize * slotCol);
-        int cursorY = slotYStart + (gp.tileSize * slotRow);
+        int cursorX = slotXStart + (slotSize * slotCol);
+        int cursorY = slotYStart + (slotSize * slotRow);
         int cursorWidth = gp.tileSize;
         int cursorHeight = gp.tileSize;
         
@@ -414,6 +429,35 @@ public class UI {
         g2.setColor(Color.white);
         g2.setStroke(new BasicStroke(3)); //DIMINUI A GROSSURA DO OBJECTO DESENHADO
         g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
+        
+        //TELA DE DESCRICAO DOS ITENS
+        int dFrameX = frameX;
+        int dFrameY = frameY + frameHeight;
+        int dFrameWidth = frameWidth;
+        int dFrameHeight = gp.tileSize * 3;
+        drawSubWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
+        
+        //DESENHAR AS DESCRICOES DOS ITENS
+        int textX = dFrameX + 20;
+        int textY = dFrameY + gp.tileSize;
+        g2.setFont(g2.getFont().deriveFont(28F));
+        
+        int itemIndex = getItemIndexSlot();
+        
+        if(itemIndex < gp.player.inventory.size()) {
+            
+            for(String line : gp.player.inventory.get(itemIndex).description.split("\n")) {
+                
+                g2.drawString(line, textX, textY);
+                textY += 32;
+            }
+        }
+    }
+    
+    public int getItemIndexSlot() {
+        
+        int itemIndex = slotCol + (slotRow * 5);
+        return itemIndex;
     }
     
     public void drawSubWindow(int x, int y, int width, int height) {
@@ -434,7 +478,7 @@ public class UI {
         int x = gp.screenWidth/2 - length/2;
         return x;
     }
-    
+
     public int getXAlignToRightText(String text, int tailX) { //PEGAR O X CENTRALIZADO NA TELA
        
         int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();

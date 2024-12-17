@@ -65,6 +65,7 @@ public class Entity {
     //ATRIBUTOS DOS ITENS
     public int attackValue;
     public int defenseValue;
+    public String description = "";
     
     public Entity(GamePanel gp) {
         this.gp = gp;
