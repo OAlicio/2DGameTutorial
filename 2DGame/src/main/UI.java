@@ -412,7 +412,7 @@ public class UI {
         
         //DESENHAR O CURSOR
         g2.setColor(Color.white);
-        g2.setStroke(new BasicStroke(3));
+        g2.setStroke(new BasicStroke(3)); //DIMINUI A GROSSURA DO OBJECTO DESENHADO
         g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
     }
     

@@ -209,8 +209,39 @@ public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas
     public void characterState(int code) {
         
         if(code == KeyEvent.VK_C) {
-            
             gp.gameState = gp.playState;
+        }
+        
+        if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP){ // Tecla W
+            
+            if(gp.ui.slotRow != 0) {
+                gp.ui.slotRow--;
+                gp.playSE(9);  
+            }
+        }
+
+        if(code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT){ // Tecla A
+                
+            if(gp.ui.slotCol != 0) {
+                gp.ui.slotCol--;
+                gp.playSE(9);
+            }
+        }
+        
+        if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN){ // Tecla S
+            
+            if(gp.ui.slotRow != 3) {
+                gp.ui.slotRow++;
+                gp.playSE(9);
+            }
+        }
+
+        if(code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT){ // Tecla D
+            
+            if(gp.ui.slotCol != 4) {
+                gp.ui.slotCol++;
+                gp.playSE(9);
+            }
         }
     }
 
