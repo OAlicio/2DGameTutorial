@@ -4,6 +4,7 @@ import entity.NPC_OldMan;
 import monster.MON_GreenSlime;
 import object.OBJ_Axe;
 import object.OBJ_Key;
+import object.OBJ_Potion_Red;
 import object.OBJ_Shield_Blue;
 
 public class AssetsSetter {
@@ -42,6 +43,11 @@ public class AssetsSetter {
         gp.obj[i] = new OBJ_Shield_Blue(gp);
         gp.obj[i].worldX = gp.tileSize * 35;
         gp.obj[i].worldY = gp.tileSize * 21;
+        i++;
+        
+        gp.obj[i] = new OBJ_Potion_Red(gp);
+        gp.obj[i].worldX = gp.tileSize * 22;
+        gp.obj[i].worldY = gp.tileSize * 27;
         i++;
     }
     
