@@ -435,7 +435,7 @@ public class UI {
         int dFrameY = frameY + frameHeight;
         int dFrameWidth = frameWidth;
         int dFrameHeight = gp.tileSize * 3;
-        drawSubWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
+        
         
         //DESENHAR AS DESCRICOES DOS ITENS
         int textX = dFrameX + 20;
@@ -445,6 +445,8 @@ public class UI {
         int itemIndex = getItemIndexSlot();
         
         if(itemIndex < gp.player.inventory.size()) {
+            
+            drawSubWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight); //TELA DE DESCRICAO SO APARECE QUANDO TEM UM ITEM
             
             for(String line : gp.player.inventory.get(itemIndex).description.split("\n")) {
                 

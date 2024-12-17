@@ -299,6 +299,19 @@ public class Player extends Entity {
         
         if(i != 999) {
         
+            String text;
+            
+            if(inventory.size() != maxInventorySize) {
+                
+                inventory.add(gp.obj[i]);
+                gp.playSE(1);
+                text = "Got a" + gp.obj[i].name + "!";
+                gp.obj[i] = null;
+            }
+            else {
+                text = "You cannot carry any more item!";
+            }
+            gp.ui.addMessage(text);
         }
     }
     
