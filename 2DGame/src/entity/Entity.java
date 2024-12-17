@@ -50,7 +50,6 @@ public class Entity {
     public int speed;
     public int maxLife;
     public int life;
-    public int type; // ex: 0 = player, 1 = npc, 2 = monster, etc
     public int level;
     public int strength;
     public int dexterity;
@@ -67,6 +66,16 @@ public class Entity {
     public int defenseValue;
     public String description = "";
     
+    //TIPOS
+     public int type; // ex: 0 = player, 1 = npc, 2 = monster, etc
+     public final int type_player = 0;
+     public final int type_npc = 1;
+     public final int type_monster = 2;
+     public final int type_sword = 3;
+     public final int type_axe = 4;
+     public final int type_shield = 5;
+     public final int type_consumable = 6;
+     
     public Entity(GamePanel gp) {
         this.gp = gp;
     }
@@ -121,7 +130,7 @@ public class Entity {
         boolean contactPlayer = gp.cChecker.checkPlayer(this);
         
         //MONSTROS DAREM DANO AO PLAYER QUANDO ENCOSTAM NELE
-        if (this.type == 2 && contactPlayer == true) {
+        if (this.type == type_monster && contactPlayer == true) {
             
             if(gp.player.invincible == false) {
                 //DAR DANO AO PLAYER

@@ -243,6 +243,10 @@ public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas
                 gp.playSE(9);
             }
         }
+        
+        if(code == KeyEvent.VK_ENTER) {
+            gp.player.selectItem();
+        }
     }
 
     @Override
