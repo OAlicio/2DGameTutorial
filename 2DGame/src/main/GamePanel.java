@@ -51,6 +51,7 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
     public Entity obj[] = new Entity[10]; //QUANTIDADE DE OBJECTOS/ENTIDADES A SEREM MOSTRADOS NA TELA
     public Entity npc[] = new Entity[10];
     public Entity monster[] = new Entity[20];
+    public ArrayList<Entity> projectileList = new ArrayList<>();
     ArrayList<Entity> entityList = new ArrayList<>(); //REORGANIZANDO AS LAYERS DAS ENTIDADE(PLAYER & OBJECTOS)
     // --------------------------------------------- //
     
@@ -133,6 +134,16 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
                         }
                     }
                 }
+                for(int i = 0; i < projectileList.size(); i++) {
+                    if(projectileList.get(i) != null) {
+                        if(projectileList.get(i).alive == true) {
+                            projectileList.get(i).update();
+                        }
+                        if(projectileList.get(i).alive == false) {
+                            projectileList.remove(i);
+                        }
+                    }
+                }
             }
             if(gameState == pauseState) {
                 //NOTHING
@@ -179,15 +190,22 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
                 
                     //OBJECTOS
                 for(int i = 0; i < obj.length; i++) {
-                        if(obj[i] != null) {
-                            entityList.add(obj[i]);
-                        }
+                    if(obj[i] != null) {
+                        entityList.add(obj[i]);
                     }
+                }
                
                 //MONSTROS
                 for (Entity monster1 : monster) {
                     if (monster1 != null) {
                         entityList.add(monster1);
+                    }
+                }
+                
+                //PROJECTIL
+                for(int i = 0; i < projectileList.size(); i++) {
+                    if(projectileList.get(i) != null) {
+                        entityList.add(projectileList.get(i));
                     }
                 }
                 

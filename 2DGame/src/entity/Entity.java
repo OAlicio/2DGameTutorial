@@ -42,14 +42,17 @@ public class Entity {
     public int spriteCounter = 0;
     public int actionLockCounter = 0;
     public int invincibleCounter;
+    public int shotAvailableCounter = 0;
     int dyingCounter = 0;
     int hpBarCounter = 0;
     
-    //CHARACTER STATUS
+    //ATRIBUTOS DO PERSONAGEM
     public String name;
     public int speed;
     public int maxLife;
     public int life;
+    public int maxMana;
+    public int mana;
     public int level;
     public int strength;
     public int dexterity;
@@ -60,11 +63,13 @@ public class Entity {
     public int coin;
     public Entity currentWeapon;
     public Entity currentShield;
+    public Projectile projectile;
     
     //ATRIBUTOS DOS ITENS
     public int attackValue;
     public int defenseValue;
     public String description = "";
+    public int useCost;
     
     //TIPOS
      public int type; // ex: 0 = player, 1 = npc, 2 = monster, etc
@@ -239,7 +244,7 @@ public class Entity {
             break; 
         }
             
-        //Health Bar dosmonstros
+        //Health Bar dos monstros
         if(type == 2 && hpBarOn == true) {
             
             double oneScale = (double) gp.tileSize/maxLife; // |oneScale| |oneScale| |oneScale| |oneScale| -> hpBar
@@ -327,10 +332,8 @@ public class Entity {
         }
         
         if(dyingCounter > 40) {
-            dying = false;
             alive = false;
         }
-        
     }
     
     public void changeAlpha(Graphics2D g2, float alphaValue) {

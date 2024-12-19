@@ -1,12 +1,14 @@
 package entity;
 
 import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import main.GamePanel;
 import main.KeyHandler;
+import object.OBJ_Fireball;
 import object.OBJ_Key;
 import object.OBJ_Shield_Wood;
 import object.OBJ_Sword_Normal;
@@ -77,6 +79,7 @@ public class Player extends Entity {
         coin = 0;
         currentWeapon = new OBJ_Sword_Normal(gp);
         currentShield = new OBJ_Shield_Wood(gp);
+        projectile = new OBJ_Fireball(gp);
         attack = getAttack(); //O VALOR DO ATAQUE TOTAL E DECIDIDO ATRAVES DA FORCA E ARMA
         defense = getDefense(); //O VALOR DA DEFESA TOTAL VALE A DESTREZA E O ESCUDO
     }
@@ -236,6 +239,20 @@ public class Player extends Entity {
             }
         }
        
+        //PROJECTEIS
+        if(gp.keyH.shotKeyPressed == true && projectile.alive == false && shotAvailableCounter == 30) {
+            
+            //COLOCA OS VALORES PADRAO DA COORDENADA, DIRECAO,STATUS E USUARIO
+            projectile.set(worldX, worldY, direction, true, this);
+            
+            //ADICIONAR A LISTA
+            gp.projectileList.add(projectile);
+            
+            shotAvailableCounter = 0;
+            
+            gp.playSE(10);
+        }
+        
         // PRECISA ESTAR FORA DO IF STATEMENT DAS KEYBINDS DE MOVIMENTACAO
         if(invincible == true) {
             invincibleCounter++;
@@ -243,6 +260,10 @@ public class Player extends Entity {
                 invincible = false;
                 invincibleCounter = 0;
             }
+        }
+        if(shotAvailableCounter < 30) {
+            
+            shotAvailableCounter++;
         }
     }
     
@@ -291,7 +312,7 @@ public class Player extends Entity {
             
             //VERIFICAR COLISAO COM MONSTROS, COM AS POSICOES ATUALIZADAS
             int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
-            damageMonster(monsterIndex);
+            damageMonster(monsterIndex, attack);
             
             //APOS A VERIFICACAP VOLTA AOS SEUS VALORES INCIAIS
             worldX = currentWorldX;
@@ -346,7 +367,7 @@ public class Player extends Entity {
         
         if(i != 999) {
             
-            if(invincible == false) {
+            if(invincible == false && gp.monster[i].dying == false) {
                 
                 gp.playSE(6);
                 
@@ -363,7 +384,7 @@ public class Player extends Entity {
     }
     
     //PLAYER PRA MONSTRO
-    public void damageMonster(int i) {
+    public void damageMonster(int i, int attack) {
         
         if(i != 999) {
             
