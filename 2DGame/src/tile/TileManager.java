@@ -102,7 +102,7 @@ public class TileManager {
             int col = 0;
             int row = 0;
             
-            while(col < gp.maxWorldCol && row < gp.maxWorldRow){  //Queremos ler ate o ultimo tile 
+            while(col < gp.maxWorldCol && row < gp.maxWorldCol){  //Queremos ler ate o ultimo tile 
                 String line = br.readLine(); // Read line: le uma linha do texto, e line recebera essa linha
                 
                 while(col < gp.maxWorldCol) {
@@ -131,7 +131,7 @@ public class TileManager {
         int worldCol = 0;
         int worldRow = 0;
         
-        while(worldCol < gp.maxWorldCol && worldRow < gp.maxWorldRow) {
+        while(worldCol < gp.maxWorldCol && worldRow < gp.maxWorldCol) {
         
             int tileNum = mapTileNum[worldCol][worldRow]; //PEGAR O VALOR DO TILE NA POSICAO ex: 0x0, O MAPA JA FOI GUARDADO
             

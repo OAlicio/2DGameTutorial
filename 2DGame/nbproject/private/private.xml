@@ -4,12 +4,15 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Mavi/Desktop/OCT/2DGameTutorial/2DGame/src/entity/Player.java</file>
+            <file>file:/C:/Users/Mavi/Desktop/OCT/2DGameTutorial/2DGame/src/main/UtilityTool.java</file>
             <file>file:/C:/Users/Mavi/Desktop/OCT/2DGameTutorial/2DGame/src/main/GamePanel.java</file>
             <file>file:/C:/Users/Mavi/Desktop/OCT/2DGameTutorial/2DGame/src/main/KeyHandler.java</file>
             <file>file:/C:/Users/Mavi/Desktop/OCT/2DGameTutorial/2DGame/src/main/AssetsSetter.java</file>
+            <file>file:/C:/Users/Mavi/Desktop/OCT/2DGameTutorial/2DGame/src/main/UI.java</file>
             <file>file:/C:/Users/Mavi/Desktop/OCT/2DGameTutorial/2DGame/src/main/Main.java</file>
-            <file>file:/C:/Users/Mavi/Desktop/OCT/2DGameTutorial/2DGame/src/entity/Entity.java</file>
-            <file>file:/C:/Users/Mavi/Desktop/OCT/2DGameTutorial/2DGame/src/object/OBJ_Potion_Red.java</file>
+            <file>file:/C:/Users/Mavi/Desktop/OCT/2DGameTutorial/2DGame/src/main/EventRect.java</file>
+            <file>file:/C:/Users/Mavi/Desktop/OCT/2DGameTutorial/2DGame/src/main/Sound.java</file>
+            <file>file:/C:/Users/Mavi/Desktop/OCT/2DGameTutorial/2DGame/src/main/CollisionChecker.java</file>
         </group>
     </open-files>
 </project-private>
