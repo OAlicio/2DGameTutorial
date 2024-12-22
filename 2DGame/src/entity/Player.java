@@ -10,6 +10,7 @@ import main.GamePanel;
 import main.KeyHandler;
 import object.OBJ_Fireball;
 import object.OBJ_Key;
+import object.OBJ_Rock;
 import object.OBJ_Shield_Wood;
 import object.OBJ_Sword_Normal;
 
@@ -72,6 +73,9 @@ public class Player extends Entity {
         level = 1;
         maxLife = 6;
         life = maxLife;
+        maxMana = 4;
+        mana = maxMana;
+        ammo = 10; //PAARA ROCK
         strength = 1; //QUANTO MAIS FORTE FOR, MAIS DANO DARA
         dexterity = 1; //QUANTO MAIS DESTREZA TIVER, MENOS DANO TOMA
         exp = 0;
@@ -79,7 +83,8 @@ public class Player extends Entity {
         coin = 0;
         currentWeapon = new OBJ_Sword_Normal(gp);
         currentShield = new OBJ_Shield_Wood(gp);
-        projectile = new OBJ_Fireball(gp);
+        projectile = new OBJ_Fireball(gp); // USA mana
+        //projectile = new OBJ_Rock(gp); // USA ammo;
         attack = getAttack(); //O VALOR DO ATAQUE TOTAL E DECIDIDO ATRAVES DA FORCA E ARMA
         defense = getDefense(); //O VALOR DA DEFESA TOTAL VALE A DESTREZA E O ESCUDO
     }
@@ -240,10 +245,14 @@ public class Player extends Entity {
         }
        
         //PROJECTEIS
-        if(gp.keyH.shotKeyPressed == true && projectile.alive == false && shotAvailableCounter == 30) {
+        if(gp.keyH.shotKeyPressed == true && projectile.alive == false 
+                && shotAvailableCounter == 30 && projectile.haveResource(this) == true) {
             
             //COLOCA OS VALORES PADRAO DA COORDENADA, DIRECAO,STATUS E USUARIO
             projectile.set(worldX, worldY, direction, true, this);
+            
+            //REDUZIR A MANA
+            projectile.subtrackResource(this);
             
             //ADICIONAR A LISTA
             gp.projectileList.add(projectile);

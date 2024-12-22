@@ -62,14 +62,24 @@ public class Projectile extends Entity {
         }
         
         spriteCounter++;
-            if(spriteCounter >= 14) {
-                if(spriteNum == 1) {
-                    spriteNum = 2;
-                }
-                else if(spriteNum == 2) {
-                    spriteNum = 1;
-                }
-                spriteCounter = 0;
-            }  
+        if(spriteCounter >= 14) {
+            if(spriteNum == 1) {
+                spriteNum = 2;
+            }
+            else if(spriteNum == 2) {
+                spriteNum = 1;
+            }
+            spriteCounter = 0;
+        }  
+    }
+    
+    public boolean haveResource(Entity user) {
+        
+        boolean haveResource = false;
+        return haveResource;
+    }
+    
+    public void subtrackResource(Entity user) {
+        
     }
 }
