@@ -265,14 +265,24 @@ public class Player extends Entity {
         // PRECISA ESTAR FORA DO IF STATEMENT DAS KEYBINDS DE MOVIMENTACAO
         if(invincible == true) {
             invincibleCounter++;
+            
             if(invincibleCounter == 60) {
                 invincible = false;
                 invincibleCounter = 0;
             }
         }
+        
         if(shotAvailableCounter < 30) {
             
             shotAvailableCounter++;
+        }
+        
+        if(life > maxLife) {
+            life = maxLife;
+        }
+        
+        if(mana > maxMana) {
+            mana = maxMana;
         }
     }
     
@@ -342,6 +352,16 @@ public class Player extends Entity {
         
         if(i != 999) {
         
+            //APENAS PEGA ITENS
+            if(gp.obj[i].type == type_pickupOnly) {
+                
+                gp.obj[i].use(this);
+                gp.obj[i] = null;
+            }
+            
+            //ITENS DO INVENTARIO
+            else {
+                
             String text;
             
             if(inventory.size() != maxInventorySize) {
@@ -355,6 +375,7 @@ public class Player extends Entity {
                 text = "You cannot carry any more item!";
             }
             gp.ui.addMessage(text);
+            }
         }
     }
     
