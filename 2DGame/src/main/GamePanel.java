@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import javax.swing.JPanel;
 import tile.TileManager;
+import tile_interactive.InteractiveTile;
 
 public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
     
@@ -51,6 +52,7 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
     public Entity obj[] = new Entity[20]; //QUANTIDADE DE OBJECTOS/ENTIDADES A SEREM MOSTRADOS NA TELA
     public Entity npc[] = new Entity[10];
     public Entity monster[] = new Entity[20];
+    public InteractiveTile iTile[] = new InteractiveTile[50]; //TILES INTERACTIVOS/ QUE QUEBRAM
     public ArrayList<Entity> projectileList = new ArrayList<>();
     ArrayList<Entity> entityList = new ArrayList<>(); //REORGANIZANDO AS LAYERS DAS ENTIDADE(PLAYER & OBJECTOS)
     // --------------------------------------------- //
@@ -79,6 +81,7 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
         aSetter.setObject();
         aSetter.setNPC();
         aSetter.setMonster();
+        aSetter.setInteractiveTile();
         gameState = titleState;
     }
 
@@ -146,6 +149,13 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
                     }
                 }
             }
+            
+            for(int i = 0; i < iTile.length; i++) {
+                    if(iTile[i] != null) {
+                        iTile[i].update();
+                    }
+                }
+            
             if(gameState == pauseState) {
                 //NOTHING
             }
@@ -177,6 +187,13 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
                 //TILE
                 tileM.draw(g2); // AQUI TEMOS LAYERS, INDO DE CIMA PRA BAIXO (O MAIS ABAIXO TEM MAIOR PRIORIDADE)
 
+                //TILE INTERACTIVO
+                for(int i = 0; i < iTile.length; i++) {
+                    if(iTile[i] != null) {
+                        iTile[i].draw(g2);
+                    }
+                }
+                
                 // ADICIONA ENTIDADES A LISTA DE ENTIDADES
                 
                     //PLAYER
