@@ -2,6 +2,7 @@ package object;
 
 import entity.Entity;
 import entity.Projectile;
+import java.awt.Color;
 import main.GamePanel;
 
 public final class OBJ_Fireball extends Projectile {
@@ -47,5 +48,33 @@ public final class OBJ_Fireball extends Projectile {
     @Override
     public void subtrackResource(Entity user) {
         user.mana -=  useCost;
+    }
+    
+    @Override
+    public Color getParticleColor() {
+        
+        Color color = new Color(240, 50, 0);
+        return color;
+    }
+    
+    @Override
+    public int getParticleSize() {
+        
+        int size = 10;
+        return size;
+    }
+    
+    @Override
+    public int getParticleSpeed() {
+        
+        int speed = 1; //Velocidade da particula
+        return speed;
+    }
+    
+    @Override
+    public int getParticleMaxLife() { //QUANTO TEMPO A PARTICULA DURA
+        
+        int maxLife = 20;
+        return maxLife;
     }
 }
