@@ -27,114 +27,115 @@ public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas
         
         //TITLE STATE
         if(gp.gameState == gp.titleState) {
-            
-            if(gp.ui.titleScreenState == 0) {
-                
                 titleState(code);
-            }
-            
-            else if(gp.ui.titleScreenState == 1) {
-                
-                if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP){ // Tecla W
-                    gp.ui.commandNum--;
-                    if(gp.ui.commandNum < 0) {
-                        gp.ui.commandNum = 0;
-                        //gp.ui.commandNum = 2; -> *Se quisermosum menu que ao chegar ao fim volta ao inicio
-                    }
-                }
-
-                if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN){ // Tecla S
-                    gp.ui.commandNum++;
-                    if(gp.ui.commandNum > 3) {
-                        gp.ui.commandNum = 3;
-                        //gp.ui.commandNum = 0; -> *
-                    }
-                }
-
-                if(code == KeyEvent.VK_ENTER) {
-                    
-                    if(gp.ui.commandNum == 0) {
-                        System.out.println("Fighter stuff here");
-                        gp.gameState = gp.playState;
-                        gp.playMusic(0);
-                    }
-
-                    if(gp.ui.commandNum == 1) {
-                        System.out.println("Thief stuff here");
-                        gp.gameState = gp.playState;
-                        gp.playMusic(0);
-
-                    }
-
-                    if(gp.ui.commandNum == 2) {
-                        System.out.println("Sorcerer stuff here");
-                        gp.gameState = gp.playState;
-                        gp.playMusic(0);
-                    }
-                    
-                     if(gp.ui.commandNum == 3) {
-                        //BACK
-                        gp.ui.titleScreenState = 0; //FECHAR O PROGRAMA
-                    }
-                }
-            }
         }
         
         // PLAY STATE
         else if(gp.gameState == gp.playState) {
-            
             playState(code);
         }
         
         //PAUSE STATE
         else if(gp.gameState == gp.pauseState) {
-            
             pauseState(code);
         }
         
         // DIALOGUE STATE
         else if(gp.gameState == gp.dialogueState) {
-            
             dialogueState(code);
         }
+        
         //CHARACTER STATE
         else if(gp.gameState == gp.characterState) {
-            
             characterState(code);
+        }
+        
+        //OPTIONS STATE
+        else if(gp.gameState == gp.characterState) {
+            optionsState(code);
         }
     }
     
     public void titleState(int code) {
         
-        if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP){ // Tecla W
-            gp.ui.commandNum--;
-            if(gp.ui.commandNum < 0) {
-                gp.ui.commandNum = 0;
-                //gp.ui.commandNum = 2; -> *Se quisermos um menu que ao chegar ao fim volta ao inicio
+        if(gp.ui.titleScreenState == 0) {
+            
+            if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP){ // Tecla W
+                gp.ui.commandNum--;
+                if(gp.ui.commandNum < 0) {
+                    gp.ui.commandNum = 0;
+                    //gp.ui.commandNum = 2; -> *Se quisermos um menu que ao chegar ao fim volta ao inicio
+                }
+            }
+
+            if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN){ // Tecla S
+                gp.ui.commandNum++;
+                if(gp.ui.commandNum > 2) {
+                    gp.ui.commandNum = 2;
+                    //gp.ui.commandNum = 0; -> *
+                }
+            }
+
+            if(code == KeyEvent.VK_ENTER) {
+                if(gp.ui.commandNum == 0) {
+                    gp.ui.titleScreenState = 1;
+                }
+
+                if(gp.ui.commandNum == 1) {
+                    //NEW GAME
+
+                }
+
+                if(gp.ui.commandNum == 2) {
+                    //QUIT
+                    System.exit(0); //FECHAR O PROGRAMA
+                }
             }
         }
-
-        if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN){ // Tecla S
-            gp.ui.commandNum++;
-            if(gp.ui.commandNum > 2) {
-                gp.ui.commandNum = 2;
-                //gp.ui.commandNum = 0; -> *
-            }
-        }
-
-        if(code == KeyEvent.VK_ENTER) {
-            if(gp.ui.commandNum == 0) {
-                gp.ui.titleScreenState = 1;
+        
+        else if(gp.ui.titleScreenState == 1) {
+                
+            if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP){ // Tecla W
+                gp.ui.commandNum--;
+                if(gp.ui.commandNum < 0) {
+                    gp.ui.commandNum = 0;
+                    //gp.ui.commandNum = 2; -> *Se quisermosum menu que ao chegar ao fim volta ao inicio
+                }
             }
 
-            if(gp.ui.commandNum == 1) {
-                //NEW GAME
-
+            if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN){ // Tecla S
+                gp.ui.commandNum++;
+                if(gp.ui.commandNum > 3) {
+                    gp.ui.commandNum = 3;
+                    //gp.ui.commandNum = 0; -> *
+                }
             }
 
-            if(gp.ui.commandNum == 2) {
-                //QUIT
-                System.exit(0); //FECHAR O PROGRAMA
+            if(code == KeyEvent.VK_ENTER) {
+
+                if(gp.ui.commandNum == 0) {
+                    System.out.println("Fighter stuff here");
+                    gp.gameState = gp.playState;
+                    gp.playMusic(0);
+                }
+
+                if(gp.ui.commandNum == 1) {
+                    System.out.println("Thief stuff here");
+                    gp.gameState = gp.playState;
+                    gp.playMusic(0);
+
+                }
+
+                if(gp.ui.commandNum == 2) {
+                    System.out.println("Sorcerer stuff here");
+                    gp.gameState = gp.playState;
+                    gp.playMusic(0);
+                }
+
+                 if(gp.ui.commandNum == 3) {
+                    //BACK
+                    gp.ui.titleScreenState = 0; //FECHAR O PROGRAMA
+                }
             }
         }
     }
@@ -162,18 +163,19 @@ public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas
         }
 
         if(code == KeyEvent.VK_ENTER) {
-
             enterPressed = true;
         }
 
         if(code == KeyEvent.VK_F){ // Tecla P
-
             shotKeyPressed = true;
         }
         
          if(code == KeyEvent.VK_P){ // Tecla P
-
             gp.gameState = gp.pauseState;
+        }
+         
+         if(code == KeyEvent.VK_ESCAPE){ // Tecla P
+            gp.gameState = gp.optionsState;
         }
          
         //DEBUG
@@ -254,6 +256,17 @@ public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas
         }
     }
 
+    public void optionsState(int code) {
+        
+        if(code == KeyEvent.VK_ESCAPE) {
+            gp.gameState = gp.playState;
+        }
+        
+        if(code == KeyEvent.VK_ENTER) {
+            enterPressed = true;
+        }
+    }
+    
     @Override
     public void keyReleased(KeyEvent e) {
         
