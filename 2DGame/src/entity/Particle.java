@@ -48,6 +48,7 @@ public class Particle extends Entity{
         }
     }
     
+    @Override
     public void draw(Graphics2D g2) {
         
         int screenX = worldX - gp.player.worldX + gp.player.screenX; //POSICIONAMENTO DAS PARTICULAS
