@@ -38,6 +38,7 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
     int screenHeight2 = screenHeight;
     BufferedImage tempScreen;
     Graphics2D g2;
+    public boolean fullScreenOn = false;
     
     //FPS
     int FPS = 60; //FPS DESEJADO
@@ -98,7 +99,7 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB); //TAMANHO MAXIMO DA TELA COLOCADO DENTRO DE UMA BUFFERED IMAGE VAZIA
         g2 = (Graphics2D)tempScreen.getGraphics(); //TUDO QUE O G2 DESENHAR SERA FEITO APARTIR DO TEMPSCREEN
         
-        setFullScreen();
+        //setFullScreen();
     }
 
     public void setFullScreen() {
@@ -310,7 +311,7 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
                     y += lineHeight;
                     g2.drawString("WorldY: " + player.worldY, x, y);
                     y += lineHeight;
-                    g2.drawString("Col: " + (player.worldY + player.solidArea.x)/tileSize, x, y);
+                    g2.drawString("Col: " + (player.worldX + player.solidArea.x)/tileSize, x, y);
                     y += lineHeight;
                     g2.drawString("Row: " + (player.worldY + player.solidArea.y)/tileSize, x, y);
                     y += lineHeight;
