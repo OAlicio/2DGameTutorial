@@ -13,10 +13,14 @@ public class Main {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
         window.setTitle("Octavio's 2D Game");
-        window.setUndecorated(true); //TIRAR AS BORDAS PADRAO
         
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);
+        
+        gamePanel.config.loadConfig();
+        if(gamePanel.fullScreenOn == true) {
+            window.setUndecorated(true); //TIRAR AS BORDAS PADRAO
+        }
         
         window.pack();
         

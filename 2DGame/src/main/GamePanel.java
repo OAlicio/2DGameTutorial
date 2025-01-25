@@ -52,6 +52,7 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
     public CollisionChecker cChecker = new CollisionChecker(this);
     public AssetsSetter aSetter = new AssetsSetter(this);
     public UI ui = new UI(this);
+    Config config = new Config(this);
     Thread gameThread; //Mantem o programa rodando até que seja fechado
     
     public EventHandler eHandler = new EventHandler(this);
@@ -99,7 +100,9 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB); //TAMANHO MAXIMO DA TELA COLOCADO DENTRO DE UMA BUFFERED IMAGE VAZIA
         g2 = (Graphics2D)tempScreen.getGraphics(); //TUDO QUE O G2 DESENHAR SERA FEITO APARTIR DO TEMPSCREEN
         
-        //setFullScreen();
+        if(fullScreenOn == true) {
+            setFullScreen();
+        }
     }
 
     public void setFullScreen() {
