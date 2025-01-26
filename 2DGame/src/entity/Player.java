@@ -89,8 +89,23 @@ public class Player extends Entity {
         defense = getDefense(); //O VALOR DA DEFESA TOTAL VALE A DESTREZA E O ESCUDO
     }
     
+    public void setDefaultPositions() {
+        
+        worldX = gp.tileSize * 23;
+        worldY = gp.tileSize * 21;
+        direction = "down";
+    }
+    
+    public void restoreLifeAndMana() {
+        
+        life = maxLife;
+        mana = maxMana;
+        invincible = false;
+    }
+    
     public void setItems() {
         
+        inventory.clear();
         inventory.add(currentWeapon);
         inventory.add(currentShield);
         inventory.add(new OBJ_Key(gp));
@@ -242,7 +257,7 @@ public class Player extends Entity {
         
             standCounter++;
             
-            if(standCounter == 20) { //A CADA x FRAMES O PLAYER VOLTA A POSICAO INICIAL APOS O BOTAO DEIXAR DE SER PRESSIONADO
+            if(standCounter == 20) { //A CADA x FRAMES O PLAYER VOLTA AO FRAME INICIAL APOS O BOTAO DEIXAR DE SER PRESSIONADO
                standCounter = 0;
                spriteNum = 1; 
             }
@@ -287,6 +302,12 @@ public class Player extends Entity {
         
         if(mana > maxMana) {
             mana = maxMana;
+        }
+        
+        if(life <= 0) {
+            gp.gameState = gp.gameOverState;
+            gp.stopMusic();
+            gp.playSE(12);
         }
     }
     
