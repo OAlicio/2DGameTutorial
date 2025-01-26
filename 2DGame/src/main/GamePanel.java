@@ -31,7 +31,9 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
     
     //OPCOES DE MUNDO
     public final int maxWorldCol = 50; //MAIOR VALOR DE "x" DO MAPA
-    public final int maxWorldRow = 50; //MAIOR VALOR DE "y" DO MAPA    
+    public final int maxWorldRow = 50; //MAIOR VALOR DE "y" DO MAPA   
+    public final int maxMap = 10; //MAXIMO NUMERO DE MAPAS/MUNDOS
+    public int currentMap = 0; //MAPA ACTUAL
     
     //FULL SCREEN
     int screenWidth2 = screenWidth;
@@ -60,10 +62,10 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
     
     //ENTITY AND OBJECT
     public Player player = new Player(this, keyH); //INSTANCIANDO O PLAYER
-    public Entity obj[] = new Entity[20]; //QUANTIDADE DE OBJECTOS/ENTIDADES A SEREM MOSTRADOS NA TELA
-    public Entity npc[] = new Entity[10];
-    public Entity monster[] = new Entity[20];
-    public InteractiveTile iTile[] = new InteractiveTile[50]; //TILES INTERACTIVOS/ QUE QUEBRAM
+    public Entity obj[][] = new Entity[maxMap][20]; //QUANTIDADE DE OBJECTOS/ENTIDADES A SEREM MOSTRADOS NA TELA
+    public Entity npc[][] = new Entity[maxMap][10];
+    public Entity monster[][] = new Entity[maxMap][20];
+    public InteractiveTile iTile[][] = new InteractiveTile[maxMap][50]; //TILES INTERACTIVOS/ QUE QUEBRAM
     public ArrayList<Entity> projectileList = new ArrayList<>();
     public ArrayList<Entity> particleList = new ArrayList<>();
     ArrayList<Entity> entityList = new ArrayList<>(); //REORGANIZANDO AS LAYERS DAS ENTIDADE(PLAYER & OBJECTOS)
@@ -178,19 +180,19 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
                 player.update();
                 
                 //NPC
-                for(int i = 0; i < npc.length; i++) {
-                    if(npc[i] != null) {
-                        npc[i].update();
+                for(int i = 0; i < npc[1].length; i++) {
+                    if(npc[currentMap][i] != null) {
+                        npc[currentMap][i].update();
                     }
                 }
-                for(int i = 0; i < monster.length; i++) {
-                    if(monster[i] != null) {
-                        if(monster[i].alive == true && monster[i].dying == false) {
-                            monster[i].update();
+                for(int i = 0; i < monster[1].length; i++) {
+                    if(monster[currentMap][i] != null) {
+                        if(monster[currentMap][i].alive == true && monster[currentMap][i].dying == false) {
+                            monster[currentMap][i].update();
                         }
-                        if(monster[i].alive == false) {
-                            monster[i].checkDrop(); //verificar drop
-                            monster[i] = null;
+                        if(monster[currentMap][i].alive == false) {
+                            monster[currentMap][i].checkDrop(); //verificar drop
+                            monster[currentMap][i] = null;
                         }
                     }
                 }
@@ -216,9 +218,9 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
                     }
                 }
                 
-                for(int i = 0; i < iTile.length; i++) {
-                    if(iTile[i] != null) {
-                        iTile[i].update();
+                for(int i = 0; i < iTile[1].length; i++) {
+                    if(iTile[currentMap][i] != null) {
+                        iTile[currentMap][i].update();
                     }
                 }
             }
@@ -250,9 +252,9 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
                 tileM.draw(g2); // AQUI TEMOS LAYERS, INDO DE CIMA PRA BAIXO (O MAIS ABAIXO TEM MAIOR PRIORIDADE)
 
                 //TILE INTERACTIVO
-                for(int i = 0; i < iTile.length; i++) {
-                    if(iTile[i] != null) {
-                        iTile[i].draw(g2);
+                for(int i = 0; i < iTile[1].length; i++) {
+                    if(iTile[currentMap][i] != null) {
+                        iTile[currentMap][i].draw(g2);
                     }
                 }
                 
@@ -262,23 +264,23 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
                 entityList.add(player);
                 
                     //NPC
-                for(int i = 0; i < npc.length; i++) {
-                    if(npc[i] != null) {
-                        entityList.add(npc[i]);
+                for(int i = 0; i < npc[1].length; i++) {
+                    if(npc[currentMap][i] != null) {
+                        entityList.add(npc[currentMap][i]);
                     }
                 }
                 
                     //OBJECTOS
-                for(int i = 0; i < obj.length; i++) {
-                    if(obj[i] != null) {
-                        entityList.add(obj[i]);
+                for(int i = 0; i < obj[1].length; i++) {
+                    if(obj[currentMap][i] != null) {
+                        entityList.add(obj[currentMap][i]);
                     }
                 }
                
                 //MONSTROS
-                for (Entity monster1 : monster) {
-                    if (monster1 != null) {
-                        entityList.add(monster1);
+                for (int i = 0; i < monster[1].length; i++) {
+                    if (monster[currentMap][i] != null) {
+                        entityList.add(monster[currentMap][i]);
                     }
                 }
                 

@@ -198,7 +198,16 @@ public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas
         //MAP CHANGE's RELOADER
          if(code == KeyEvent.VK_R ) {
              
-             gp.tileM.loadMap("/maps/worldV2.txt");
+             switch(gp.currentMap) {
+                 
+                 case 0:
+                     gp.tileM.loadMap("/maps/worldV2.txt", 0);
+                     break;
+                 case 1:
+                     gp.tileM.loadMap("/maps/Interior01.txt", 1);
+                     break;
+             }
+             
          }
     }
     
@@ -352,6 +361,7 @@ public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas
             if(gp.ui.commandNum == 0) {
                 gp.gameState = gp.playState;
                 gp.retry();
+                gp.playMusic(0);
             }
             
             else if(gp.ui.commandNum == 1) {

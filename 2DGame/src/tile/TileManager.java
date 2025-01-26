@@ -13,16 +13,17 @@ public class TileManager {
     
     GamePanel gp;
     public Tile[] tile;
-    public int mapTileNum[][]; //ARMAZENA OS VALORES NUMERICOS DOS TILES QUE FOREM ENCONTRADOS
+    public int mapTileNum[][][]; //ARMAZENA O VALOR NUMERICO DO MAPA, E DOS TILES QUE FOREM ENCONTRADOS
     
     public TileManager(GamePanel gp){
     
         this.gp = gp;
         
         tile = new Tile[50]; //Numero de tiles/blocos totais que poderao ser colocados
-        mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
+        mapTileNum = new int[gp.maxMap][gp.maxWorldCol][gp.maxWorldRow];
         getTileImage();
-        loadMap("/maps/worldV2.txt");
+        loadMap("/maps/worldV2.txt", 0);
+        loadMap("/maps/Interior01.txt", 1);
     }
     
     public void getTileImage() {
@@ -73,6 +74,10 @@ public class TileManager {
         setup(39, "earth", false);
         setup(40, "wall", true);
         setup(41, "tree", true);
+        setup(42, "hut", false);
+        setup(43, "floor01", false);
+        setup(44, "table01", true);
+        
         //---------------------------------------------------------------------//
         
     }
@@ -92,7 +97,7 @@ public class TileManager {
         }
     }
     
-    public void loadMap(String filePath) {
+    public void loadMap(String filePath, int map) {
     
         try {
         
@@ -111,7 +116,7 @@ public class TileManager {
                     
                     int num = Integer.parseInt(numbers[col]); //STring para Integer
                     
-                    mapTileNum[col][row] = num;
+                    mapTileNum[map][col][row] = num;
                     col++;
                 }
                 if(col == gp.maxWorldCol) { //QUANDO A LINHA TERMINA
@@ -133,7 +138,7 @@ public class TileManager {
         
         while(worldCol < gp.maxWorldCol && worldRow < gp.maxWorldCol) {
         
-            int tileNum = mapTileNum[worldCol][worldRow]; //PEGAR O VALOR DO TILE NA POSICAO ex: 0x0, O MAPA JA FOI GUARDADO
+            int tileNum = mapTileNum[gp.currentMap][worldCol][worldRow]; //PEGAR O VALOR DO TILE NA POSICAO ex: 0x0, O MAPA JA FOI GUARDADO
             
             //IMPLEMENTANDO CAMERA
             int worldX = worldCol * gp.tileSize;
