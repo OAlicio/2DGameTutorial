@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import main.GamePanel;
 import main.UtilityTool;
@@ -67,6 +68,8 @@ public class Entity {
     public Projectile projectile;
     
     //ATRIBUTOS DOS ITENS
+    public ArrayList<Entity> inventory = new ArrayList<>();
+    public final int maxInventorySize = 20; 
     public int value;
     public int attackValue;
     public int defenseValue;
@@ -227,7 +230,7 @@ public class Entity {
             }
         }
         spriteCounter++;
-        if(spriteCounter >= 14) { //A CADA 14 FRAMES TROCA A IMAGEM PELO SPRITENUM
+        if(spriteCounter >= 24) { //A CADA 24 FRAMES TROCA A IMAGEM PELO SPRITENUM
             if(spriteNum == 1) {
                 spriteNum = 2;
             }

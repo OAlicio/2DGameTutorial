@@ -24,8 +24,6 @@ public class Player extends Entity {
     boolean moving = false;
     int pixelCounter = 0;
     public boolean attackCanceled = false;
-    public ArrayList<Entity> inventory = new ArrayList<>();
-    public final int maxInventorySize = 20; 
     
     public Player(GamePanel gp, KeyHandler keyH) {
     
@@ -65,6 +63,10 @@ public class Player extends Entity {
         //POSICOES INICIAIS DO PLAYER
         worldX = gp.tileSize * 23;
         worldY = gp.tileSize * 21;
+        
+        worldX = gp.tileSize * 12;
+        worldY = gp.tileSize * 12;
+        gp.currentMap = 1;
         
         speed = 4;
         direction = "down"; //DIRECAO PADRAO PODE SER QUALQUER UMA
