@@ -75,6 +75,7 @@ public class Entity {
     public int defenseValue;
     public String description = "";
     public int useCost;
+    public int price;
     
     //TIPOS
     public int type; // ex: 0 = player, 1 = npc, 2 = monster, etc
