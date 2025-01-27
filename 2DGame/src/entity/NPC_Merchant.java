@@ -43,7 +43,7 @@ public class NPC_Merchant extends Entity{
     
     public void setDialogue() {
         
-        dialogue[0] = "So you found me.\nI have some good stuff.\nDO you want to trade?";
+        dialogue[0] = "So you found me.\nI have some good stuff.\nDo you want to trade?";
     }
     
     public void setItems() {
@@ -54,5 +54,13 @@ public class NPC_Merchant extends Entity{
         inventory.add(new OBJ_Axe(gp));
         inventory.add(new OBJ_Shield_Wood(gp));
         inventory.add(new OBJ_Shield_Blue(gp));
+    }
+    
+    @Override
+    public void speak() {
+        
+        super.speak();
+        gp.gameState = gp.tradeState;
+        gp.ui.npc = this;
     }
 }

@@ -1,4 +1,7 @@
 package main;
+
+import entity.Entity;
+
 public class EventHandler {
     
     GamePanel gp;
@@ -85,6 +88,10 @@ public class EventHandler {
                 //EVENTO ACONTECE
                 teleport(0, 10, 40);
             }
+            
+            else if(hit(1, 12, 9, "up") == true) {
+                speak(gp.npc[1][0]);
+            }
         }
     }
     
@@ -130,13 +137,6 @@ public class EventHandler {
         tempCol = col;
         tempRow = row;
         
-        // SEM TRANSICAO
-//        gp.currentMap = map;
-//        gp.player.worldX = gp.tileSize * col;
-//        gp.player.worldY = gp.tileSize * row;
-//        previousEventX = gp.player.worldX;
-//        previousEventY = gp.player.worldY;
-        // --------------- //
         canTouchEvent = false;
         gp.playSE(13);
     }
@@ -163,6 +163,15 @@ public class EventHandler {
             gp.player.mana = gp.player.maxMana;
             canTouchEvent = false;
             gp.aSetter.setMonster();
+        }
+    }
+    
+    public void speak(Entity entity) {
+        
+        if(gp.keyH.enterPressed == true) {
+            gp.gameState = gp.dialogueState;
+            gp.player.attackCanceled = true;
+            entity.speak();
         }
     }
 }
