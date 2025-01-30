@@ -1,5 +1,6 @@
 package main;
 
+import ai.PathFinder;
 import entity.Entity;
 import entity.Player;
 import java.awt.Color;
@@ -46,7 +47,7 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
     int FPS = 60; //FPS DESEJADO
     
     //SYSTEM -------------------------------//
-    TileManager tileM = new TileManager(this);
+    public TileManager tileM = new TileManager(this);
     public KeyHandler keyH = new KeyHandler(this);
     Sound music = new Sound();
     Sound se = new Sound();
@@ -55,6 +56,7 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
     public AssetsSetter aSetter = new AssetsSetter(this);
     public UI ui = new UI(this);
     Config config = new Config(this);
+    public PathFinder pFinder = new PathFinder(this);
     Thread gameThread; //Mantem o programa rodando até que seja fechado
     
     public EventHandler eHandler = new EventHandler(this);
