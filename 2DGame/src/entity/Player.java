@@ -271,9 +271,15 @@ public class Player extends Entity {
             //REDUZIR A MANA
             projectile.subtrackResource(this);
             
-            //ADICIONAR A LISTA
-            gp.projectileList.add(projectile);
             
+            //VERIFICAR DISPONIBILIDADE
+            for(int i = 0; i < gp.projectile[1].length; i++) { //VERIFICA QUAL SLOT TEM DISPONIBILIDADE PARA O PROJECTIL
+                if(gp.projectile[gp.currentMap][i] == null) {
+                    gp.projectile[gp.currentMap][i] = projectile;
+                    break;
+                }
+            }
+    
             shotAvailableCounter = 0;
             
             gp.playSE(10);
@@ -318,7 +324,7 @@ public class Player extends Entity {
             spriteNum = 1;
         }
         
-        if(spriteCounter > 5 && spriteCounter <= 25) { //AQUI ENTRE 6 A 25 FRAMES COMECARA A ATACAR
+        if(spriteCounter > 8 && spriteCounter <= 25) { //AQUI ENTRE 6 A 25 FRAMES COMECARA A ATACAR(ENTRE O FRAME DE REPOUSO E DE ATAQUE)
             spriteNum = 2;
             
             //SALVANDO O WORLDX, WORLDY E SOLID AREA
@@ -359,6 +365,9 @@ public class Player extends Entity {
             
             int iTileIndex = gp.cChecker.checkEntity(this, gp.iTile);
             damageInteractiveTile(iTileIndex);
+            
+            int projectileIndex = gp.cChecker.checkEntity(this, gp.projectile);
+            damageProjectile(projectileIndex);
             
             //APOS A VERIFICACAO VOLTA AOS SEUS VALORES INCIAIS
             worldX = currentWorldX;
@@ -490,6 +499,16 @@ public class Player extends Entity {
                 gp.iTile[gp.currentMap][i] = gp.iTile[gp.currentMap][i].getDestroyedForm();
                 gp.ui.addMessage("Arvore quebrada");
             }
+        }
+    }
+    
+    public void damageProjectile(int i) { //DESTRUIR PROJECTEIS
+        
+        if(i != 999) {
+            
+            Entity projectile = gp.projectile[gp.currentMap][i];
+            projectile.alive = false;
+            generateParticle(projectile, projectile);
         }
     }
     

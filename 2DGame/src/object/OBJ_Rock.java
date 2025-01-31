@@ -14,7 +14,7 @@ public class OBJ_Rock extends Projectile {
         this.gp = gp;
         
         name = "Rock";
-        speed = 8;
+        speed = 4;
         maxLife = 80; //NA VERDADE AQUI O TEMPO DE DURACAO NA TELA,ATE QUE O PROJECTIL "MORRA"
         life = maxLife;
         attack = 2;

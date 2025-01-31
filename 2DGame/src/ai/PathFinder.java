@@ -67,6 +67,17 @@ public class PathFinder {
     
     //public void setNodes(int startCol, int startRow, int goalCol, int goalRow, Entity entity); -> Entity nao foi usado, mas pode
     
+    public void seeiTiles() {
+        
+        for(int i = 0; i < gp.iTile[1].length; i++) {
+                if(gp.iTile[gp.currentMap][i] != null && gp.iTile[gp.currentMap][i].destructible == true) {
+                    int itCol = gp.iTile[gp.currentMap][i].worldX/gp.tileSize;
+                    int itRow = gp.iTile[gp.currentMap][i].worldY/gp.tileSize;
+                    node[itCol][itRow].solid = true;
+                }
+            }
+    }
+    
     public void setNodes(int startCol, int startRow, int goalCol, int goalRow) {
         
         resetNodes();
@@ -89,13 +100,14 @@ public class PathFinder {
                 node[col][row].solid = true;
             }
             //VERIFICA OS TILES INTERACTIVOS
-            for(int i = 0; i < gp.iTile[1].length; i++) {
-                if(gp.iTile[gp.currentMap][i] != null && gp.iTile[gp.currentMap][i].destructible == true) {
-                    int itCol = gp.iTile[gp.currentMap][i].worldX/gp.tileSize;
-                    int itRow = gp.iTile[gp.currentMap][i].worldY/gp.tileSize;
-                    node[itCol][itRow].solid = true;
-                }
-            }
+            //seeiTiles();
+//            for(int i = 0; i < gp.iTile[1].length; i++) {
+//                if(gp.iTile[gp.currentMap][i] != null && gp.iTile[gp.currentMap][i].destructible == true) {
+//                    int itCol = gp.iTile[gp.currentMap][i].worldX/gp.tileSize;
+//                    int itRow = gp.iTile[gp.currentMap][i].worldY/gp.tileSize;
+//                    node[itCol][itRow].solid = true;
+//                }
+//            }
             
             //DEFINIR OS CUSTOS
             getCost(node[col][row]);
