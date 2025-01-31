@@ -39,6 +39,7 @@ public class Entity {
     public boolean dying = false;
     boolean hpBarOn = false;
     public boolean onPath = false;
+    public boolean knockBack = false;
     
     //CONTADORES
     public int spriteCounter = 0;
@@ -47,9 +48,11 @@ public class Entity {
     public int shotAvailableCounter = 0;
     int dyingCounter = 0;
     int hpBarCounter = 0;
+    int knockBarCounter = 0;
     
     //ATRIBUTOS DO PERSONAGEM
     public String name;
+    public int defaultSpeed;
     public int speed;
     public int maxLife;
     public int life;
@@ -77,6 +80,7 @@ public class Entity {
     public String description = "";
     public int useCost;
     public int price;
+    public int knockBackPower = 0;
     
     //TIPOS
     public int type; // ex: 0 = player, 1 = npc, 2 = monster, etc
@@ -213,28 +217,66 @@ public class Entity {
     
     public void update() {
         
-        setAction();
-        checkCollision();
-        
-        // SE A COLISAO FOR FALSA, O PLAYER NAO SE MOVE
-        if(collisionOn == false) {
-
-            switch(direction) {
-
-                case "up":
-                     worldY -= speed; // QUANTO MAIS PRA CIMA MENOS O Y VALE MENOS EM 4 PIXELS(SPEED)
-                    break;
-                case "down":
-                    worldY += speed;
-                    break;
-                case "left":
-                    worldX -= speed;
-                    break;
-                case "right":
-                    worldX += speed;
-                    break;
+        if(knockBack == true) {
+            
+            checkCollision();
+            
+            if(collisionOn == true) {
+                knockBarCounter = 0;
+                knockBack = false;
+                speed = defaultSpeed;
+            }
+            else if(collisionOn == false) {
+                
+                switch(gp.player.direction) {
+                    
+                    case "up":
+                        worldY -= speed;
+                        break;
+                    case "down":
+                        worldY += speed;
+                        break;
+                    case "left":
+                        worldX -= speed;
+                        break;
+                    case "right":
+                        worldX += speed;
+                        break;
+                }
+            }
+            knockBarCounter++;
+            if(knockBarCounter == 10) {
+                knockBarCounter = 0;
+                knockBack = false;
+                speed = defaultSpeed;
             }
         }
+        else {
+            
+            setAction();
+            checkCollision();
+
+            // SE A COLISAO FOR FALSA, O PLAYER NAO SE MOVE
+            if(collisionOn == false) {
+
+                switch(direction) {
+
+                    case "up":
+                         worldY -= speed; // QUANTO MAIS PRA CIMA MENOS O Y VALE MENOS EM 4 PIXELS(SPEED)
+                        break;
+                    case "down":
+                        worldY += speed;
+                        break;
+                    case "left":
+                        worldX -= speed;
+                        break;
+                    case "right":
+                        worldX += speed;
+                        break;
+                }
+            }
+        }
+        
         spriteCounter++;
         if(spriteCounter >= 24) { //A CADA 24 FRAMES TROCA A IMAGEM PELO SPRITENUM
             if(spriteNum == 1) {

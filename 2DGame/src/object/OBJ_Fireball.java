@@ -19,6 +19,7 @@ public final class OBJ_Fireball extends Projectile {
         maxLife = 80; //NA VERDADE AQUI O TEMPO DE DURACAO NA TELA,ATE QUE O PROJECTIL "MORRA"
         life = maxLife;
         attack = 2;
+        knockBackPower = 5;
         useCost = 1;
         alive = false;
         getImage();

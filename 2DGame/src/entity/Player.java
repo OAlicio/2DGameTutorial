@@ -64,7 +64,8 @@ public class Player extends Entity {
         worldX = gp.tileSize * 23;
         worldY = gp.tileSize * 21;
         
-        speed = 4;
+        defaultSpeed = 4;
+        speed = defaultSpeed;
         direction = "down"; //DIRECAO PADRAO PODE SER QUALQUER UMA
         
         //PLAYER STATUS
@@ -204,7 +205,7 @@ public class Player extends Entity {
             // --------------------------- //
             
             //VERIIFCAR COLISAO COM TILES INTERACTIVOS
-            int iTileIndex = gp.cChecker.checkEntity(this, gp.iTile); //NAO NECESSARIO O INDEX, PODE SER FEITO SEM AQUI
+            int iTileIndex = gp.cChecker.checkEntity(this, gp.iTile); //NAO NECESSARIO O INDEX, PODE SER FEITO SEM SER AQUI
             // --------------------------- //
             
             // VERIFICA OS EVENTOS
@@ -361,7 +362,7 @@ public class Player extends Entity {
             
             //VERIFICAR COLISAO COM MONSTROS, COM AS POSICOES ATUALIZADAS
             int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
-            damageMonster(monsterIndex, attack);
+            damageMonster(monsterIndex, attack, currentWeapon.knockBackPower);
             
             int iTileIndex = gp.cChecker.checkEntity(this, gp.iTile);
             damageInteractiveTile(iTileIndex);
@@ -450,13 +451,17 @@ public class Player extends Entity {
     }
     
     //PLAYER PRA MONSTRO
-    public void damageMonster(int i, int attack) {
+    public void damageMonster(int i, int attack, int knockBackPower) {
         
         if(i != 999) {
             
             if(gp.monster[gp.currentMap][i].invincible == false) {
                 
                 gp.playSE(5);
+                
+                if(knockBackPower > 0) {
+                    knockBack(gp.monster[gp.currentMap][i], knockBackPower);
+                }
                 
                 int damage = attack - gp.monster[gp.currentMap][i].defense;
                 
@@ -479,6 +484,13 @@ public class Player extends Entity {
                 }
             }
         }
+    }
+    
+    public void knockBack(Entity entity, int knockBackPower) {
+        
+        entity.direction = direction;
+        entity.speed += knockBackPower;
+        entity.knockBack = true;
     }
     
     public void damageInteractiveTile(int i) {
