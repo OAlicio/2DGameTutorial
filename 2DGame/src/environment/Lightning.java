@@ -23,9 +23,6 @@ public class Lightning {
         
         Graphics2D g2 = (Graphics2D)darknessFilter.getGraphics();
         
-        //CRIAR UMA AREA DE TELA RECTANGULAR
-        Area screenArea = new Area(new Rectangle2D.Double(0, 0, gp.screenWidth, gp.screenHeight));
-        
         //PEGAR O CENTRO X E Y DA AREA DO CIRCULO
         int centerX = gp.player.screenX + gp.tileSize/2;
         int centerY = gp.player.screenY + gp.tileSize/2;
@@ -33,15 +30,6 @@ public class Lightning {
         //PEGAR O TOPO ESQUERDO X E Y DA AREA DO CIRCULO
         double x = centerX - (circleSize/2);
         double y = centerY - (circleSize/2);
-        
-        //CRIAR O FORMATO DO CIRCULO
-        Shape circleShape = new Ellipse2D.Double(x, y, circleSize, circleSize);
-        
-        //CRIAR A AREA DE LUZ
-        Area lightArea = new Area(circleShape);
-        
-        //SUBTRAIR O TAMANHO DO CIRCULO DO TAMANHO DA TELA RECTANGULAR
-        screenArea.subtract(lightArea);
         
         //CRIAR EFEITO DE GRADIACAO
         Color color[] = new Color[12]; //QUANTO MAIOR FOR O NUMERO VARIAVEIS DENTRO DO ARRAY, MAIS DETALHES TERÁ
@@ -80,12 +68,7 @@ public class Lightning {
         //COLOCAR OS DADOS DO GRADIENTE NO G2
         g2.setPaint(gPaint);
         
-        //DESENHA A LUZ
-        g2.fill(lightArea);
-        
-        //DESENHAR A TELA RECTANGULAR SEM A LUZ DO CIRCULO
-        g2.fill(screenArea);
-        
+        g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
         g2.dispose();
     }
     
