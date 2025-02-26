@@ -3,6 +3,7 @@ package main;
 import ai.PathFinder;
 import entity.Entity;
 import entity.Player;
+import environment.EnvironmentManager;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -23,7 +24,6 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
     //OPCOES DE TELA
     public final int originalTileSize = 16; // TAMANHO DOS TILES (16 X 16)
     final int scale = 3;
-    
     public final int tileSize = originalTileSize * scale; //Coloca numa escala mais visivel nas telas atuais (48 X 48)
     public final int maxScreenCol = 20; // TAMANHO/LIMITE MAXIMO NA VERTICAL
     public final int maxScreenRow = 12; // TAMANHO/LIMITE MAXIMO NA HORIZONTAL
@@ -51,15 +51,14 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
     public KeyHandler keyH = new KeyHandler(this);
     Sound music = new Sound();
     Sound se = new Sound();
-    
     public CollisionChecker cChecker = new CollisionChecker(this);
     public AssetsSetter aSetter = new AssetsSetter(this);
     public UI ui = new UI(this);
     Config config = new Config(this);
     public PathFinder pFinder = new PathFinder(this);
-    Thread gameThread; //Mantem o programa rodando até que seja fechado
-    
     public EventHandler eHandler = new EventHandler(this);
+    EnvironmentManager  eManager = new EnvironmentManager(this);
+    Thread gameThread; //Mantem o programa rodando até que seja fechado
     // ---------------------------------------//
     
     //ENTITY AND OBJECT
@@ -103,6 +102,7 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
         aSetter.setNPC();
         aSetter.setMonster();
         aSetter.setInteractiveTile();
+        eManager.setup();
         gameState = titleState;
         
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB); //TAMANHO MAXIMO DA TELA COLOCADO DENTRO DE UMA BUFFERED IMAGE VAZIA
@@ -161,18 +161,27 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
         long lastTime = System.nanoTime();
         long currentTime;
         
+        int frameCount = 0;
+        long timer = System.currentTimeMillis();
+        
         while (gameThread != null) { //ENQUANTO O GAME THREAD EXISTIR, REPITA
             
             currentTime = System.nanoTime(); // PEGA O TEMPO DE EXECUCAO ATUAL DO SISTEMA EM NANO SEGUNDOS (1s = 1Bns)
             
             delta += (currentTime - lastTime) / drawInterval;
             lastTime = currentTime;
-            
             if(delta >= 1) {
                 update();
                 drawToTempScreen(); //DESENHA TUDO AO BUFFERED IMAGE
                 drawToScreen(); //DESENHA A BUFFERED IMAGE NA TELA
+                frameCount++;
                 delta--;
+            }
+            // Calcula FPS a cada segundo
+            if (System.currentTimeMillis() - timer >= 1000) {
+                System.out.println("FPS: " + frameCount);
+                frameCount = 0; // Reseta o contador
+                timer = System.currentTimeMillis(); // Reinicia o timer
             }
         }
     }
@@ -322,6 +331,9 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
                 //ESVAZIAR A LISTA DE ENTIDADES
                 entityList.clear();
                 // -------------------------------------- //
+                
+                //ENVIRONMENT
+                eManager.draw(g2);
                 
                 // UI
                 ui.draw(g2);
