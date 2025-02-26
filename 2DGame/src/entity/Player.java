@@ -111,7 +111,7 @@ public class Player extends Entity {
         inventory.add(currentShield);
         inventory.add(new OBJ_Axe(gp));
         inventory.add(new OBJ_Key(gp));
-        inventory.add(new OBJ_Key(gp));
+//        inventory.add(new OBJ_Key(gp));
 //        inventory.add(new OBJ_Potion_Red(gp));
 //        inventory.add(new OBJ_Potion_Red(gp));
 //        inventory.add(new OBJ_Potion_Red(gp));
@@ -414,7 +414,7 @@ public class Player extends Entity {
                 gp.obj[gp.currentMap][i].use(this);
                 gp.obj[gp.currentMap][i] = null;
             }
-            //OBSTACLO
+            //OBSTACULO
             else if(gp.obj[gp.currentMap][i].type == type_obstacle) {
                 if(keyH.enterPressed == true) {
                     attackCanceled = true;
@@ -426,9 +426,7 @@ public class Player extends Entity {
                 
                 String text;
 
-                if(inventory.size() != maxInventorySize) {
-
-                    inventory.add(gp.obj[gp.currentMap][i]);
+                if(canObtainItem(gp.obj[gp.currentMap][i]) == true) {
                     gp.playSE(1);
                     text = "Got a " + gp.obj[gp.currentMap][i].name + "!";
                 }
@@ -592,12 +590,59 @@ public class Player extends Entity {
             if(selectedItem.type == type_consumable) {
                 
                 if(selectedItem.use(this) == true) {
-                    inventory.remove(itemIndex);
+                    if(selectedItem.amount > 1) {
+                        selectedItem.amount--;
+                    }
+                    else {
+                        inventory.remove(itemIndex);
+                    }
                 }
             }
         }
     }
 
+    public int searchItemInInventory(String itemName) {
+        
+        int itemIndex = 999;
+        
+        for(int i = 0; i < inventory.size(); i++) {
+            if(inventory.get(i).name.equals(itemName)) {
+                itemIndex = i;
+                break;
+            }
+        }
+        return itemIndex;
+    }
+    
+    public boolean canObtainItem(Entity item) {
+        
+        boolean canObtain = false;
+        
+        //VERIFICAR SE O ITEM E STACKAVEL
+        if(item.stackable == true) {
+            
+            int index =  searchItemInInventory(item.name);
+            
+            if(index != 999) {
+                inventory.get(index).amount++;
+                canObtain = true;
+            }
+            else { //NOVO ITEM PRECISA VERIFICAR SE HA ESPACO NO INVENTARIO
+                if(inventory.size() != maxInventorySize) {
+                    inventory.add(item);
+                    canObtain = true;
+                }
+            }
+        }
+        else { //NAO E STACKAVEL
+            if(inventory.size() != maxInventorySize) {
+                    inventory.add(item);
+                    canObtain = true;
+                }
+        }
+        return canObtain;
+    }
+    
     @Override
     public void draw(Graphics2D g2) {
         
