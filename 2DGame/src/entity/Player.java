@@ -26,6 +26,7 @@ public class Player extends Entity {
     boolean moving = false;
     int pixelCounter = 0;
     public boolean attackCanceled = false;
+    public boolean lightUpdated = false;
     
     public Player(GamePanel gp, KeyHandler keyH) {
     
@@ -76,7 +77,7 @@ public class Player extends Entity {
         life = maxLife;
         maxMana = 4;
         mana = maxMana;
-        ammo = 10; //PAARA ROCK
+        ammo = 10; //PARA ROCK
         strength = 1; //QUANTO MAIS FORTE FOR, MAIS DANO DARA
         dexterity = 1; //QUANTO MAIS DESTREZA TIVER, MENOS DANO TOMA
         exp = 0;
@@ -111,22 +112,6 @@ public class Player extends Entity {
         inventory.add(currentShield);
         inventory.add(new OBJ_Axe(gp));
         inventory.add(new OBJ_Key(gp));
-//        inventory.add(new OBJ_Key(gp));
-//        inventory.add(new OBJ_Potion_Red(gp));
-//        inventory.add(new OBJ_Potion_Red(gp));
-//        inventory.add(new OBJ_Potion_Red(gp));
-//        inventory.add(new OBJ_Potion_Red(gp));
-//        inventory.add(new OBJ_Potion_Red(gp));
-//        inventory.add(new OBJ_Potion_Red(gp));
-//        inventory.add(new OBJ_Potion_Red(gp));
-//        inventory.add(new OBJ_Potion_Red(gp));
-//        inventory.add(new OBJ_Potion_Red(gp));
-//        inventory.add(new OBJ_Potion_Red(gp));
-//        inventory.add(new OBJ_Potion_Red(gp));
-//        inventory.add(new OBJ_Potion_Red(gp));
-//        inventory.add(new OBJ_Potion_Red(gp));
-//        inventory.add(new OBJ_Potion_Red(gp));
-//        inventory.add(new OBJ_Potion_Red(gp));
     }
     
     public int getAttack() {
@@ -585,6 +570,17 @@ public class Player extends Entity {
                 
                 currentShield = selectedItem;
                 defense = getDefense();
+            }
+            
+            if(selectedItem.type == type_light) {
+                
+                if(currentLight == selectedItem) {
+                    currentLight = null;
+                }
+                else {
+                    currentLight = selectedItem;
+                }
+                lightUpdated = true;
             }
             
             if(selectedItem.type == type_consumable) {

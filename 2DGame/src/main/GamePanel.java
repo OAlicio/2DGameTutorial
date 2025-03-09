@@ -45,6 +45,7 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
     
     //FPS
     int FPS = 60; //FPS DESEJADO
+    int frameCount = 0;
     
     //SYSTEM -------------------------------//
     public TileManager tileM = new TileManager(this);
@@ -154,34 +155,35 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
     }
 
     //Metodo Delta/Acumulator
+    @Override
     public void run() { // FUNCAO CHAMADA PELO THREAD
         
         double drawInterval = 1000000000/FPS;
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
-        
-        int frameCount = 0;
-        long timer = System.currentTimeMillis();
+        long timer = 0;
+        int drawCount = 0;
         
         while (gameThread != null) { //ENQUANTO O GAME THREAD EXISTIR, REPITA
             
             currentTime = System.nanoTime(); // PEGA O TEMPO DE EXECUCAO ATUAL DO SISTEMA EM NANO SEGUNDOS (1s = 1Bns)
             
             delta += (currentTime - lastTime) / drawInterval;
+            timer += (currentTime - lastTime);
             lastTime = currentTime;
             if(delta >= 1) {
                 update();
                 drawToTempScreen(); //DESENHA TUDO AO BUFFERED IMAGE
                 drawToScreen(); //DESENHA A BUFFERED IMAGE NA TELA
-                frameCount++;
                 delta--;
+                drawCount++;
             }
             // Calcula FPS a cada segundo
-            if (System.currentTimeMillis() - timer >= 1000) {
-                System.out.println("FPS: " + frameCount);
-                frameCount = 0; // Reseta o contador
-                timer = System.currentTimeMillis(); // Reinicia o timer
+            if (timer >= 1000000000) {
+                frameCount = drawCount; // Reseta o contador
+                drawCount = 0;
+                timer = 0; // Reinicia o timer
             }
         }
     }
@@ -237,6 +239,9 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
                         iTile[currentMap][i].update();
                     }
                 }
+                
+                //LUZ
+                eManager.update();
             }
             
             if(gameState == pauseState) {
@@ -357,6 +362,8 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
                     g2.drawString("Col: " + (player.worldX + player.solidArea.x)/tileSize, x, y);
                     y += lineHeight;
                     g2.drawString("Row: " + (player.worldY + player.solidArea.y)/tileSize, x, y);
+                    y += lineHeight;
+                    g2.drawString("FPS: " + frameCount, x, y);
                     y += lineHeight;
                     
                     g2.drawString("Draw Time: " + passed, x, y);

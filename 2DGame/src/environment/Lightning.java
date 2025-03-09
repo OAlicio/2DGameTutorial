@@ -3,10 +3,6 @@ package environment;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RadialGradientPaint;
-import java.awt.Shape;
-import java.awt.geom.Area;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import main.GamePanel;
 
@@ -15,21 +11,47 @@ public class Lightning {
     GamePanel gp;
     BufferedImage darknessFilter;
 
-    public Lightning(GamePanel gp, int circleSize) {
+    public Lightning(GamePanel gp) {
         
+        this.gp = gp;
+        
+        setLightSource();
+       
+    }
+    
+    public void setLightSource() {
         //CRIAR UMA BUFFEREDIMAGE
         darknessFilter = new BufferedImage(gp.screenWidth,
                 gp.screenHeight, BufferedImage.TYPE_INT_ARGB);
         
         Graphics2D g2 = (Graphics2D)darknessFilter.getGraphics();
         
+        if(gp.player.currentLight == null) {
+            g2.setColor(new Color(0,0,0,0.98f));
+        }
+        else {
         //PEGAR O CENTRO X E Y DA AREA DO CIRCULO
         int centerX = gp.player.screenX + gp.tileSize/2;
         int centerY = gp.player.screenY + gp.tileSize/2;
         
-        //PEGAR O TOPO ESQUERDO X E Y DA AREA DO CIRCULO
-        double x = centerX - (circleSize/2);
-        double y = centerY - (circleSize/2);
+        //COR DA LUZ//
+//         Color color2[] =  new Color[2];
+//			 float fraction2[] = new float[2];
+//	 
+//			 float fR = 253 / 255.0F;
+//			 float fG = 120 / 255.0F;
+//			 float fB = 9 / 255.0F;
+//			 
+//			 color2[0] = new Color(fR,fG,fB,.40f);
+//			 color2[1] = new Color(fR,fG,fB,.12f);
+//		
+//			 fraction2[0] = 0.10f;
+//			 fraction2[1] = 0.96f;
+//
+//			 RadialGradientPaint gPaint2 = new RadialGradientPaint(centerX,centerY,(float) (gp.player.currentLight.lightRadius - 0.15),fraction2,color2);
+//			 
+//			 g2.setPaint(gPaint2);
+//			 g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
         
         //CRIAR EFEITO DE GRADIACAO
         Color color[] = new Color[12]; //QUANTO MAIOR FOR O NUMERO VARIAVEIS DENTRO DO ARRAY, MAIS DETALHES TERÁ
@@ -62,14 +84,23 @@ public class Lightning {
         fraction[11] = 1f;
         
         //CRIAR OPCOES DE DESENHO DO GRADIENTE
-        RadialGradientPaint gPaint = new RadialGradientPaint(centerX, centerY, circleSize/2,
+        RadialGradientPaint gPaint = new RadialGradientPaint(centerX, centerY, gp.player.currentLight.lightRadius,
                                                     fraction, color);
-        
         //COLOCAR OS DADOS DO GRADIENTE NO G2
         g2.setPaint(gPaint);
+        }
         
+        //DESENHA UM RECTANGULO SEM A AREA DE LUZ
         g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
         g2.dispose();
+    }
+    
+    public void update() {
+        
+        if(gp.player.lightUpdated == true) {
+            setLightSource();
+            gp.player.lightUpdated = false;
+        }
     }
     
     public void draw(Graphics2D g2) {
