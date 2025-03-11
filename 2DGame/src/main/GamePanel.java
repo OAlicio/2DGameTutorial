@@ -64,8 +64,8 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
     
     //ENTITY AND OBJECT
     public Player player = new Player(this, keyH); //INSTANCIANDO O PLAYER
-    public Entity obj[][] = new Entity[maxMap][20]; //QUANTIDADE DE OBJECTOS/ENTIDADES A SEREM MOSTRADOS NA TELA
-    public Entity npc[][] = new Entity[maxMap][10];
+    public Entity obj[][] = new Entity[maxMap][30]; //QUANTIDADE DE OBJECTOS/ENTIDADES A SEREM MOSTRADOS NA TELA
+    public Entity npc[][] = new Entity[maxMap][20];
     public Entity monster[][] = new Entity[maxMap][20];
     public Entity projectile[][] = new Entity[maxMap][20];
     public InteractiveTile iTile[][] = new InteractiveTile[maxMap][50]; //TILES INTERACTIVOS/ QUE QUEBRAM
@@ -86,6 +86,7 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
     public final int gameOverState = 6;
     public final int transitionState = 7;
     public final int tradeState = 8;
+    public final int sleepState = 9;
     
     //---------//
     
