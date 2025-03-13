@@ -65,9 +65,14 @@ public class Player extends Entity {
     public void setDefaultValues() {
     
         //POSICOES INICIAIS DO PLAYER
-        worldX = gp.tileSize * 23;
-        worldY = gp.tileSize * 21;
-        
+//        worldX = gp.tileSize * 23;
+//        worldY = gp.tileSize * 21;
+//        if(gp.currentMap == 0) {
+//            worldX = gp.tileSize * 23;
+//            worldY = gp.tileSize * 21;
+//        }
+            worldX = gp.tileSize * 34;
+            worldY = gp.tileSize * 43;
         defaultSpeed = 4;
         speed = defaultSpeed;
         direction = "down"; //DIRECAO PADRAO PODE SER QUALQUER UMA
