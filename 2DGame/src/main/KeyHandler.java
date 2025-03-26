@@ -60,9 +60,14 @@ public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas
             gameOverState(code);
         }
         
-        //Trade STATE
+        //TRADE STATE
         else if(gp.gameState == gp.tradeState) {
             tradeState(code);
+        }
+        
+        //MAP STATE
+        else if(gp.gameState == gp.mapState) {
+            mapState(code);
         }
     }
     
@@ -180,12 +185,25 @@ public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas
             shotKeyPressed = true;
         }
         
-         if(code == KeyEvent.VK_P){ // Tecla P
+        if(code == KeyEvent.VK_P){ // Tecla P
             gp.gameState = gp.pauseState;
         }
          
-         if(code == KeyEvent.VK_ESCAPE){ // Tecla P
+        if(code == KeyEvent.VK_ESCAPE){ // Tecla P
             gp.gameState = gp.optionsState;
+        }
+        
+        if(code == KeyEvent.VK_M){ // Tecla P
+            gp.gameState = gp.mapState;
+        }
+        
+        if(code == KeyEvent.VK_X){ // Tecla P
+            if(gp.map.miniMapOn == false) {
+                gp.map.miniMapOn = true;
+            }
+            else{
+                gp.map.miniMapOn = false;
+            }
         }
          
         //DEBUG
@@ -201,7 +219,7 @@ public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas
         }
         
         //MAP CHANGE's RELOADER
-         if(code == KeyEvent.VK_R ) {
+        if(code == KeyEvent.VK_R ) {
              
              switch(gp.currentMap) {
                  
@@ -384,6 +402,13 @@ public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas
             if(code == KeyEvent.VK_ESCAPE) {
                 gp.ui.subState = 0;
             }
+        }
+    }
+    
+    public void mapState(int code) {
+        
+        if(code == KeyEvent.VK_M) {
+            gp.gameState = gp.playState;
         }
     }
     

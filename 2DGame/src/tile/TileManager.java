@@ -21,9 +21,6 @@ public class TileManager {
     boolean drawPath = true;
     ArrayList<String> fileNames = new ArrayList<>();
     ArrayList<String> collisionStatus = new ArrayList<>();
-    InputStream is;
-    BufferedReader br;
-    
     
     public TileManager(GamePanel gp) {
     
@@ -31,8 +28,8 @@ public class TileManager {
     
         //LER OS DADOS DO FICHEIRO COMOS DADOS DOS TILES
         
-        is = getClass().getResourceAsStream("/maps/tiledata.txt");
-        br = new BufferedReader(new InputStreamReader(is));
+        InputStream is = getClass().getResourceAsStream("/maps/tiledata.txt");
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
         
         String line;
         
@@ -78,12 +75,6 @@ public class TileManager {
 //        loadMap("/maps/Interior01.txt", 1);
     }
 
-    
-    public void getMapSize(InputStream is, BufferedReader br, String mapPath) {
-        
-        
-    }
-    
     public void getWorldColandRow() {
         
     }
