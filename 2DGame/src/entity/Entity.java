@@ -7,6 +7,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 import javax.imageio.ImageIO;
 import main.GamePanel;
 import main.UtilityTool;
@@ -125,6 +126,31 @@ public class Entity {
     
     public int getRow() {
         return (worldY + solidArea.y)/gp.tileSize;
+    }
+    
+    public int getXdistance(Entity target) {
+        int xDistance = Math.abs(worldX - target.worldX);
+        return xDistance;
+    }
+    
+    public int getYdistance(Entity target) {
+        int yDistance = Math.abs(worldY - target.worldY);
+        return yDistance;
+    }
+    
+    public int getTileDistance(Entity target) {
+        int tileDistance = (getXdistance(target) + getYdistance(target))/gp.tileSize;
+        return tileDistance;
+    }
+    
+    public int getGoalCol(Entity target) {
+        int goalCol = (target.worldX + target.solidArea.x)/gp.tileSize;
+        return goalCol;
+    }
+    
+    public int getGoalRow(Entity target) {
+        int goalRow = (target.worldY + target.solidArea.y)/gp.tileSize;
+        return goalRow;
     }
     
     public void setAction() {
@@ -333,6 +359,77 @@ public class Entity {
         if(shotAvailableCounter < 30) {
             
             shotAvailableCounter++;
+        }
+    }
+    
+    public void checkShootOrNot(int rate, int shootInterval) {
+        
+        int i = new Random().nextInt(rate);
+        if(i == 0 && projectile.alive == false && shotAvailableCounter == shootInterval) {
+
+            projectile.set(worldX, worldY, direction, true, this);
+
+            // VERIFICAR DISPONIBILIDADE
+            for(int ii = 0; ii < gp.projectile[1].length; ii++) { //VERIFICA QUAL SLOT TEM DISPONIBILIDADE PARA O PROJECTIL
+                if(gp.projectile[gp.currentMap][ii] == null) {
+                    gp.projectile[gp.currentMap][ii] = projectile;
+                    break;
+                }
+            }
+            shotAvailableCounter = 0;
+        }
+    }
+    
+    public void checkStartChasingOrNot(Entity target, int distance, int rate) {
+        
+        if(getTileDistance(target) < distance) {
+            int i = new Random().nextInt(rate); // -> 0 à (rate - 1) ** 60 vezes por segundo ocorre a verificacao
+            if(i == 0) {
+                onPath = true;
+            }
+        }
+    }
+    
+    public void checkStopChasingOrNot(Entity target, int distance, int rate) {
+        
+        if(getTileDistance(target) > distance) {
+            int i = new Random().nextInt(rate); // -> 0 à (rate - 1) ** 60 vezes por segundo ocorre a verificacao
+            if(i == 0) {
+                onPath = false;
+            }
+        }
+    }
+    
+    public void getRandomDirection() {
+        
+        actionLockCounter++;
+
+        //if(actionLockCounter == 120 || gp.npc[0].collisionOn == true) {
+        if(actionLockCounter == 120) {
+            //ALEATORIZAR UM NUMERO
+            Random random = new Random();
+            int i = random.nextInt(100) + 1; //NUMEROS DE 1 A 100 (SERIA DE 0 A 99 SEM O +1)
+            // -------------------------- //
+
+            // COLOCAR AS ANIMACOES DE ACORDO AO NUMERO ALEATORIO
+            if(i <= 25) {
+                direction = "up";
+            }
+
+            if(i > 25 && i <= 50) {
+                direction = "down";
+            }
+
+            if(i > 50 && i <= 75) {
+                direction = "left";
+            }
+
+            if(i > 75 && i <= 100) {
+                direction = "right";
+            }
+            // ---------------------------------------------------- //
+
+            actionLockCounter = 0;
         }
     }
     

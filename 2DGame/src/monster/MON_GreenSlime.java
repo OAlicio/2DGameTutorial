@@ -53,82 +53,26 @@ public class MON_GreenSlime extends Entity {
     }
     
     @Override
-    public void update() {
-        
-        super.update();
-         //MONSTROS VIRAO PRA CIMA DO PLAYER CASO ELE ESTEJA A 5 TILES DE DISTANCIA
-        int xDistance = Math.abs(worldX - gp.player.worldX);
-        int yDistance = Math.abs(worldY - gp.player.worldY);
-        int tileDistance = (xDistance + yDistance)/gp.tileSize;
-        
-        if(onPath == false && tileDistance < 5) {
-            
-            int i = new Random().nextInt(100)+1;
-            if(i > 50) {
-                onPath = true;
-            }
-        }
-        
-        if(onPath == true && tileDistance > 20) { //DEPOIS DE 20 TILES PARAR DE SEGUIR
-            onPath = false;
-        }
-    }
-    
-    @Override
     public void setAction() {
         
         if(onPath == true) {
             
-            int goalCol = (gp.player.worldX + gp.player.solidArea.x)/gp.tileSize;
-            int goalRow = (gp.player.worldY + gp.player.solidArea.y)/gp.tileSize;
+            // Verifica se para de seguir
+            checkStopChasingOrNot(gp.player, 15, 100);
+            
+            // Verifica em que direcao deve ir
+            searchPath(getGoalCol(gp.player), getGoalRow(gp.player));
 
-            searchPath(goalCol, goalRow);
-
-            int i = new Random().nextInt(200) + 1;
-            if(i > 197 && projectile.alive == false && shotAvailableCounter == 30) {
-                projectile.set(worldX, worldY, direction, true, this);
-    //            gp.projectileL.add(projectile);
-                 //VERIFICAR DISPONIBILIDADE
-//                for(int ii = 0; ii < gp.projectile[1].length; ii++) { //VERIFICA QUAL SLOT TEM DISPONIBILIDADE PARA O PROJECTIL
-//                    if(gp.projectile[gp.currentMap][ii] == null) {
-//                        gp.projectile[gp.currentMap][ii] = projectile;
-//                        break;
-//                    }
-//                }
-                shotAvailableCounter = 0;
-            }
+            //Analiza se um projectil foi lancado
+            checkShootOrNot(200, 30);
         }
         else {
-             
-            actionLockCounter++;
-
-            //if(actionLockCounter == 120 || gp.npc[0].collisionOn == true) {
-            if(actionLockCounter == 120) {
-                //ALEATORIZAR UM NUMERO
-                Random random = new Random();
-                int i = random.nextInt(100) + 1; //NUMEROS DE 1 A 100 (SERIA DE 0 A 99 SEM O +1)
-                // -------------------------- //
-
-                // COLOCAR AS ANIMACOES DE ACORDO AO NUMERO ALEATORIO
-                if(i <= 25) {
-                    direction = "up";
-                }
-
-                if(i > 25 && i <= 50) {
-                    direction = "down";
-                }
-
-                if(i > 50 && i <= 75) {
-                    direction = "left";
-                }
-
-                if(i > 75 && i <= 100) {
-                    direction = "right";
-                }
-                // ---------------------------------------------------- //
-
-                actionLockCounter = 0;
-            }
+            
+            //Verifica quando iniciar a perseguicao
+            checkStartChasingOrNot(gp.player, 5, 100);
+            
+            //Pega uma direcao aleatoria se nao estiver perseguindo
+            getRandomDirection();
         }
     }
     

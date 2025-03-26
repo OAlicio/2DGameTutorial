@@ -45,6 +45,7 @@ public class Map extends TileManager{
                     row++;
                 }
             }
+            g2.dispose();
         }
     }
     
@@ -90,7 +91,7 @@ public class Map extends TileManager{
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f));
             g2.drawImage(worldMap[gp.currentMap], x, y, width, height, null);
             
-             //DESENHA O PLAYER
+            //DESENHA O PLAYER
             double scale = (double)(gp.tileSize * gp.maxWorldCol)/width;
             int playerX = (int)(x + gp.player.worldX/scale);
             int playerY = (int )(y + gp.player.worldY/scale);
