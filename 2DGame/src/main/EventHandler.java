@@ -81,7 +81,7 @@ public class EventHandler {
             
             else if(hit(0, 10, 40, "any") == true) {
                 //EVENTO ACONTECE
-                teleport(1, 34, 43);
+                teleport(1, 12, 12);
             }
             
             else if(hit(1, 12, 13, "any") == true) {

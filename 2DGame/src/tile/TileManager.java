@@ -69,7 +69,7 @@ public class TileManager {
         
         
         loadMap("/maps/worldmap.txt", 0);
-//        loadMap("/maps/indoor01.txt", 1);
+        loadMap("/maps/indoor01.txt", 1);
         
 //        loadMap("/maps/worldV2.txt", 0);
 //        loadMap("/maps/Interior01.txt", 1);

@@ -120,6 +120,8 @@ public class Player extends Entity {
     public int getAttack() {
         
         attackArea = currentWeapon.attackArea;
+        motion1_duration = currentWeapon.motion1_duration;
+        motion2_duration = currentWeapon.motion2_duration;
         return attack = strength * currentWeapon.attackValue;
     }  
     
@@ -335,74 +337,6 @@ public class Player extends Entity {
         }
     }
     
-    public void attacking() {
-        
-        spriteCounter++;
-        
-        if(spriteCounter <= 5) { //PRIMEIROS 5 FRAMES TERA A IMAGEM SACANDO A ESPADA 
-            spriteNum = 1;
-        }
-        
-        if(spriteCounter > 8 && spriteCounter <= 25) { //AQUI ENTRE 6 A 25 FRAMES COMECARA A ATACAR(ENTRE O FRAME DE REPOUSO E DE ATAQUE)
-            spriteNum = 2;
-            
-            //SALVANDO O WORLDX, WORLDY E SOLID AREA
-            int currentWorldX = worldX;
-            int currentWorldY = worldY;
-            int solidAreaWidth = solidArea.width;
-            int solidAreaHeight = solidArea.height;
-            // ----------------------------------- //
-            
-            //AJUSTADO O WORLDX E Y PARA A AREA DE ATAQUE
-            switch(direction) {
-                
-                case "up":
-                    worldY -= attackArea.height;
-                    break;
-                    
-                case "down":
-                    worldY += attackArea.height;
-                    break;
-                    
-                case "left":
-                    worldX -= attackArea.width;
-                    break;
-                    
-                case "right":
-                    worldX += attackArea.width;
-                    break;
-                    
-            }
-            
-            //AREA DE ATAQUE FICA IGUAL A SOLID AREA
-            solidArea.width = attackArea.width;
-            solidArea.height = attackArea.height;
-            
-            //VERIFICAR COLISAO COM MONSTROS, COM AS POSICOES ATUALIZADAS
-            int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
-            damageMonster(monsterIndex, attack, currentWeapon.knockBackPower);
-            
-            int iTileIndex = gp.cChecker.checkEntity(this, gp.iTile);
-            damageInteractiveTile(iTileIndex);
-            
-            int projectileIndex = gp.cChecker.checkEntity(this, gp.projectile);
-            damageProjectile(projectileIndex);
-            
-            //APOS A VERIFICACAO VOLTA AOS SEUS VALORES INCIAIS
-            worldX = currentWorldX;
-            worldY = currentWorldY;
-            solidArea.width = solidAreaWidth;
-            solidArea.height = solidAreaHeight;
-            
-        }
-        
-        if(spriteCounter > 25) { // A IMAGEM DO ATAQUE
-            spriteNum = 1;
-            spriteCounter = 0;
-            attacking = false;
-        }
-    }
-    
     public void pickUpObject (int i) {
         
         if(i != 999) {
@@ -473,7 +407,7 @@ public class Player extends Entity {
     }
     
     //PLAYER PRA MONSTRO
-    public void damageMonster(int i, int attack, int knockBackPower) {
+    public void damageMonster(int i, Entity attacker, int attack, int knockBackPower) {
         
         if(i != 999) {
             
@@ -482,7 +416,7 @@ public class Player extends Entity {
                 gp.playSE(5);
                 
                 if(knockBackPower > 0) {
-                    knockBack(gp.monster[gp.currentMap][i], knockBackPower);
+                    setKnockBack(gp.monster[gp.currentMap][i], attacker, knockBackPower);
                 }
                 
                 int damage = attack - gp.monster[gp.currentMap][i].defense;
@@ -508,12 +442,6 @@ public class Player extends Entity {
         }
     }
     
-    public void knockBack(Entity entity, int knockBackPower) {
-        
-        entity.direction = direction;
-        entity.speed += knockBackPower;
-        entity.knockBack = true;
-    }
     
     public void damageInteractiveTile(int i) {
         

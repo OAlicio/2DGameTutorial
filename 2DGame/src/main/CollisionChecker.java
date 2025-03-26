@@ -26,7 +26,13 @@ public class CollisionChecker {
         
         int tileNum1, tileNum2;
         
-        switch(entity.direction) {
+        //Define uma direcao temporaria quando esta sofrendo knockback
+        String direction = entity.direction;
+        if(entity.knockBack == true) {
+            direction = entity.knockBackDirection;
+        }
+        
+        switch(direction) {
         
             case "up":
                 entityTopRow = (entityTopWorldY - entity.speed)/gp.tileSize;
@@ -129,6 +135,12 @@ public class CollisionChecker {
         
         int index = 999; //PODE SER QUALQUER NUMERO DESDE QUE NAO ESTEJA NO INTERVALO DO ARRAY DO OBJECTO
         
+        //Define uma direcao temporaria quando esta sofrendo knockback
+        String direction = entity.direction;
+        if(entity.knockBack == true) {
+            direction = entity.knockBackDirection;
+        }
+        
         for(int i = 0; i < target[1].length; i++) {
             
             if(target[gp.currentMap][i] != null) {
@@ -141,7 +153,7 @@ public class CollisionChecker {
                 target[gp.currentMap][i].solidArea.x = target[gp.currentMap][i].worldX + target[gp.currentMap][i].solidArea.x;
                 target[gp.currentMap][i].solidArea.y = target[gp.currentMap][i].worldY + target[gp.currentMap][i].solidArea.y;
                 
-                switch(entity.direction) { //VERIFICANDO ONDE A ENTIDADE ESTARA
+                switch(direction) { //VERIFICANDO ONDE A ENTIDADE ESTARA
                     case "up":
                         entity.solidArea.y -= entity.speed;
                         break;
