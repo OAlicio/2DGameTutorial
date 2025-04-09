@@ -46,6 +46,7 @@ public class Entity {
     public String knockBackDirection;
     public boolean guarding = false;
     public boolean transparent = false;
+    public boolean offBalance = false;
     
     //CONTADORES
     public int spriteCounter = 0;
@@ -55,6 +56,8 @@ public class Entity {
     int dyingCounter = 0;
     int hpBarCounter = 0;
     int knockBarCounter = 0;
+    public int guardCounter = 0;
+    int offBalanceCounter = 0; 
     
     //ATRIBUTOS DO PERSONAGEM
     public String name;
@@ -359,8 +362,6 @@ public class Entity {
         }
     }
         
-        
-
         if(invincible == true) {
             invincibleCounter++;
             if(invincibleCounter > 40) {
@@ -369,8 +370,14 @@ public class Entity {
             }
         }
         if(shotAvailableCounter < 30) {
-            
             shotAvailableCounter++;
+        }
+        if(offBalance == true) {
+            offBalanceCounter++;
+            if(offBalanceCounter > 60) {
+                offBalance = true;
+                offBalanceCounter = 0;
+            }
         }
     }
     
@@ -601,8 +608,19 @@ public class Entity {
                 if(gp.player.guarding  == true && 
                         gp.player.direction.equals(canGuardDirection)) {
                     
-                    damage /= 3;
-                    gp.playSE(15);
+                    //Parry
+                    if(gp.player.guardCounter < 10 /*O numero aqui significa os frames que o player tem que ter antes do ataque*/) {
+                        damage = 0;
+                        gp.playSE(16);
+                        setKnockBack(this, gp.player, knockBackPower);
+                        offBalance = true;
+                        spriteCounter =- 60; //Efeito de stun temporario
+                    }
+                    // Defesa normal
+                    else{
+                        damage /= 3;
+                        gp.playSE(15);
+                    }
                 }
                 else {
                     //EFEITO DE SOM 

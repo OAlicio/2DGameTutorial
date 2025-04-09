@@ -106,6 +106,7 @@ public class Player extends Entity {
         life = maxLife;
         mana = maxMana;
         invincible = false;
+        transparent = false;
     }
     
     public void setItems() {
@@ -232,6 +233,7 @@ public class Player extends Entity {
         }
         else if(gp.keyH.spacePressed == true) {
             guarding = true;
+            guardCounter++;
         }
         //ATUALIZAR AS COORDENADAS DO JOGADOR
         else if(keyH.upPressed == true || keyH.downPressed == true 
@@ -310,6 +312,7 @@ public class Player extends Entity {
             attackCanceled = false;
             keyH.enterPressed = false;
             guarding = false;
+            guardCounter = 0;
                     
             spriteCounter++;
             if(spriteCounter >= 14) { //A CADA 14 FRAMES TROCA A IMAGEM PELO SPRITENUM
@@ -331,6 +334,7 @@ public class Player extends Entity {
                 standCounter = 0;
             }
             guarding = false;
+            guardCounter = 0;
         }
        
         //PROJECTEIS
@@ -472,6 +476,11 @@ public class Player extends Entity {
                     setKnockBack(gp.monster[gp.currentMap][i], attacker, knockBackPower);
                 }
                 
+                //Dano extra, caso o inimigo tomou parry
+                if(gp.monster[gp.currentMap][i].offBalance == true) {
+                    attack *= 5;
+                }
+                
                 int damage = attack - gp.monster[gp.currentMap][i].defense;
                 
                 if(damage < 0) {
@@ -494,7 +503,6 @@ public class Player extends Entity {
             }
         }
     }
-    
     
     public void damageInteractiveTile(int i) {
         
