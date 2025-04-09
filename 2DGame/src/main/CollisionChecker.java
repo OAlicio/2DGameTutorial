@@ -187,40 +187,40 @@ public class CollisionChecker {
     public boolean checkPlayer(Entity entity) {
         
         boolean contactPlayer = false;
-        
+
         //PEGAR A POSICAO DA AREA SOLIDA DA ENTIDADE
-                entity.solidArea.x = entity.worldX + entity.solidArea.x;
-                entity.solidArea.y = entity.worldY + entity.solidArea.y;
-                
-                //PEGAR A POSICAO DA AREA SOLIDA DA ENTIDADE
-                gp.player.solidArea.x = gp.player.worldX + gp.player.solidArea.x;
-                gp.player.solidArea.y = gp.player.worldY + gp.player.solidArea.y;
-                
-                switch(entity.direction) { //VERIFICANDO ONDE A ENTIDADE ESTARA
-                    case "up":
-                        entity.solidArea.y -= entity.speed;
-                        break;
-                    case "down":
-                        entity.solidArea.y += entity.speed;
-                        break;
-                    case "left":
-                        entity.solidArea.x -= entity.speed;
-                        break;
-                    case "right":
-                        entity.solidArea.x += entity.speed;
-                        break;
-                }
-                
-                if(entity.solidArea.intersects(gp.player.solidArea)){ //(.intersects)VERIFICA AUTOMATICAMENTE SE OS OBJECTOS ESTAO SE TOCANDO
-                    entity.collisionOn = true;
-                    contactPlayer = true;
-                }
-                
-                entity.solidArea.x = entity.solidAreaDefaultX;
-                entity.solidArea.y = entity.solidAreaDefaultY;
-                gp.player.solidArea.x = gp.player.solidAreaDefaultX;
-                gp.player.solidArea.y = gp.player.solidAreaDefaultY;
-                
-                return contactPlayer;
+        entity.solidArea.x = entity.worldX + entity.solidArea.x;
+        entity.solidArea.y = entity.worldY + entity.solidArea.y;
+
+        //PEGAR A POSICAO DA AREA SOLIDA DA ENTIDADE
+        gp.player.solidArea.x = gp.player.worldX + gp.player.solidArea.x;
+        gp.player.solidArea.y = gp.player.worldY + gp.player.solidArea.y;
+
+        switch(entity.direction) { //VERIFICANDO ONDE A ENTIDADE ESTARA
+            case "up":
+                entity.solidArea.y -= entity.speed;
+                break;
+            case "down":
+                entity.solidArea.y += entity.speed;
+                break;
+            case "left":
+                entity.solidArea.x -= entity.speed;
+                break;
+            case "right":
+                entity.solidArea.x += entity.speed;
+                break;
+        }
+
+        if(entity.solidArea.intersects(gp.player.solidArea)){ //(.intersects)VERIFICA AUTOMATICAMENTE SE OS OBJECTOS ESTAO SE TOCANDO
+            entity.collisionOn = true;
+            contactPlayer = true;
+        }
+
+        entity.solidArea.x = entity.solidAreaDefaultX;
+        entity.solidArea.y = entity.solidAreaDefaultY;
+        gp.player.solidArea.x = gp.player.solidAreaDefaultX;
+        gp.player.solidArea.y = gp.player.solidAreaDefaultY;
+
+        return contactPlayer;
     }
 }

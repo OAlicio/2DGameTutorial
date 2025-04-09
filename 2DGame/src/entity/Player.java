@@ -57,8 +57,9 @@ public class Player extends Entity {
         // ------------- //
         
         setDefaultValues();
-        getPlayerImage();
-        getPlayerAttackImage();
+        getImage();
+        getAttackImage();
+        getGuardImage();
         setItems();
     }
 
@@ -130,7 +131,7 @@ public class Player extends Entity {
         return defense = dexterity * currentShield.defenseValue;
     } 
     
-    public void getPlayerImage() {
+    public void getImage() {
     
         up1 = setup("/player/boy_up_1", gp.tileSize, gp.tileSize);
         up2 = setup("/player/boy_up_2", gp.tileSize, gp.tileSize);
@@ -153,7 +154,7 @@ public class Player extends Entity {
         right2 = image;
     }
     
-    public void getPlayerAttackImage() {
+    public void getAttackImage() {
         
         if(currentWeapon.type == type_sword) {
             attackUp1 = setup("/player/boy_attack_up_1", gp.tileSize, gp.tileSize * 2);
@@ -178,12 +179,25 @@ public class Player extends Entity {
         }
     }
         
+    public void getGuardImage() {
+        
+        guardUp = setup("/player/boy_guard_up", gp.tileSize, gp.tileSize);
+        guardDown = setup("/player/boy_guard_down", gp.tileSize, gp.tileSize);
+        guardLeft = setup("/player/boy_guard_left", gp.tileSize, gp.tileSize);
+        guardRight = setup("/player/boy_guard_right", gp.tileSize, gp.tileSize);
+    }
+    
     @Override
     public void update() {
         
         if(attacking == true) {
             attacking();
         }
+        
+        else if(gp.keyH.spacePressed == true) {
+            guarding = true;
+        }
+        
         //ATUALIZAR AS COORDENADAS DO JOGADOR
         else if(keyH.upPressed == true || keyH.downPressed == true 
                 || keyH.leftPressed == true || keyH.rightPressed == true || keyH.enterPressed == true) { // Previne da imagem se mexer sem dar nenhum comando
@@ -238,7 +252,7 @@ public class Player extends Entity {
                 switch(direction) {
                     
                     case "up":
-                         worldY -= speed; // QUANTO MAIS PRA CIMA MENOS O Y VALE MENOS EM 4 PIXELS(SPEED)
+                        worldY -= speed; // QUANTO MAIS PRA CIMA MENOS O Y VALE MENOS EM 4 PIXELS(SPEED)
                         break;
                     case "down":
                         worldY += speed;
@@ -260,6 +274,7 @@ public class Player extends Entity {
             
             attackCanceled = false;
             keyH.enterPressed = false;
+            guarding = false;
                     
             spriteCounter++;
             if(spriteCounter >= 14) { //A CADA 14 FRAMES TROCA A IMAGEM PELO SPRITENUM
@@ -277,9 +292,10 @@ public class Player extends Entity {
             standCounter++;
             
             if(standCounter == 20) { //A CADA x FRAMES O PLAYER VOLTA AO FRAME INICIAL APOS O BOTAO DEIXAR DE SER PRESSIONADO
-               standCounter = 0;
-               spriteNum = 1; 
+                spriteNum = 1;
+                standCounter = 0;
             }
+            guarding = false;
         }
        
         //PROJECTEIS
@@ -308,6 +324,7 @@ public class Player extends Entity {
         
         // PRECISA ESTAR FORA DO IF STATEMENT DAS KEYBINDS DE MOVIMENTACAO
         if(invincible == true) {
+            
             invincibleCounter++;
             
             if(invincibleCounter == 60) {
@@ -317,7 +334,6 @@ public class Player extends Entity {
         }
         
         if(shotAvailableCounter < 30) {
-            
             shotAvailableCounter++;
         }
         
@@ -505,7 +521,7 @@ public class Player extends Entity {
                 
                 currentWeapon = selectedItem;
                 attack = getAttack();
-                getPlayerAttackImage();
+                getAttackImage();
             }
             
             if(selectedItem.type == type_shield) {
@@ -594,11 +610,9 @@ public class Player extends Entity {
         case "up":
             
             if(attacking == false) {
-                
                 if(spriteNum == 1) {
-                image = up1;
+                    image = up1;
                 }
-                
                 if(spriteNum == 2) {
                     image = up2;
                 } 
@@ -607,89 +621,92 @@ public class Player extends Entity {
             if(attacking == true) {
                 tempScreenY = screenY - gp.tileSize;
                 if(spriteNum == 1) {
-                image = attackUp1;
+                    image = attackUp1;
                 }
-                
                 if(spriteNum == 2) {
                     image = attackUp2;
                 } 
+            }
+            
+            if(guarding == true) {
+                image = guardUp;
             }
             break;
             
         case "down":
             
             if(attacking == false) {
-                
                 if(spriteNum == 1) {
-                image = down1;
+                    image = down1;
                 }
-                
                 if(spriteNum == 2) {
                     image = down2;
                 } 
             }
             
             if(attacking == true) {
-                
                 if(spriteNum == 1) {
-                image = attackDown1;
+                    image = attackDown1;
                 }
-                
                 if(spriteNum == 2) {
                     image = attackDown2;
                 } 
+            }
+            if(guarding == true) {
+                image = guardDown;
             }
             break;
             
         case "left":
             
             if(attacking == false) {
-                
                 if(spriteNum == 1) {
                 image = left1;
                 }
-                
                 if(spriteNum == 2) {
                     image = left2;
                 }
             }
             
             if(attacking == true) {
-                
                 tempScreenX = screenX - gp.tileSize;
                 if(spriteNum == 1) {
-                image = attackLeft1;
+                    image = attackLeft1;
                 }
-                
                 if(spriteNum == 2) {
                     image = attackLeft2;
                 }
+            }
+            
+            if(guarding == true) {
+                image = guardLeft;
             }
             break;
             
         case "right":
             
             if(attacking == false) {
-                
                 if(spriteNum == 1) {
                     image = right1;
                 }
-
                 if(spriteNum == 2) {
                     image = right2;
                 } 
             }
             
             if(attacking == true) {
-                
                 if(spriteNum == 1) {
                     image = attackRight1;
                 }
-
                 if(spriteNum == 2) {
                     image = attackRight2;
                 }
             }
+            
+            if(guarding == true) {
+                image = guardRight;
+            }
+                        
             break; 
         }
         

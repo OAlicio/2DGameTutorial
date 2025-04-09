@@ -6,7 +6,8 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas que serao pressionadas
 
     GamePanel gp;
-    public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed, shotKeyPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, 
+            enterPressed, shotKeyPressed, spacePressed;
     
     //DEBUG
     boolean showDebugText = false;
@@ -204,6 +205,11 @@ public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas
             else{
                 gp.map.miniMapOn = false;
             }
+        }
+        
+        //Guard Shield
+        if(code == KeyEvent.VK_SPACE){ // Tecla P
+            spacePressed = true;
         }
          
         //DEBUG
@@ -503,9 +509,16 @@ public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas
             rightPressed = false;
         }
         
-        if(code == KeyEvent.VK_F){ // Tecla P
-
+        if(code == KeyEvent.VK_F){
             shotKeyPressed = false;
+        }
+        
+        if(code == KeyEvent.VK_ENTER){
+            enterPressed = false;
+        }
+        
+        if(code == KeyEvent.VK_SPACE){
+            spacePressed = false;
         }
     }
 }

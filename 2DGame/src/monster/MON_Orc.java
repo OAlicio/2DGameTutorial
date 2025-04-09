@@ -92,7 +92,7 @@ public class MON_Orc extends Entity{
             getRandomDirection();
         }
         
-        // Verifica se ataca
+        /* Verifica se ataca */
         if(attacking == false) {
             checkAttackOrNot(30, gp.tileSize * 4, gp.tileSize);
         }

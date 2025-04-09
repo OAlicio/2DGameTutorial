@@ -12,7 +12,7 @@ public class Main {
         window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
-        window.setTitle("Octavio's 2D Game");
+        window.setTitle("2D Game");
         
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);

@@ -18,7 +18,8 @@ public class Entity {
     
     public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2; //BufferedImage basicamente descreve a imagem com um buffer acessivel para dados de imagem
     public BufferedImage attackUp1, attackUp2, attackDown1, attackDown2, 
-            attackLeft1, attackLeft2, attackRight1, attackRight2;
+            attackLeft1, attackLeft2, attackRight1, attackRight2,
+            guardUp, guardDown, guardLeft, guardRight;
     public BufferedImage image, image2, image3;
     
     //CRIANDO O COLISOR DAS ENTIDADES, UM RECTANGULO
@@ -43,6 +44,7 @@ public class Entity {
     public boolean onPath = false;
     public boolean knockBack = false;
     public String knockBackDirection;
+    public boolean guarding = false;
     
     //CONTADORES
     public int spriteCounter = 0;
@@ -485,7 +487,30 @@ public class Entity {
         }
     }
     
-      public void attacking() {
+    public String getOppositeDirection(String direction) {
+        
+        String opositeDirection = "";
+        
+        switch(direction) {
+            
+            case "up": 
+                opositeDirection = "down";
+                break;
+            case "down": 
+                opositeDirection = "up";
+                break;
+            case "left":
+                opositeDirection = "right";
+                break;
+            case "right":
+                opositeDirection = "left";
+                break;
+        }
+        
+        return opositeDirection;
+    }
+    
+    public void attacking() {
         
         spriteCounter++;
         
@@ -567,13 +592,25 @@ public class Entity {
     public void damagePlayer(int attack) {
         
         if(gp.player.invincible == false) {
-                //DAR DANO AO PLAYER
-                gp.playSE(6);
                 
+                //DAR DANO AO PLAYER
                 int damage = attack - gp.player.defense;
                 
-                if(damage < 0) {
-                    damage = 0;
+                //Pegar a direcao contraria (player -> <- monstro) pra quando for defender
+                String canGuardDirection = getOppositeDirection(direction);
+                
+                if(gp.player.guarding  == true && gp.player.direction.equals(canGuardDirection)) {
+                    
+                    damage /= 3;
+                    gp.playSE(15);
+                }
+                else {
+                    //EFEITO DE SOM 
+                    gp.playSE(6);
+
+                    if(damage < 1) {
+                        damage = 1;
+                    }
                 }
                 
                 gp.player.life -= damage;
