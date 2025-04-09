@@ -358,6 +358,7 @@ public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas
         if(code == KeyEvent.VK_ENTER) {
             
             if(gp.ui.commandNum == 0) {
+                gp.player.transparent = false;
                 gp.gameState = gp.playState;
                 gp.retry();
                 gp.playMusic(0);

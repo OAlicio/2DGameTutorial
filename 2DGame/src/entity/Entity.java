@@ -45,6 +45,7 @@ public class Entity {
     public boolean knockBack = false;
     public String knockBackDirection;
     public boolean guarding = false;
+    public boolean transparent = false;
     
     //CONTADORES
     public int spriteCounter = 0;
@@ -599,7 +600,8 @@ public class Entity {
                 //Pegar a direcao contraria (player -> <- monstro) pra quando for defender
                 String canGuardDirection = getOppositeDirection(direction);
                 
-                if(gp.player.guarding  == true && gp.player.direction.equals(canGuardDirection)) {
+                if(gp.player.guarding  == true && 
+                        gp.player.direction.equals(canGuardDirection)) {
                     
                     damage /= 3;
                     gp.playSE(15);
@@ -613,6 +615,9 @@ public class Entity {
                     }
                 }
                 
+                if(damage != 0) {
+                    gp.player.transparent = true;
+                }
                 gp.player.life -= damage;
                 gp.player.invincible = true;
             }
