@@ -190,14 +190,49 @@ public class Player extends Entity {
     @Override
     public void update() {
         
-        if(attacking == true) {
+        if(knockBack == true) {
+            
+            collisionOn = false;
+            gp.cChecker.checkTile(this);
+            gp.cChecker.checkObject(this, true);
+            gp.cChecker.checkEntity(this, gp.npc);
+            gp.cChecker.checkEntity(this, gp.monster);
+            gp.cChecker.checkEntity(this, gp.iTile);
+            
+            if(collisionOn == true) {
+                knockBarCounter = 0;
+                knockBack = false;
+                speed = defaultSpeed;
+            }
+            else if(collisionOn == false) {
+                switch(knockBackDirection) {
+                    case "up":
+                        worldY -= speed;
+                        break;
+                    case "down":
+                        worldY += speed;
+                        break;
+                    case "left":
+                        worldX -= speed;
+                        break;
+                    case "right":
+                        worldX += speed;
+                        break;
+                }
+            }
+            knockBarCounter++;
+            if(knockBarCounter == 10) {
+                knockBarCounter = 0;
+                knockBack = false;
+                speed = defaultSpeed;
+            }
+        }
+        else if(attacking == true) {
             attacking();
         }
-        
         else if(gp.keyH.spacePressed == true) {
             guarding = true;
         }
-        
         //ATUALIZAR AS COORDENADAS DO JOGADOR
         else if(keyH.upPressed == true || keyH.downPressed == true 
                 || keyH.leftPressed == true || keyH.rightPressed == true || keyH.enterPressed == true) { // Previne da imagem se mexer sem dar nenhum comando

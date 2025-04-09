@@ -295,9 +295,7 @@ public class Entity {
                 speed = defaultSpeed;
             }
             else if(collisionOn == false) {
-                
                 switch(knockBackDirection) {
-                    
                     case "up":
                         worldY -= speed;
                         break;
@@ -617,6 +615,7 @@ public class Entity {
                 
                 if(damage != 0) {
                     gp.player.transparent = true;
+                    setKnockBack(gp.player, this, knockBackPower);
                 }
                 gp.player.life -= damage;
                 gp.player.invincible = true;
