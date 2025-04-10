@@ -57,10 +57,6 @@ public class Player extends Entity {
         // ------------- //
         
         setDefaultValues();
-        getImage();
-        getAttackImage();
-        getGuardImage();
-        setItems();
     }
 
     public void setDefaultValues() {
@@ -88,10 +84,16 @@ public class Player extends Entity {
         coin = 500;
         currentWeapon = new OBJ_Sword_Normal(gp);
         currentShield = new OBJ_Shield_Wood(gp);
+        currentLight = null;
         projectile = new OBJ_Fireball(gp); // USA mana
         //projectile = new OBJ_Rock(gp); // USA ammo;
         attack = getAttack(); //O VALOR DO ATAQUE TOTAL E DECIDIDO ATRAVES DA FORCA E ARMA
         defense = getDefense(); //O VALOR DA DEFESA TOTAL VALE A DESTREZA E O ESCUDO
+        
+        getImage();
+        getAttackImage();
+        getGuardImage();
+        setItems();
     }
     
     public void setDefaultPositions() {
@@ -101,12 +103,16 @@ public class Player extends Entity {
         direction = "down";
     }
     
-    public void restoreLifeAndMana() {
+    public void restoreStatus() {
         
         life = maxLife;
         mana = maxMana;
         invincible = false;
         transparent = false;
+        attacking = false;
+        guarding = false;
+        knockBack = false;
+        lightUpdated = true;
     }
     
     public void setItems() {

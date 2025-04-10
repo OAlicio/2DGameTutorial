@@ -359,14 +359,14 @@ public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas
             
             if(gp.ui.commandNum == 0) {
                 gp.gameState = gp.playState;
-                gp.retry();
+                gp.resetGame(false);
                 gp.playMusic(0);
             }
             
             else if(gp.ui.commandNum == 1) {
                 gp.ui.titleScreenState = 0;
                 gp.gameState = gp.titleState;
-                gp.restart();
+                gp.resetGame(true);
             }
         }
     }
