@@ -181,7 +181,8 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
                 delta--;
                 drawCount++;
             }
-            // Calcula FPS a cada segundo
+            
+            
             if (timer >= 1000000000) {
                 frameCount = drawCount; // Reseta o contador
                 drawCount = 0;

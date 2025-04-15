@@ -6,7 +6,7 @@ import main.GamePanel;
 public class OBJ_Potion_Red extends Entity{
 
     GamePanel gp;
-    
+
     public OBJ_Potion_Red(GamePanel gp) {
         super(gp);
         

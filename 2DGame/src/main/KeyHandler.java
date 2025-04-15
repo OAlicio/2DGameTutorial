@@ -102,8 +102,8 @@ public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas
                 if(gp.ui.commandNum == 1) {
                     //LOAD GAME
                     gp.saveLoad.load();
+                    gp.gameState = gp.playState;
                     gp.playMusic(0);
-
                 }
 
                 if(gp.ui.commandNum == 2) {
@@ -217,7 +217,7 @@ public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas
         }
          
         //DEBUG
-        if(code == KeyEvent.VK_T ){
+        if(code == KeyEvent.VK_L ){
 
             if(showDebugText == false) {
                 showDebugText = true;
