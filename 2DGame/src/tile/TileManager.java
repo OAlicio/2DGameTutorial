@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import main.GamePanel;
 import main.UtilityTool;
@@ -40,7 +38,7 @@ public class TileManager {
             }
             br.close();
         } catch (IOException ex) {
-            Logger.getLogger(TileManager.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         
         // ------------------------------ //
