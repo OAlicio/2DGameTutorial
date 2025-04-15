@@ -1,6 +1,7 @@
 package main;
 
 import ai.PathFinder;
+import data.SaveLoad;
 import entity.Entity;
 import entity.Player;
 import environment.EnvironmentManager;
@@ -61,6 +62,7 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
     public EventHandler eHandler = new EventHandler(this);
     EnvironmentManager  eManager = new EnvironmentManager(this);
     Map map = new Map(this);
+    SaveLoad saveLoad = new SaveLoad(this);
     Thread gameThread; //Mantem o programa rodando até que seja fechado
     // ---------------------------------------//
     

@@ -94,11 +94,15 @@ public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas
 
             if(code == KeyEvent.VK_ENTER) {
                 if(gp.ui.commandNum == 0) {
-                    gp.ui.titleScreenState = 1;
+                    // gp.ui.titleScreenState = 1;
+                    gp.gameState = gp.playState;
+                    gp.playMusic(0);
                 }
 
                 if(gp.ui.commandNum == 1) {
-                    //NEW GAME
+                    //LOAD GAME
+                    gp.saveLoad.load();
+                    gp.playMusic(0);
 
                 }
 
@@ -115,7 +119,7 @@ public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas
                 gp.ui.commandNum--;
                 if(gp.ui.commandNum < 0) {
                     gp.ui.commandNum = 0;
-                    //gp.ui.commandNum = 2; -> *Se quisermosum menu que ao chegar ao fim volta ao inicio
+                    //gp.ui.commandNum = 2; -> *Se quisermos um menu que ao chegar ao fim volta ao inicio
                 }
             }
 
