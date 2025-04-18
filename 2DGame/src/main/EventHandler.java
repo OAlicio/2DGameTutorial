@@ -6,6 +6,7 @@ public class EventHandler {
     
     GamePanel gp;
     EventRect eventRect[][][];
+    Entity eventMaster;
     
     int previousEventX, previousEventY;
     boolean canTouchEvent = true;
@@ -16,6 +17,8 @@ public class EventHandler {
         
         this.gp = gp;
         
+        eventMaster = new Entity(gp);
+
         eventRect = new EventRect[gp.maxMap][gp.maxWorldCol][gp.maxWorldRow];
         
         int map = 0;
@@ -43,8 +46,20 @@ public class EventHandler {
                 }
             }
         }
+
+        setDialogue();
     }
     
+    public void setDialogue() {
+
+        eventMaster.dialogue[0][0] = "You fall into a pit!";
+
+        eventMaster.dialogue[1][0] = "You drink the water.\nYour life and mana have been recovered "
+                    + "\n And Monster's has been replaced. " + 
+                    "\n(Game Saved)";
+
+    }
+
     public void checkEvent() {
         
         // VERIFICA SE O JOGADOR ESTA UM TILE DE DISTANCIA DO ULTIMO EVENTO, SO ACONTECE SE O PLAYER SE MOVER UM TILE E VOLTAR
@@ -145,7 +160,7 @@ public class EventHandler {
         
         gp.gameState = gameState;
         gp.playSE(6);
-        gp.ui.currentDialogue = "You fall into a pit!";
+        eventMaster.startDialogue(eventMaster, 0);
         gp.player.life -= 1;
         canTouchEvent = false;
     }
@@ -157,9 +172,7 @@ public class EventHandler {
             gp.gameState = gameState;
             gp.player.attackCanceled = true;
             gp.playSE(2);
-            gp.ui.currentDialogue = "You drink the water.\nYour life and mana have been recovered "
-                    + "\n And Monster's has been replaced. " + 
-                    "\n(Game Saved)";
+            eventMaster.startDialogue(eventMaster, 1);
             gp.player.life = gp.player.maxLife;
             gp.player.mana = gp.player.maxMana;
             canTouchEvent = false;
