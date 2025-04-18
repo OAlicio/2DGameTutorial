@@ -35,9 +35,9 @@ public class OBJ_Chest extends Entity {
 
     public void setDialogue() {
 
-        dialogue[0][0] = "Chest opened and find a " + loot.name + "!\\n" + //
+        dialogue[0][0] = "Chest opened and find a " + loot.name + "!\n" + //
                         "...But you cannot carry any more\"";
-        dialogue[1][0] = "Chest opened and find a " + loot.name + "!\\n" + //
+        dialogue[1][0] = "Chest opened and find a " + loot.name + "!\n" + //
                         "You obtain the \" + loot.name + \"!\"";
         dialogue[2][0] = "This chest is already opened";
     }
