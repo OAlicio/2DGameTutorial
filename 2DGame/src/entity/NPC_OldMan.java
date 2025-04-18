@@ -37,10 +37,17 @@ public class NPC_OldMan extends Entity {
     
     public void setDialogue() {
         
-        dialogue[0] = "Hello, lad.";
-        dialogue[1] = "So you've come to this island to \nfind the treasure?";  //GRAPHICS2D IGNORA O \n
-        dialogue[2] = "I used to be a great wizard but now... \nI'm a bit too old for taking an adventure.";
-        dialogue[3] = "Well, good luck on you.";
+        dialogue[0][0] = "Hello, lad.";
+        dialogue[0][1] = "So you've come to this island to \nfind the treasure?";  //GRAPHICS2D IGNORA O \n
+        dialogue[0][2] = "I used to be a great wizard but now... \nI'm a bit too old for taking an adventure.";
+        dialogue[0][3] = "Well, good luck on you.";
+
+        dialogue[1][0] = "If you become d, rest at the water.";
+        dialogue[1][1] = "However, the monsters reapper if you rest.\nI don't know why but that's how it works.";
+        dialogue[1][2] = "In any case, don't push yourself too hard.";
+        
+        dialogue[2][0] = "I wonder how to open that door...";
+
     }
     
     @Override
@@ -91,7 +98,8 @@ public class NPC_OldMan extends Entity {
     
     public void speak() {
         
-        super.speak();
+        facePlayer();
+        startDialogue(this, dialogueSet);
         
         onPath = true;
     }

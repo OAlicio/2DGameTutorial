@@ -336,6 +336,27 @@ public class UI {
         x += gp.tileSize;
         y += gp.tileSize;
         
+        if(npc.dialogue[npc.dialogueSet][npc.dialogueIndex] != null) {
+            
+            currentDialogue = npc.dialogue[npc.dialogueSet][npc.dialogueIndex];
+            
+            if(gp.keyH.enterPressed == true) {
+
+                if(gp.gameState == gp.dialogueState) {
+
+                    npc.dialogueIndex++;
+                    gp.keyH.enterPressed = false;
+                }
+            }
+        }
+        else { //Se nao houver texto dentro do Array...
+            npc.dialogueIndex = 0;
+
+            if(gp.gameState == gp.dialogueState) {
+                gp.gameState = gp.playState;
+            }
+        }
+
         for(String line : currentDialogue.split("\n")) { //QUANDO TIVER A KEYWORD(\n ou qualquer outra) O TEXTO SERA QUEBRADO E SERA IMPRIMIDO A OUTRA PARTE COM UMA DISTANCIA DE 40(y)
             
             g2.drawString(line, x, y);

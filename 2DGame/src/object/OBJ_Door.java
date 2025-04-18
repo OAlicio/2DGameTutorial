@@ -24,11 +24,17 @@ public class OBJ_Door extends Entity {
         solidArea.height = 32;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
+
+        setDialogue();
+    }
+
+    public void setDialogue() {
+
+        dialogue[0][0] = "You need a key.";
     }
     
     public void interact() {
         
-        gp.gameState = gp.dialogueState;
-        gp.ui.currentDialogue = "You need a key.";
+        startDialogue(this, 0);
     }
 }

@@ -27,14 +27,15 @@ public class Entity {
     public Rectangle attackArea = new Rectangle(0, 0, 0, 0);
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collision = false;
-    String dialogue[] = new String[20]; //PARA OS DIALOGOS COM NPC's
+    public String dialogue[][] = new String[20][20]; //PARA OS DIALOGOS COM NPC's
     public Entity attacker;
     
     //ESTADOS
     public int worldX, worldY; //POSICAO DA ENTIDADE
     public String direction = "down";
     public int spriteNum = 1;
-    int dialogueIndex = 0; 
+    public int dialogueSet = 0;
+    public int dialogueIndex = 0; 
     public boolean collisionOn = false;
     public boolean invincible = false;
     public boolean attacking = false;
@@ -188,16 +189,10 @@ public class Entity {
         
     }
     
-    public void speak() {
-        
-        if(dialogue[dialogueIndex] == null) {
-            
-            dialogueIndex = 0;
-        }
-                
-        gp.ui.currentDialogue = dialogue[dialogueIndex];
-        dialogueIndex += 1;
-        
+    public void speak() {}
+    
+    public void facePlayer() {
+
         switch(gp.player.direction) {
             
             case "up":
@@ -217,7 +212,14 @@ public class Entity {
                 break;
         }
     }
-    
+
+    public void startDialogue(Entity entity, int setNum) {
+
+        gp.gameState = gp.dialogueState;
+        gp.ui.npc = entity;
+        dialogueSet = setNum;
+    }
+
     public void interact() {
         
     }

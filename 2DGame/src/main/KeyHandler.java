@@ -256,7 +256,7 @@ public class KeyHandler implements KeyListener { //KeyListner "escuta" as teclas
         
         if(code == KeyEvent.VK_ENTER) {
             
-            gp.gameState = gp.playState;
+            enterPressed = true;
         }
     }
     

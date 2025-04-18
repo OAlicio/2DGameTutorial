@@ -18,23 +18,30 @@ public class OBJ_Key extends Entity {
         description = "[" + name + "]\nIt open the door.";
         price = 12;
         stackable = true;
+
+        setDialogue();
+    }
+
+    public void setDialogue() {
+
+        dialogue[0][0] = "Door Opened.";
+        dialogue[1][0] = "This isn't a Door.";
     }
     
     @Override
     public boolean use(Entity entity) {
         
-        gp.gameState = gp.dialogueState;
         
         int objIndex = getDetected(entity, gp.obj, "Door");
         
         if(objIndex != 999) {
-            gp.ui.currentDialogue = "Door Opened.";
+            startDialogue(this, 0);
             gp.playSE(3);
             gp.obj[gp.currentMap][objIndex] = null;
             return true;
         } 
         else {
-            gp.ui.currentDialogue = "This isn't a Door.";
+            startDialogue(this, 1);
             return false;
         }
     }
