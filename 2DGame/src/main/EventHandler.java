@@ -57,6 +57,7 @@ public class EventHandler {
         eventMaster.dialogue[1][0] = "You drink the water.\nYour life and mana have been recovered "
                     + "\n And Monster's has been replaced. " + 
                     "\n(Game Saved)";
+        eventMaster.dialogue[1][1] = "Damn, this is good water";
 
     }
 

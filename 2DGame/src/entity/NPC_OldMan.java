@@ -19,6 +19,8 @@ public class NPC_OldMan extends Entity {
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
         
+        dialogueSet = -1;
+
         getImage();
         setDialogue();
     }
@@ -42,7 +44,7 @@ public class NPC_OldMan extends Entity {
         dialogue[0][2] = "I used to be a great wizard but now... \nI'm a bit too old for taking an adventure.";
         dialogue[0][3] = "Well, good luck on you.";
 
-        dialogue[1][0] = "If you become d, rest at the water.";
+        dialogue[1][0] = "If you become tired, rest at the water.";
         dialogue[1][1] = "However, the monsters reapper if you rest.\nI don't know why but that's how it works.";
         dialogue[1][2] = "In any case, don't push yourself too hard.";
         
@@ -101,6 +103,11 @@ public class NPC_OldMan extends Entity {
         facePlayer();
         startDialogue(this, dialogueSet);
         
-        onPath = true;
+        dialogueSet++;
+
+        if(dialogue[dialogueSet][0] == null) {
+            dialogueSet--;
+        }
+    //  onPath = true;
     }
 }
