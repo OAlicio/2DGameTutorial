@@ -581,7 +581,7 @@ public class Player extends Entity {
             defense = getDefense();
             
             gp.playSE(8);
-            gp.gameState = gp.dialogueState;
+            setDialogue();
             startDialogue(this, 0);
         }
     }
