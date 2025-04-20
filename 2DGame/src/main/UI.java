@@ -348,7 +348,7 @@ public class UI {
             if(charIndex < characters.length) {
 
                 // Mostrar caracter por caracter
-                gp.playSE(17);
+                // gp.playSE(17); -> ta causando bugs
                 String s = String.valueOf(characters[charIndex]);
                 combinedText = combinedText + s;
                 currentDialogue = combinedText;
