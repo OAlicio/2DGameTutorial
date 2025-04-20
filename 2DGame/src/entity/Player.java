@@ -649,10 +649,12 @@ public class Player extends Entity {
         
         boolean canObtain = false;
         
+        Entity newItem = gp.eGenerator.getObject(item.name);
+
         //VERIFICAR SE O ITEM E STACKAVEL
-        if(item.stackable == true) {
+        if(newItem.stackable == true) {
             
-            int index =  searchItemInInventory(item.name);
+            int index =  searchItemInInventory(newItem.name);
             
             if(index != 999) {
                 inventory.get(index).amount++;
@@ -660,14 +662,14 @@ public class Player extends Entity {
             }
             else { //NOVO ITEM PRECISA VERIFICAR SE HA ESPACO NO INVENTARIO
                 if(inventory.size() != maxInventorySize) {
-                    inventory.add(item);
+                    inventory.add(newItem);
                     canObtain = true;
                 }
             }
         }
         else { //NAO E STACKAVEL
             if(inventory.size() != maxInventorySize) {
-                    inventory.add(item);
+                    inventory.add(newItem);
                     canObtain = true;
                 }
         }
