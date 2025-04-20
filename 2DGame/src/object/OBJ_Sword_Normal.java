@@ -5,6 +5,8 @@ import main.GamePanel;
 
 public class OBJ_Sword_Normal extends Entity {
 
+    public static final String objName = "Normal Sword";
+
     public OBJ_Sword_Normal(GamePanel gp) {
         super(gp);
         
