@@ -1,0 +1,7 @@
+# Diretórios específicos do projeto 2D
+build/
+out/
+*.class
+
+.idea/
+.vscode/

@@ -1,1 +1,43 @@
-/2DGame/dist/
+# Arquivos de compilação Java
+*.class
+*.jar
+*.war
+*.ear
+
+# Arquivos de log
+*.log
+
+# IDEs
+## IntelliJ IDEA
+.idea/
+*.iml
+out/
+
+## VSCode
+.vscode/
+
+## NetBeans
+nbproject/private/
+build/
+dist/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Linux
+*~
+
+# Windows
+ehthumbs.db
+Desktop.ini
+
+# Diretórios de build comuns
+/build/
+/target/
+/bin/
+
+# Configurações pessoais
+.vscode/
+*.swp
+
