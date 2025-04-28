@@ -184,7 +184,7 @@ public class PathFinder {
             }
             
             //SE NAO HA NODE NA OPENLIST, O LOOP TERMINA
-            if(openList.size() == 0) {
+            if(openList.isEmpty()) {
                 break;
             }
             

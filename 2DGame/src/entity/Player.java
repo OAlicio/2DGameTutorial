@@ -1,18 +1,14 @@
 package entity;
 
 import java.awt.AlphaComposite;
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import main.GamePanel;
 import main.KeyHandler;
 import object.OBJ_Axe;
 import object.OBJ_Fireball;
 import object.OBJ_Key;
-import object.OBJ_Potion_Red;
-import object.OBJ_Rock;
 import object.OBJ_Shield_Wood;
 import object.OBJ_Sword_Normal;
 import object.OBJ_Tent;
@@ -129,6 +125,7 @@ public class Player extends Entity {
         inventory.add(currentWeapon);
         inventory.add(currentShield);
         inventory.add(new OBJ_Axe(gp));
+        inventory.add(new OBJ_Key(gp));
         inventory.add(new OBJ_Key(gp));
         inventory.add(new OBJ_Tent(gp));
     }
@@ -381,7 +378,6 @@ public class Player extends Entity {
             
             //REDUZIR A MANA
             projectile.subtrackResource(this);
-            
             
             //VERIFICAR DISPONIBILIDADE
             for(int i = 0; i < gp.projectile[1].length; i++) { //VERIFICA QUAL SLOT TEM DISPONIBILIDADE PARA O PROJECTIL

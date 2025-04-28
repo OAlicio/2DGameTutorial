@@ -5,7 +5,7 @@ import entity.Entity;
 public class EventHandler {
     
     GamePanel gp;
-    EventRect eventRect[][][];
+    EventRect[][][] eventRect;
     Entity eventMaster;
     
     int previousEventX, previousEventY;
@@ -79,35 +79,54 @@ public class EventHandler {
         // ----------------------------------------------------------------- //
         
         if(canTouchEvent == true) {
-            
-            if(hit(0, 27, 16, "right") == true) {
-                //EVENTO ACONTECE
+
+            if(hit(0, 27, 16, "right")) {
                 damagePit(gp.dialogueState);
             }
 
-            else if(hit(0, 23, 19, "any") == true) {
-                //EVENTO ACONTECE
-                damagePit(gp.dialogueState);
-            }
-
-            else if(hit(0, 23, 12, "up") == true) {
-                //EVENTO ACONTECE
+            else if(hit(0, 23, 12, "up")) {
                 healingPool(gp.dialogueState);
             }
-            
-            else if(hit(0, 10, 40, "any") == true) {
-                //EVENTO ACONTECE
-                teleport(1, 12, 12);
+
+            // ----- Merchant --------
+
+            //Pra dentro
+            else if(hit(0, 10, 39, "any")) {
+                teleport(1, 12, 13);
             }
-            
-            else if(hit(1, 12, 13, "any") == true) {
-                //EVENTO ACONTECE
-                teleport(0, 10, 40);
+
+            //Pra fora
+            else if(hit(1, 12, 13, "any")) {
+                teleport(0, 10, 39);
             }
-            
-            else if(hit(1, 12, 9, "up") == true) {
+            // ------------------------ //
+
+            else if(hit(1, 12, 9, "up")) {
                 speak(gp.npc[1][0]);
             }
+
+            // ---------- Dungeon ----------
+
+            //Pra dentro
+            else if(hit(0, 12, 9, "up")) {
+                teleport(2, 9, 41);
+            }
+
+            //Pra fora
+            else if(hit(2, 9, 41, "up")) {
+                teleport(0, 12, 9);
+            }
+
+            //B1
+            else if(hit(2, 8, 7, "up")) {
+                teleport(3, 26, 41);
+            }
+
+            //B2
+            else if(hit(3, 26, 41, "up")) {
+                teleport(2, 8, 7);
+            }
+            // -----------------------------
         }
     }
     

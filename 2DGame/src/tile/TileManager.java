@@ -68,6 +68,8 @@ public class TileManager {
         
         loadMap("/maps/worldmap.txt", 0);
         loadMap("/maps/indoor01.txt", 1);
+        loadMap("/maps/dungeon01.txt", 2);
+        loadMap("/maps/dungeon02.txt", 3);
         
 //        loadMap("/maps/worldV2.txt", 0);
 //        loadMap("/maps/Interior01.txt", 1);
@@ -180,18 +182,18 @@ public class TileManager {
                 worldRow++;
             }
         }
-        if(drawPath == true) {
-            g2.setColor(new Color(255, 0, 0, 70));
-            
-            for(int i = 0; i< gp.pFinder.pathList.size(); i++) {
-                
-            int worldX = gp.pFinder.pathList.get(i).col * gp.tileSize;
-            int worldY = gp.pFinder.pathList.get(i).row * gp.tileSize;
-            int screenX = worldX - gp.player.worldX + gp.player.screenX;
-            int screenY = worldY - gp.player.worldY + gp.player.screenY;
-            
-            g2.fillRect(screenX, screenY, gp.tileSize, gp.tileSize);
-            }
-        }
+//        if(drawPath == true) {
+//            g2.setColor(new Color(255, 0, 0, 70));
+//
+//            for(int i = 0; i< gp.pFinder.pathList.size(); i++) {
+//
+//            int worldX = gp.pFinder.pathList.get(i).col * gp.tileSize;
+//            int worldY = gp.pFinder.pathList.get(i).row * gp.tileSize;
+//            int screenX = worldX - gp.player.worldX + gp.player.screenX;
+//            int screenY = worldY - gp.player.worldY + gp.player.screenY;
+//
+//            g2.fillRect(screenX, screenY, gp.tileSize, gp.tileSize);
+//            }
+//        }
     }
 }

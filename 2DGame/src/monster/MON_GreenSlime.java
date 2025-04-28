@@ -63,8 +63,6 @@ public class MON_GreenSlime extends Entity {
             // Verifica em que direcao deve ir
             searchPath(getGoalCol(gp.player), getGoalRow(gp.player));
 
-            //Analiza se um projectil foi lancado
-            checkShootOrNot(200, 30);
         }
         else {
             
