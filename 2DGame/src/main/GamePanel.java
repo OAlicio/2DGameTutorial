@@ -23,7 +23,7 @@ import tile_interactive.InteractiveTile;
 
 public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
     
-    //OPCOES DE TELA
+    // OPCOES DE TELA
     public final int originalTileSize = 16; // TAMANHO DOS TILES (16 X 16)
     final int scale = 3;
     public final int tileSize = originalTileSize * scale; //Coloca numa escala mais visivel nas telas atuais (48 X 48)
@@ -32,24 +32,24 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
     public final int screenWidth = tileSize * maxScreenCol; // COMPRIMENTO TOTAL 960 pixels
     public final int screenHeight = tileSize * maxScreenRow; // ALTURA TOTAL 576 pixels
     
-    //OPCOES DE MUNDO
+    // OPCOES DE MUNDO
     public int maxWorldCol; //MAIOR VALOR DE "x" DO MAPA
     public int maxWorldRow; //MAIOR VALOR DE "y" DO MAPA   
     public final int maxMap = 10; //MAXIMO NUMERO DE MAPAS/MUNDOS
     public int currentMap = 0; //MAPA ACTUAL
     
-    //FULL SCREEN
+    // FULL SCREEN
     int screenWidth2 = screenWidth;
     int screenHeight2 = screenHeight;
     BufferedImage tempScreen;
     Graphics2D g2;
     public boolean fullScreenOn = false;
     
-    //FPS
+    // FPS
     int FPS = 60; //FPS DESEJADO
     int frameCount = 0;
     
-    //SYSTEM -------------------------------//
+    // SYSTEM
     public TileManager tileM = new TileManager(this);
     public KeyHandler keyH = new KeyHandler(this);
     Sound music = new Sound();
@@ -65,9 +65,8 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
     SaveLoad saveLoad = new SaveLoad(this);
     public EntityGenerator eGenerator = new EntityGenerator(this);
     Thread gameThread; //Mantem o programa rodando até que seja fechado
-    // ---------------------------------------//
-    
-    //ENTITY AND OBJECT
+
+    // ENTIDADE E OBJECTO
     public Player player = new Player(this, keyH); //INSTANCIANDO O PLAYER
     public Entity obj[][] = new Entity[maxMap][30]; //QUANTIDADE DE OBJECTOS/ENTIDADES A SEREM MOSTRADOS NA TELA
     public Entity npc[][] = new Entity[maxMap][20];
@@ -77,10 +76,8 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
 //  public ArrayList<Entity> projectileList = new ArrayList<>();
     public ArrayList<Entity> particleList = new ArrayList<>();
     ArrayList<Entity> entityList = new ArrayList<>(); //REORGANIZANDO AS LAYERS DAS ENTIDADE(PLAYER & OBJECTOS)
-    // --------------------------------------------- //
-    
-    //GAMESTATE
-    
+
+    // GAMESTATE
     public int gameState;
     public final int titleState = 0;  
     public final int playState = 1; //PODEM SER QUAISQUER NUMEROS
@@ -93,9 +90,15 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
     public final int tradeState = 8;
     public final int sleepState = 9;
     public final int mapState = 10;
-    
-    //---------//
-    
+
+    // AREA
+
+    public int currentArea;
+    public int nextArea;
+    public final int outside = 50;
+    public final int indoor = 51;
+    public final int dungeon = 52;
+
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight)); //Coloca o tamanho da classe JPanel(Gamepanel)
         this.setBackground(Color.black);
@@ -111,7 +114,9 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
         aSetter.setMonster();
         aSetter.setInteractiveTile();
         eManager.setup();
+
         gameState = titleState;
+        currentArea = outside;
         
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB); //TAMANHO MAXIMO DA TELA COLOCADO DENTRO DE UMA BUFFERED IMAGE VAZIA
         g2 = (Graphics2D)tempScreen.getGraphics(); //TUDO QUE O G2 DESENHAR SERA FEITO APARTIR DO TEMPSCREEN
@@ -408,5 +413,10 @@ public class GamePanel extends JPanel implements Runnable { //RUNNABLE -> THREAD
     
         se.setFile(i);
         se.play();
+    }
+
+    public void changeArea() {
+
+        currentArea = nextArea;
     }
 } 

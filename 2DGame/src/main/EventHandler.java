@@ -92,12 +92,12 @@ public class EventHandler {
 
             //Pra dentro
             else if(hit(0, 10, 39, "any")) {
-                teleport(1, 12, 13);
+                teleport(1, 12, 13, gp.indoor);
             }
 
             //Pra fora
             else if(hit(1, 12, 13, "any")) {
-                teleport(0, 10, 39);
+                teleport(0, 10, 39, gp.outside);
             }
             // ------------------------ //
 
@@ -109,22 +109,22 @@ public class EventHandler {
 
             //Pra dentro
             else if(hit(0, 12, 9, "up")) {
-                teleport(2, 9, 41);
+                teleport(2, 9, 41, gp.dungeon);
             }
 
             //Pra fora
             else if(hit(2, 9, 41, "up")) {
-                teleport(0, 12, 9);
+                teleport(0, 12, 9, gp.outside);
             }
 
             //B1
             else if(hit(2, 8, 7, "up")) {
-                teleport(3, 26, 41);
+                teleport(3, 26, 41, gp.dungeon);
             }
 
             //B2
             else if(hit(3, 26, 41, "up")) {
-                teleport(2, 8, 7);
+                teleport(2, 8, 7, gp.dungeon);
             }
             // -----------------------------
         }
@@ -164,10 +164,11 @@ public class EventHandler {
         return hit;
     }
     
-    public void teleport(int map, int col, int row) {
+    public void teleport(int map, int col, int row, int area) {
         
         gp.gameState = gp.transitionState;
-        
+        gp.nextArea = area;
+
         tempMap = map;
         tempCol = col;
         tempRow = row;
